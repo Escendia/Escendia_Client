@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Escendia_Winestock_Client",
-    "slug": "Escendia_Winestock_Client",
+    "name": "Escendia_Client",
+    "slug": "Escendia_Client",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
