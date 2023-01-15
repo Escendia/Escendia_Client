@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useLayoutEffect } from "react";
 import {
-  View
+  Platform, View
 } from "react-native";
+
 
 const LandingPage = () => {
   const navigation = useNavigation();
@@ -13,9 +14,11 @@ const LandingPage = () => {
     });
   }, []);
 
+
+
   return (
     <View>
-
+      
     </View>
   );
 };
