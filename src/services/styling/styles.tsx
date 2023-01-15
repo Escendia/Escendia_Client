@@ -1,7 +1,7 @@
 import { StyleSheet} from "react-native";
 
 const colors = {
-    "esendia_light":"#EEE7DD",
+    "escendia_light":"#EEE7DD",
     "escendia_dark":"#5A453C",
     "escendia_text_faded":"#84746D",
     "escendia_text_background":"#E7DCCD",
@@ -10,7 +10,7 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
-
+    
 });
 
 

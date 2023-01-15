@@ -4,7 +4,8 @@ import i18n from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
 import LandingPage from "./src/pages/LandingPage";
 import { de, en } from "./src/services/localization/localizations";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useFonts } from "expo-font";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -16,16 +17,25 @@ i18n.use(initReactI18next).init({
   fallbackLng: "de",
 });
 
+/*
+ */
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const { t } = useTranslation();
+  const [fontsLoaded] = useFonts({
+    "Josefin Sans": require("./src/assets/fonts/JosefinSans-Regular.otf"),
+    "Simply Conception": require("./src/assets/fonts/Simply-Conception-Regular.otf"),
+  });
 
   return (
-      <NavigationContainer>
+    <NavigationContainer>
+      {fontsLoaded ? (
         <Stack.Navigator initialRouteName="LandingPage">
           <Stack.Screen name="LandingPage" component={LandingPage} />
         </Stack.Navigator>
-      </NavigationContainer>
+      ) : null}
+    </NavigationContainer>
   );
 }
