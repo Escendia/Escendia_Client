@@ -6,6 +6,8 @@ import LandingPage from "./src/pages/LandingPage";
 import { de, en } from "./src/services/localization/localizations";
 import React, { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
+import 'react-native-gesture-handler';
+import 'react-native-reanimated';
 
 i18n.use(initReactI18next).init({
   resources: {
