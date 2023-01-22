@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useLayoutEffect } from "react";
+import { MutableRefObject, useLayoutEffect } from "react";
 import {
   Text,
   View,
@@ -11,6 +11,8 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  GestureResponderEvent,
 } from "react-native";
 import { colors } from "../services/styling/styles";
 import LeafIcon from "../components/icons/LeafIcon";
@@ -22,8 +24,7 @@ import TwitterIcon from "../components/icons/TwitterIcon";
 import EscendiaText from "../components/EscendiaText";
 import EscendiaInput from "../components/EscendiaInput";
 import EscendiaCarousel from "../components/EscendiaCarousel";
-import Carousel from "react-native-reanimated-carousel";
-import ACarousel from "react-native-snap-carousel";
+import ACarousel, { Carousel } from "react-native-snap-carousel";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -51,11 +52,15 @@ function LandingPage() {
           alignItems: "flex-end",
         }}
       >
-        <LeafIcon width={indexLeafTop} height={indexLeafTop} fill={colors.escendia_img_background_light} />
+        <LeafIcon
+          width={indexLeafTop}
+          height={indexLeafTop}
+          fill={colors.escendia_img_background_light}
+        />
       </View>
     );
   }
-  /* colors.escendia_img_background_light */
+
   function Header(props: any) {
     return (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -770,6 +775,27 @@ function LandingPage() {
   const ref = useRef<ICarouselInstance>(null);
   const onPrevPress = () => ref.current?.prev();
   const onNextPress = () => ref.current?.next();
+  const ref2 = useRef<Carousel<any>>(null);
+
+  const setSliderPage = (event: any) => {
+    const { currentPage } = sliderState;
+    const { x } = event.nativeEvent.contentOffset;
+    const indexOfNextScreen = Math.floor(x / width);
+    if (indexOfNextScreen !== currentPage) {
+      setSliderState({
+        ...sliderState,
+        currentPage: indexOfNextScreen,
+      });
+    }
+    console.log(currentPage);
+  };
+
+  const [sliderState, setSliderState] = useState({ currentPage: 0 });
+  const { width, height } = Dimensions.get("window");
+
+  const SLIDER_WIDTH = Dimensions.get("window").width;
+  const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
+  const ITEM_HEIGHT = Math.round((ITEM_WIDTH * 3) / 4);
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.escendia_light, flex: 1 }}>
@@ -777,9 +803,7 @@ function LandingPage() {
         {HeaderImage({})}
         {Header({})}
         {HeadLine({})}
-
         {Platform.OS == "web" ? <HeaderText /> : <HeaderTextMobile />}
-
         <View
           style={{
             backgroundColor: "black",
@@ -791,7 +815,6 @@ function LandingPage() {
             borderRightColor: colors.escendia_light,
           }}
         ></View>
-
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -809,7 +832,6 @@ function LandingPage() {
             source={require("../assets/winebottle.png")}
           />
         </View>
-
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -827,9 +849,71 @@ function LandingPage() {
             source={require("../assets/winebottle.png")}
           />
         </View>
+        {/*         {Platform.OS == "web" ? <FeatureLine /> : <FeatureLineMobile />}
+         */}
 
-        {Platform.OS == "web" ? <FeatureLine /> : <FeatureLineMobile />}
-
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <View
+            style={{ backgroundColor: "pink", alignItems: "center" }}
+          >
+            <ACarousel
+              ref={ref2}
+              vertical={false}
+              activeSlideAlignment={"center"}
+              sliderWidth={400}
+              itemWidth={300}
+              layout={"default"}
+              useScrollView={false}
+              inactiveSlideScale={0.9}
+              inactiveSlideOpacity={0.3}
+              firstItem={1}
+              enableSnap={true}
+              data={[
+                { title: "title1", text: "text" },
+                { title: "title2", text: "text" },
+                { title: "title3", text: "text" },
+              ]}
+              renderItem={({ item }: { item: any }) => {
+                return (
+                  <View
+                    style={{
+                      backgroundColor: "floralwhite",
+                      borderRadius: 5,
+                      height: 250,
+                      padding: 30,
+                      marginLeft: 5,
+                      marginRight: 5,
+                    }}
+                  >
+                    <Text style={{ fontSize: 30 }}>{item.title}</Text>
+                    <Text>{item.text}</Text>
+                  </View>
+                );
+              }}
+            />
+          </View>
+          <TouchableOpacity
+            style={{ backgroundColor: "blue", position: "absolute", left: 345 }}
+            onPress={() => {
+              ref2.current?.snapToItem(0);
+            }}
+          >
+            <Text>{"<"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ backgroundColor: "grey", position: "absolute", left: 40 }}
+            onPress={() => {
+              ref2.current?.snapToItem(2);
+            }}
+          >
+            <Text>{">"}</Text>
+          </TouchableOpacity>
+        </View>
         {Footer({})}
       </ScrollView>
     </SafeAreaView>
