@@ -29,7 +29,7 @@ interface EscendiaTextProps {
     | undefined;
 }
 
-const Text = ({
+const EscendiaText = ({
   color,
   style,
   children,
@@ -69,11 +69,11 @@ const Text = ({
     </RNText>
   );
 
-Text.defaultProps = {
+  EscendiaText.defaultProps = {
   fontFamily: "Josefin Sans",
   color: colors.escendia_dark,
   fontSize: 20,
   fontWeight: "400",
 };
 
-export default Text;
+export default EscendiaText;

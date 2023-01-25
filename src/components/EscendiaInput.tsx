@@ -15,71 +15,65 @@ interface EscendiaInputProps {
   value?: string;
   style?: TextStyle;
   outlineStyle?: TextStyle;
-  iconStyle?: TextStyle;
   placeholder?: string;
   iconName?: string;
-  textColor?: string;
+  textColor?: string | undefined;
   onChangeText?: ((e: string) => void) | undefined;
   onIconPress?: ((e: GestureResponderEvent) => void) | undefined;
+  left?: React.ReactNode;
+  right?: React.ReactNode;
+  disabled?: boolean | undefined;
+  hasBorder?: boolean | undefined;
+  placeholderTextColor?: string | undefined;
 }
 
-const TextInput = ({
-  placeholder,
-  value,
-  onChangeText,
-  style,
-  textColor,
-  outlineStyle,
-  onIconPress,
-  iconStyle,
-}: EscendiaInputProps) => (
-  <Input
-    placeholder={placeholder}
-    value={value}
-    onChangeText={onChangeText}
-    textColor={textColor}
-    mode="outlined"
-    dense={true}
-    style={{
-      flex: 1,
-      backgroundColor: "transparent",
-      fontFamily: "Josefin Sans",
-      color: colors.escendia_text_faded,
-      fontSize: 20,
-      ...style,
-    }}
-    outlineStyle={{ ...outlineStyle }}
-    left={
+/* 
       <Input.Icon
         icon="text-search"
         style={{ ...iconStyle }}
         onPress={onIconPress}
       />
+*/
+const EscendiaInput = ({
+  placeholder,
+  value,
+  onChangeText,
+  style,
+  textColor,
+  placeholderTextColor,
+  outlineStyle,
+  left,
+  right,
+  disabled,
+  hasBorder,
+}: EscendiaInputProps) => (
+  <Input
+    disabled={disabled}
+    placeholder={placeholder}
+    value={value}
+    onChangeText={onChangeText}
+    mode="outlined"
+    dense={true}
+    style={{
+      padding: 2,
+      backgroundColor: "transparent",
+      fontFamily: "Josefin Sans",
+      color: "white",
+      fontSize: 20,
+      ...style,
+    }}
+    outlineStyle={{
+      borderRadius: hasBorder ? 1 : 0,
+      borderColor: colors.escendia_img_background_light,
+      ...outlineStyle,
+    }}
+    textColor={textColor ? textColor : colors.escendia_light}
+    placeholderTextColor={
+      placeholderTextColor ? placeholderTextColor : colors.escendia_text_faded
     }
+    left={left}
+    right={right}
   />
 );
 
-TextInput.defaultProps = {
-  inputStyle: {
-    color: colors.escendia_text_faded,
-    fontFamily: "Josefin Sans",
-  },
-  style: {
-    backgroundColor: "transparent",
-    borderBottomWidth: 1,
-    borderBottomColor: colors.escendia_dark,
-    height: 20,
-    fontSize: 20,
-    paddingBottom: 0,
-  },
-  outlineStyle: {
-    borderColor: "transparent",
-    borderRadius: 0,
-  },
-  iconStyle: {
-    paddingBottom: 4,
-  },
-  textColor: colors.escendia_text_faded,
-};
-
-export default TextInput;
+export default EscendiaInput;

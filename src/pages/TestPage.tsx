@@ -2,10 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useLayoutEffect } from "react";
 import { View, ScrollView, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import EscendiaText from "../components/EscendiaText";
-import EscendiaInput from "../components/EscendiaInput";
-
 import { colors } from "../services/styling/styles";
+import EscendiaButton from "@components/EscendiaButton";
+import EscendiaText from "@components/EscendiaText";
+import EscendiaInput from "@components/EscendiaInput";
 
 function TestPage() {
   const navigation = useNavigation();
@@ -27,11 +27,18 @@ function TestPage() {
           }}
           source={require("../assets/logo.png")}
         />
-        <View style={{ borderWidth: 1, borderColor: colors.escendia_light }}>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: colors.escendia_light,
+          }}
+        >
           Eingabe
         </View>
+        <EscendiaInput placeholder="E-Mail"></EscendiaInput>
         <EscendiaText>Hier Steht ein Text</EscendiaText>
-        <View style={{ backgroundColor: colors.escendia_light }}>Button</View>
+
+        <EscendiaButton>Drück mich!</EscendiaButton>
       </View>
       <View style={{ backgroundColor: colors.escendia_light, flex: 1 }}></View>
     </SafeAreaView>
