@@ -33,7 +33,7 @@ function TestPage() {
             borderColor: colors.escendia_light,
           }}
         >
-          Eingabe
+          EingabeX
         </View>
         <EscendiaInput placeholder="E-Mail"></EscendiaInput>
         <EscendiaText>Hier Steht ein Text</EscendiaText>
