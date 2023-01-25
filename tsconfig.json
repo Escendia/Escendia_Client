@@ -1,11 +1,12 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
+    "allowJs": true,
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@services/*": ["./src/services/*"]
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src7pages/*"],
+      "@services/*": ["src/services/*"]
     }
   }
 }

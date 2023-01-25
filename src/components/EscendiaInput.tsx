@@ -25,6 +25,7 @@ interface EscendiaInputProps {
   disabled?: boolean | undefined;
   hasBorder?: boolean | undefined;
   placeholderTextColor?: string | undefined;
+  secureTextEntry?: boolean | undefined;
 }
 
 /* 
@@ -46,6 +47,7 @@ const EscendiaInput = ({
   right,
   disabled,
   hasBorder,
+  secureTextEntry,
 }: EscendiaInputProps) => (
   <Input
     disabled={disabled}
@@ -54,6 +56,7 @@ const EscendiaInput = ({
     onChangeText={onChangeText}
     mode="outlined"
     dense={true}
+    secureTextEntry={secureTextEntry}
     style={{
       padding: 2,
       backgroundColor: "transparent",
