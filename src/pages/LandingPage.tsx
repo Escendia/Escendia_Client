@@ -24,7 +24,6 @@ import TwitterIcon from "../components/icons/TwitterIcon";
 import EscendiaText from "../components/EscendiaText";
 import EscendiaInput from "../components/EscendiaInput";
 import EscendiaCarousel from "../components/EscendiaCarousel";
-import ACarousel, { Carousel } from "react-native-snap-carousel";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -506,15 +505,49 @@ function LandingPage() {
           </View>
           <View style={{ paddingRight: 100 }}>
             <EscendiaCarousel
-              height={600}
-              width={800}
+              itemWidth={600}
+              sliderWidth={800}
               data={[
-                require("../assets/test.jpg"),
-                require("../assets/test.jpg"),
-                require("../assets/test.jpg"),
+                {
+                  image: require("../assets/test.jpg"),
+                  text: "1 Hier könnte ein Text stehen für Sie",
+                },
+                {
+                  image: require("../assets/test.jpg"),
+                  text: "2 Hier könnte ein Text stehen für Sie",
+                },
+                {
+                  image: require("../assets/test.jpg"),
+                  text: "3 Hier könnte ein Text stehen für Sie",
+                },
+                {
+                  image: require("../assets/test.jpg"),
+                  text: "4 Hier könnte ein Text stehen für Sie",
+                },
+                {
+                  image: require("../assets/test.jpg"),
+                  text: "5 Hier könnte ein Text stehen für Sie",
+                },
               ]}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity
+              renderItem={({ item }) => (
+                <View
+                  style={{
+                    backgroundColor: "floralwhite",
+                    borderRadius: 5,
+                    height: 250,
+                    padding: 5,
+                    marginLeft: 5,
+                    marginRight: 5,
+                  }}
+                >
+                  <Image
+                    style={{
+                      flex: 1,
+                    }}
+                    source={item.image}
+                  />
+                </View>
+                /*                 <TouchableOpacity
                   onPress={() => console.log("GEILOMEILO")}
                   style={{
                     flex: 1,
@@ -523,15 +556,27 @@ function LandingPage() {
                     marginTop: 20,
                   }}
                 >
+                  <EscendiaText>WTFFFF</EscendiaText>
                   <Image
                     style={{
                       flex: 1,
                       width: 800,
                       height: 600,
                     }}
-                    source={item}
+                    source={item.image}
                   />
-                  <View
+
+                  <EscendiaText
+                    style={{
+                      color: colors.escendia_dark,
+                      fontWeight: "600",
+                      fontSize: 26,
+                      lineHeight: 30,
+                    }}
+                  >
+                    {item.text}
+                  </EscendiaText>
+                                     <View
                     style={{
                       position: "absolute",
                       bottom: 20,
@@ -547,10 +592,10 @@ function LandingPage() {
                         lineHeight: 30,
                       }}
                     >
-                      Hier könnte ein Text stehen für Sie
+                      {item.text}
                     </EscendiaText>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */
               )}
             />
           </View>
@@ -617,14 +662,15 @@ function LandingPage() {
         </EscendiaText>
         <View style={{ flex: 1, paddingBottom: 50, paddingTop: 20 }}>
           <EscendiaCarousel
-            height={600}
-            width={800}
+            itemWidth={600}
+            sliderWidth={800}
             data={[
-              require("../assets/test.jpg"),
-              require("../assets/test.jpg"),
-              require("../assets/test.jpg"),
+              {
+                image: require("../assets/test.jpg"),
+                text: "Hier könnte ein Text stehen für Sie",
+              },
             ]}
-            renderItem={({ item, index }) => (
+            renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => console.log("GEILOMEILO")}
                 style={{
@@ -640,7 +686,7 @@ function LandingPage() {
                     width: 800,
                     height: 600,
                   }}
-                  source={item}
+                  source={item.image}
                 />
                 <View
                   style={{
@@ -658,7 +704,7 @@ function LandingPage() {
                       lineHeight: 30,
                     }}
                   >
-                    Hier könnte ein Text stehen für Sie
+                    {item.text}
                   </EscendiaText>
                 </View>
               </TouchableOpacity>
@@ -775,7 +821,6 @@ function LandingPage() {
   const ref = useRef<ICarouselInstance>(null);
   const onPrevPress = () => ref.current?.prev();
   const onNextPress = () => ref.current?.next();
-  const ref2 = useRef<Carousel<any>>(null);
 
   const setSliderPage = (event: any) => {
     const { currentPage } = sliderState;
@@ -849,71 +894,8 @@ function LandingPage() {
             source={require("../assets/winebottle.png")}
           />
         </View>
-        {/*         {Platform.OS == "web" ? <FeatureLine /> : <FeatureLineMobile />}
-         */}
+        {Platform.OS == "web" ? <FeatureLine /> : <FeatureLineMobile />}
 
-        <View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
-          <View
-            style={{ backgroundColor: "pink", alignItems: "center" }}
-          >
-            <ACarousel
-              ref={ref2}
-              vertical={false}
-              activeSlideAlignment={"center"}
-              sliderWidth={400}
-              itemWidth={300}
-              layout={"default"}
-              useScrollView={false}
-              inactiveSlideScale={0.9}
-              inactiveSlideOpacity={0.3}
-              firstItem={1}
-              enableSnap={true}
-              data={[
-                { title: "title1", text: "text" },
-                { title: "title2", text: "text" },
-                { title: "title3", text: "text" },
-              ]}
-              renderItem={({ item }: { item: any }) => {
-                return (
-                  <View
-                    style={{
-                      backgroundColor: "floralwhite",
-                      borderRadius: 5,
-                      height: 250,
-                      padding: 30,
-                      marginLeft: 5,
-                      marginRight: 5,
-                    }}
-                  >
-                    <Text style={{ fontSize: 30 }}>{item.title}</Text>
-                    <Text>{item.text}</Text>
-                  </View>
-                );
-              }}
-            />
-          </View>
-          <TouchableOpacity
-            style={{ backgroundColor: "blue", position: "absolute", left: 345 }}
-            onPress={() => {
-              ref2.current?.snapToItem(0);
-            }}
-          >
-            <Text>{"<"}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ backgroundColor: "grey", position: "absolute", left: 40 }}
-            onPress={() => {
-              ref2.current?.snapToItem(2);
-            }}
-          >
-            <Text>{">"}</Text>
-          </TouchableOpacity>
-        </View>
         {Footer({})}
       </ScrollView>
     </SafeAreaView>

@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import i18n from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
 import LandingPage from "./src/pages/LandingPage";
+import TestPage from "./src/pages/TestPage";
+
 import { de, en } from "./src/services/localization/localizations";
 import React, { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
@@ -35,7 +37,7 @@ export default function App() {
     <NavigationContainer>
       {fontsLoaded ? (
         <Stack.Navigator initialRouteName="LandingPage">
-          <Stack.Screen name="LandingPage" component={LandingPage} />
+          <Stack.Screen name="LandingPage" component={TestPage} />
         </Stack.Navigator>
       ) : null}
     </NavigationContainer>
