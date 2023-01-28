@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { colors } from "../services/styling/styles";
 
+
 interface EscendiaTextProps {
   fontFamily?: string;
   children: React.ReactNode;
