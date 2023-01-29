@@ -1,37 +1,29 @@
 import { useNavigation } from "@react-navigation/native";
-import { MutableRefObject, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import {
-  Text,
-  View,
-  Button,
   Dimensions,
   Image,
+  Linking,
   Platform,
   StyleSheet,
-  TextInput,
-  ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  GestureResponderEvent,
+  View,
 } from "react-native";
-import { colors } from "../services/styling/styles";
-import LeafIcon from "../components/icons/LeafIcon";
+import EscendiaCarousel from "../components/EscendiaCarousel";
+import EscendiaText from "../components/EscendiaText";
 import AppleIcon from "../components/icons/AppleIcon";
+import FacebookIcon from "../components/icons/FacebookIcon";
 import GoogleIcon from "../components/icons/GoogleIcon";
 import InstagramIcon from "../components/icons/InstagramIcon";
-import FacebookIcon from "../components/icons/FacebookIcon";
+import LeafIcon from "../components/icons/LeafIcon";
 import TwitterIcon from "../components/icons/TwitterIcon";
-import EscendiaText from "../components/EscendiaText";
-import EscendiaInput from "../components/EscendiaInput";
-import EscendiaCarousel from "../components/EscendiaCarousel";
+import { colors } from "../services/styling/styles";
 
-import { SafeAreaView } from "react-native-safe-area-context";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { useRef } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { ICarouselInstance } from "react-native-reanimated-carousel";
+import EscendiaDefaultPage from "@components/EscendiaDefaultPage";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ICarouselInstance } from "react-native-reanimated-carousel";
+import EscendiaButton from "@components/EscendiaButton";
 
 function LandingPage() {
   const navigation = useNavigation();
@@ -41,140 +33,6 @@ function LandingPage() {
       headerShown: false,
     });
   }, []);
-
-  function HeaderImage(props: any) {
-    return (
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          position: "absolute",
-          alignItems: "flex-end",
-        }}
-      >
-        <LeafIcon
-          width={indexLeafTop}
-          height={indexLeafTop}
-          fill={colors.escendia_img_background_light}
-        />
-      </View>
-    );
-  }
-
-  function Header(props: any) {
-    return (
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <View
-          style={{
-            paddingLeft: 20,
-            flexDirection: "column",
-          }}
-        >
-          <View style={{ width: 40 }}>
-            <View
-              style={{
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-                margin: 5,
-              }}
-            />
-            <View
-              style={{
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-                margin: 5,
-                width: 20,
-              }}
-            />
-            <View
-              style={{
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-                margin: 5,
-              }}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            flex: Platform.OS == "web" ? 6 : 1,
-            alignItems: Platform.OS == "web" ? "stretch" : "center",
-          }}
-        >
-          <Image
-            style={{
-              resizeMode: "contain",
-              height: 150,
-            }}
-            source={require("../assets/logo.png")}
-          />
-        </View>
-        <EscendiaInput
-          style={{
-            flex: Platform.OS == "web" ? 4 : 3,
-            borderBottomWidth: 1,
-            marginRight: 50,
-          }}
-          placeholder="Suche..."
-          iconName="text-search"
-        />
-        {Platform.OS == "web" ? (
-          <View
-            style={{
-              flexDirection: "row-reverse",
-              justifyContent: "flex-end",
-              paddingRight: 50,
-            }}
-          >
-            <EscendiaText onPress={() => console.log("TEST")}>
-              {t("escendia_login")}
-            </EscendiaText>
-            <EscendiaText
-              style={{
-                marginLeft: 5,
-                marginRight: 5,
-              }}
-            >
-              |
-            </EscendiaText>
-            <EscendiaText>{t("escendia_register")}</EscendiaText>
-          </View>
-        ) : null}
-      </View>
-    );
-  }
-
-  function HeadLine(props: any) {
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <EscendiaText
-          fontFamily="Simply Conception"
-          color={colors.escendia_img_background_light}
-          style={{
-            fontSize: Platform.OS == "web" ? 250 : 75,
-            fontWeight: "600",
-            marginHorizontal: Platform.OS == "web" ? -200 : -60,
-          }}
-        >
-          {t("escendia_name")}
-        </EscendiaText>
-        <EscendiaText
-          style={{
-            fontSize: Platform.OS == "web" ? 100 : 35,
-            fontWeight: "600",
-            marginHorizontal: Platform.OS == "web" ? 0 : -50,
-          }}
-        >
-          {t("escendia_name")}
-        </EscendiaText>
-      </View>
-    );
-  }
 
   function HeaderText(props: any) {
     return (
@@ -194,7 +52,7 @@ function LandingPage() {
               lineHeight: 34,
             }}
           >
-            {t("escendia_landingpage_text")}
+            {t("Page_Landing_MainText")}
           </EscendiaText>
           <View
             style={{
@@ -220,7 +78,7 @@ function LandingPage() {
                     fontWeight: "300",
                   }}
                 >
-                  {t("escendia_available")}
+                  {t("Page_Landing_Available")}
                 </EscendiaText>
                 <EscendiaText
                   color={colors.escendia_light}
@@ -229,11 +87,16 @@ function LandingPage() {
                     fontSize: 24,
                   }}
                 >
-                  {t("escendia_androidstore")}
+                  {t("Page_Landing_AndroidStore")}
                 </EscendiaText>
               </View>
             </View>
-            <View style={{ paddingLeft: 10 }}>
+            <EscendiaButton
+              style={{ paddingLeft: 10 }}
+              onPress={() => {
+                console.log("PRESS");
+              }}
+            >
               <View
                 style={{
                   flexDirection: "row",
@@ -251,7 +114,7 @@ function LandingPage() {
                       fontWeight: "300",
                     }}
                   >
-                    {t("escendia_available")}
+                    {t("Page_Landing_Available")}
                   </EscendiaText>
                   <EscendiaText
                     color={colors.escendia_light}
@@ -260,11 +123,11 @@ function LandingPage() {
                       fontSize: 24,
                     }}
                   >
-                    {t("escendia_appstore")}
+                    {t("Page_Landing_IOSStore")}
                   </EscendiaText>
                 </View>
               </View>
-            </View>
+            </EscendiaButton>
           </View>
         </View>
         <SocialMediaSide />
@@ -302,7 +165,7 @@ function LandingPage() {
                   fontWeight: "300",
                 }}
               >
-                {t("escendia_available")}
+                {t("Page_Landing_Available")}
               </EscendiaText>
               <EscendiaText
                 color={colors.escendia_light}
@@ -311,7 +174,7 @@ function LandingPage() {
                   fontSize: 12,
                 }}
               >
-                {t("escendia_appstore")}
+                {t("Page_Landing_IOSStore")}
               </EscendiaText>
             </View>
           </View>
@@ -334,7 +197,7 @@ function LandingPage() {
                     fontWeight: "300",
                   }}
                 >
-                  {t("escendia_available")}
+                  {t("Page_Landing_Available")}
                 </EscendiaText>
                 <EscendiaText
                   color={colors.escendia_light}
@@ -343,7 +206,7 @@ function LandingPage() {
                     fontSize: 12,
                   }}
                 >
-                  {t("escendia_androidstore")}
+                  {t("Page_Landing_AndroidStore")}
                 </EscendiaText>
               </View>
             </View>
@@ -365,10 +228,18 @@ function LandingPage() {
         }}
       >
         <View style={{ flexDirection: "column", alignItems: "center" }}>
-          <View style={{ flex: 1, padding: 10 }}>
+          <TouchableOpacity
+            style={{ flex: 1, padding: 10 }}
+            onPress={() => {
+              Linking.openURL("http://www.facebook.de");
+            }}
+          >
             <FacebookIcon width={23} fill={colors.escendia_dark} />
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL("http://www.twitter.de");
+            }}
             style={{
               flex: 1,
               borderRadius: 1,
@@ -381,42 +252,15 @@ function LandingPage() {
             }}
           >
             <TwitterIcon width={28} fill={colors.escendia_dark} />
-          </View>
-          <View style={{ flex: 1, padding: 10 }}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ flex: 1, padding: 10 }}
+            onPress={() => {
+              Linking.openURL("http://www.instagram.de");
+            }}
+          >
             <InstagramIcon width={28} fill={colors.escendia_dark} />
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  function SocialMediaRow(props: any) {
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 10,
-        }}
-      >
-        <View style={{ flex: 1, padding: 5 }}>
-          <FacebookIcon height={24} fill={colors.escendia_dark} />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            borderRadius: 1,
-            borderLeftWidth: 1,
-            borderRightWidth: 1,
-            borderStyle: "dashed",
-            borderColor: colors.escendia_dark,
-            padding: 5,
-          }}
-        >
-          <TwitterIcon height={24} fill={colors.escendia_dark} />
-        </View>
-        <View style={{ flex: 1, padding: 5 }}>
-          <InstagramIcon height={24} fill={colors.escendia_dark} />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -469,7 +313,7 @@ function LandingPage() {
                 lineHeight: 24,
               }}
             >
-              {t("escendia_landingpage_features")}
+              {t("Page_Landing_Feature_Text")}
             </EscendiaText>
             <View
               style={{
@@ -547,55 +391,6 @@ function LandingPage() {
                     source={item.image}
                   />
                 </View>
-                /*                 <TouchableOpacity
-                  onPress={() => console.log("GEILOMEILO")}
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 20,
-                  }}
-                >
-                  <EscendiaText>WTFFFF</EscendiaText>
-                  <Image
-                    style={{
-                      flex: 1,
-                      width: 800,
-                      height: 600,
-                    }}
-                    source={item.image}
-                  />
-
-                  <EscendiaText
-                    style={{
-                      color: colors.escendia_dark,
-                      fontWeight: "600",
-                      fontSize: 26,
-                      lineHeight: 30,
-                    }}
-                  >
-                    {item.text}
-                  </EscendiaText>
-                                     <View
-                    style={{
-                      position: "absolute",
-                      bottom: 20,
-                      backgroundColor: colors.escendia_light,
-                      padding: 20,
-                    }}
-                  >
-                    <EscendiaText
-                      style={{
-                        color: colors.escendia_dark,
-                        fontWeight: "600",
-                        fontSize: 26,
-                        lineHeight: 30,
-                      }}
-                    >
-                      {item.text}
-                    </EscendiaText>
-                  </View>
-                </TouchableOpacity> */
               )}
             />
           </View>
@@ -715,109 +510,6 @@ function LandingPage() {
     );
   }
 
-  function Footer(props: any) {
-    return (
-      <View
-        style={{
-          backgroundColor: colors.escendia_light,
-        }}
-      >
-        <View style={{ paddingTop: 20 }}>
-          <EscendiaText style={{ textAlign: "center" }}>
-            {t("escendia_landingpage_footertext")}
-          </EscendiaText>
-        </View>
-        <View
-          style={{
-            paddingTop: 20,
-            flex: 1,
-            flexDirection: Platform.OS === "web" ? "row" : "column",
-          }}
-        >
-          <View
-            style={{
-              flex: 2,
-              alignItems: "center",
-            }}
-          >
-            <EscendiaText
-              style={{
-                fontWeight: "bold",
-                paddingBottom: 10,
-              }}
-            >
-              {t("escendia_service")}
-            </EscendiaText>
-            <EscendiaText>{t("escendia_agb")}</EscendiaText>
-            <EscendiaText>{t("escendia_privacy")}</EscendiaText>
-            <EscendiaText>{t("escendia_cookiesetting")}</EscendiaText>
-            <EscendiaText>{t("escendia_payment")}</EscendiaText>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: Platform.OS === "web" ? undefined : "center",
-            }}
-          >
-            <Image
-              style={{
-                resizeMode: "contain",
-                height: 150,
-              }}
-              source={require("../assets/logo.png")}
-            />
-          </View>
-          <View style={{ flex: 2, alignItems: "center" }}>
-            <EscendiaText
-              style={{
-                fontWeight: "bold",
-                paddingBottom: 10,
-              }}
-            >
-              {t("escendia_company")}
-            </EscendiaText>
-            <EscendiaText>{t("escendia_impressum")}</EscendiaText>
-            <EscendiaText>{t("escendia_aboutus")}</EscendiaText>
-            <EscendiaText>{t("escendia_contactus")}</EscendiaText>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            paddingTop: 20,
-            paddingBottom: 20,
-            borderTopColor: colors.escendia_dark,
-            borderTopWidth: 1,
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-            }}
-          >
-            <EscendiaText>Copyright © 2023. All rights reserved.</EscendiaText>
-          </View>
-          {SocialMediaRow({})}
-        </View>
-      </View>
-    );
-  }
-
-  const indexLeafTop = Platform.OS == "web" ? 750 : 250;
-  const lineHeader = Platform.OS == "web" ? 400 : 100;
-  const lineHeaderHeight = Platform.OS == "web" ? 300 : 50;
-
-  const bottle1Top = Platform.OS == "web" ? 270 : 210;
-  const bottle1Right = Platform.OS == "web" ? 500 : 0;
-  const bottle1Left = Platform.OS == "web" ? 0 : -180;
-  const bottle1Height = Platform.OS == "web" ? 800 : 200;
-
-  const bottle2Top = Platform.OS == "web" ? 210 : 190;
-  const bottle2Right = Platform.OS == "web" ? 0 : 0;
-  const bottle2Left = Platform.OS == "web" ? 0 : -110;
-  const bottle2Height = Platform.OS == "web" ? 800 : 200;
-
   const ref = useRef<ICarouselInstance>(null);
   const onPrevPress = () => ref.current?.prev();
   const onNextPress = () => ref.current?.next();
@@ -836,69 +528,90 @@ function LandingPage() {
   };
 
   const [sliderState, setSliderState] = useState({ currentPage: 0 });
-  const { width, height } = Dimensions.get("window");
+  const { width, height, scale } = Dimensions.get("screen");
 
   const SLIDER_WIDTH = Dimensions.get("window").width;
   const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
   const ITEM_HEIGHT = Math.round((ITEM_WIDTH * 3) / 4);
 
-  return (
-    <SafeAreaView style={{ backgroundColor: colors.escendia_light, flex: 1 }}>
-      <ScrollView>
-        {HeaderImage({})}
-        {Header({})}
-        {HeadLine({})}
-        {Platform.OS == "web" ? <HeaderText /> : <HeaderTextMobile />}
-        <View
-          style={{
-            backgroundColor: "black",
-            borderBottomWidth: lineHeaderHeight,
-            borderBottomColor: colors.escendia_dark,
-            borderLeftWidth: Dimensions.get("window").width / 2 - lineHeader,
-            borderRightWidth: Dimensions.get("window").width / 2 + lineHeader,
-            borderLeftColor: colors.escendia_light,
-            borderRightColor: colors.escendia_light,
-          }}
-        ></View>
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            position: "absolute",
-            top: bottle1Top,
-            right: bottle1Right,
-            left: bottle1Left,
-          }}
-        >
-          <Image
-            style={{
-              resizeMode: "contain",
-              height: bottle1Height,
-            }}
-            source={require("../assets/winebottle.png")}
-          />
-        </View>
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            position: "absolute",
-            top: bottle2Top,
-            right: bottle2Right,
-            left: bottle2Left,
-          }}
-        >
-          <Image
-            style={{
-              resizeMode: "contain",
-              height: bottle2Height,
-            }}
-            source={require("../assets/winebottle.png")}
-          />
-        </View>
-        {Platform.OS == "web" ? <FeatureLine /> : <FeatureLineMobile />}
+  const indexLeafTop = Platform.OS == "web" ? calculate("height", 750) : 250;
 
-        {Footer({})}
-      </ScrollView>
-    </SafeAreaView>
+  const bottle1Top = Platform.OS == "web" ? calculate("height", 350) : 115;
+  const bottle1Right = Platform.OS == "web" ? calculate("width", 300) : 0;
+  const bottle1Left = Platform.OS == "web" ? calculate("width", 400) : -180;
+  const bottle1Width = Platform.OS == "web" ? 300 : 200;
+  const bottle1Height = Platform.OS == "web" ? 600 : 200;
+
+  const bottle2Top = Platform.OS == "web" ? calculate("height", 270) : 100;
+  const bottle2Right = Platform.OS == "web" ? 0 : 0;
+  const bottle2Left = Platform.OS == "web" ? calculate("width", 600) : -110;
+  const bottle2Width = Platform.OS == "web" ? 300 : 200;
+  const bottle2Height = Platform.OS == "web" ? 600 : 200;
+
+  //Feault 1920 / 1080
+
+  function calculate(type: "height" | "width", value: number) {
+    let currentValue =
+      type === "height"
+        ? Dimensions.get("screen").height
+        : Dimensions.get("screen").width;
+    let defaultValue = type === "width" ? 1920 : 1080;
+    console.log(currentValue, defaultValue);
+    return (currentValue / defaultValue) * value;
+  }
+
+  console.log();
+
+  return (
+    <EscendiaDefaultPage
+      title={"Name"}
+      pyramideStyle={"left"}
+      childrenHeaderBelowPyramide={
+        <>
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              position: "absolute",
+              top: bottle1Top,
+              right: bottle1Right,
+              left: bottle1Left,
+              width: bottle1Width,
+            }}
+          >
+            <Image
+              style={{
+                resizeMode: "stretch",
+                height: bottle1Height,
+              }}
+              source={require("../assets/winebottle_1.png")}
+            />
+          </View>
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              position: "absolute",
+              top: bottle2Top,
+              right: bottle2Right,
+              left: bottle2Left,
+              width: bottle2Width,
+            }}
+          >
+            <Image
+              style={{
+                resizeMode: "stretch",
+                height: bottle2Height,
+              }}
+              source={require("../assets/winebottle_1.png")}
+            />
+          </View>
+        </>
+      }
+      childrenHeader={
+        Platform.OS == "web" ? <HeaderText /> : <HeaderTextMobile />
+      }
+    >
+      {Platform.OS == "web" ? <FeatureLine /> : <FeatureLineMobile />}
+    </EscendiaDefaultPage>
   );
 }
 
