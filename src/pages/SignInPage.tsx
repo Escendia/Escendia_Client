@@ -43,7 +43,6 @@ function SignInPage() {
     <EscendiaDefaultPage title={"Page_SignIn_Title"}>
       <View
         style={{
-          backgroundColor: colors.escendia_dark,
           flexDirection: "row",
         }}
       >

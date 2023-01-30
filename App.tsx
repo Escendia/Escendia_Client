@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import "react-native-gesture-handler";
 import "react-native-reanimated";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -37,7 +38,7 @@ export type DefaultStackParams = {
   SingUp: undefined;
 };
 
-const DefaultStack = createNativeStackNavigator<DefaultStackParams>();
+const DefaultStack = createDrawerNavigator<DefaultStackParams>();
 
 const DefaultScreenStack = () => {
   return (
@@ -45,7 +46,9 @@ const DefaultScreenStack = () => {
       initialRouteName="Landing"
       screenOptions={{
         headerShown: false,
+        
       }}
+      useLegacyImplementation={false}
     >
       <DefaultStack.Screen
         name="Landing"

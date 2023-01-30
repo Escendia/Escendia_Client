@@ -3,9 +3,16 @@ import { useUserStore } from "@services/store/store";
 import { DefaultStackParams } from "App";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Image, Platform, StyleSheet, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  Dimensions,
+  Image,
+  Platform,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { colors } from "../services/styling/styles";
+import EscendiaButton from "./EscendiaButton";
 import EscendiaInput from "./EscendiaInput";
 import EscendiaText from "./EscendiaText";
 import LeafIcon from "./icons/LeafIcon";
@@ -39,7 +46,8 @@ function HeaderImage(props: any) {
 }
 
 function Header(props: any) {
-  const { navigate }: NavigationProp<DefaultStackParams> = useNavigation();
+  const { navigate, dispatch }: NavigationProp<DefaultStackParams> =
+    useNavigation();
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -49,7 +57,12 @@ function Header(props: any) {
           flexDirection: "column",
         }}
       >
-        <View style={{ width: 40 }}>
+        {/*         <TouchableOpacity
+          style={{ width: 40 }}
+          onPress={() => {
+            console.log("TEST");
+          }}
+        >
           <View
             style={{
               borderBottomColor: "black",
@@ -72,7 +85,7 @@ function Header(props: any) {
               margin: 5,
             }}
           />
-        </View>
+        </TouchableOpacity> */}
       </View>
       <View
         style={{

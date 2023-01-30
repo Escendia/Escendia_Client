@@ -26,6 +26,7 @@ const de = {
   Page_Landing_MainText:
     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
 
+  Page_Landing_Feature_Title: "Feature",
   Page_Landing_Feature_Text:
     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
 
@@ -34,6 +35,9 @@ const de = {
   Page_Landing_IOSStore: "App Store",
 
   Page_SignIn_Title: "Anmelden",
+
+
+  Page_Landing_Feature_CommingSoon:"Kommt bald..."
 };
 
 const en = {

@@ -16,7 +16,7 @@ interface EscendiaButtonProps {
   style?: ViewStyle;
   onPress?: (event: GestureResponderEvent) => void;
   iconRight?: React.ReactNode;
-  iconLeft?:React.ReactNode;
+  iconLeft?: React.ReactNode;
 }
 
 const EscendiaButton = ({
@@ -40,11 +40,11 @@ const EscendiaButton = ({
     }}
     onPress={onPress}
   >
-    <View style={{paddingRight:5}}>{iconLeft}</View>
+    <View style={{ paddingRight: 5 }}>{iconLeft}</View>
     <EscendiaText style={{ color: colors.escendia_light, ...textStyle }}>
       {children}
     </EscendiaText>
-    <View style={{paddingLeft:5}}>{iconRight}</View>
+    <View style={{ paddingLeft: 5 }}>{iconRight}</View>
   </TouchableOpacity>
 );
 
