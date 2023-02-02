@@ -23,8 +23,8 @@ function ImageView(props: any) {
       <Image
         style={{
           //resizeMode: "contain",
-          height: calculate("height", 550,550),
-          width: calculate("width", 450,450),
+          height: calculate("height", 550, 550),
+          width: calculate("width", 450, 450),
           margin: 50,
         }}
         source={require("../assets/test.jpg")}
@@ -33,27 +33,48 @@ function ImageView(props: any) {
   );
 }
 
-function SignInPage() {
+function SignUpPage() {
+  function validatePassword(password:string, passwordconfirm:string) {
+    var minNumberofChars = 6;
+    var maxNumberofChars = 16;
+    var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    if (password.length<3) {
+      setPasswordError("");
+      return;
+    }
+    if (password != passwordconfirm) {
+      setPasswordError(t("Page_SignUp_PasswordDifference"));
+      return;
+    }
+    if (
+      password.length < minNumberofChars ||
+      password.length > maxNumberofChars
+    ) {
+      setPasswordError(t("Page_SignUp_PasswordLength"));
+      return;
+    }
+    if (!regularExpression.test(password)) {
+      setPasswordError(t("Page_SignUp_LetterReq"));
+      return;
+    }
+    setPasswordError("");
+  }
   const navigation = useNavigation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
-    
-    if(email.length>10){
-      setButtonDisabled(false)
-    }else{
-      setButtonDisabled(true)
-    }
- 
-  }, [email])
-  
+    validatePassword(password, passwordConfirm);
+  }, [password, passwordConfirm]);
+
   const { t } = useTranslation();
 
   return (
-    <EscendiaDefaultPage title={"Page_SignIn_Title"}>
+    <EscendiaDefaultPage title={"Page_SignUp_Title"}>
       <View
         style={{
           flexDirection: "row",
@@ -76,61 +97,89 @@ function SignInPage() {
             }}
           >
             <EscendiaInput
-            outlineStyle={{
-              borderColor: colors.escendia_text_faded
-            }}
+              outlineStyle={{
+                borderColor: colors.escendia_text_faded,
+              }}
               style={{
                 borderColor: "black",
                 marginBottom: 15,
               }}
-              placeholder={t("Page_SignIn_Email")}
-              onChangeText={(e) => {setEmail(e)}}
+              placeholder={t("Page_SignUp_Username")}
+              onChangeText={(e) => {
+                setEmail(e);
+              }}
+            />
+            <EscendiaInput
+              outlineStyle={{
+                borderColor: colors.escendia_text_faded,
+              }}
+              style={{
+                borderColor: "black",
+                marginBottom: 15,
+              }}
+              placeholder={t("Page_SignUp_Email")}
+              onChangeText={(e) => {
+                setEmail(e);
+              }}
             />
 
             <EscendiaInput
-             outlineStyle={{
-              borderColor: colors.escendia_text_faded
-            }}
+              outlineStyle={{
+                borderColor: colors.escendia_text_faded,
+              }}
               style={{
                 borderColor: colors.escendia_light,
                 marginBottom: 5,
               }}
-              placeholder={t("Page_SignIn_Password")}
-              onChangeText={(e) => {setPassword(e)}}
+              placeholder={t("Page_SignUp_Password")}
+              onChangeText={(e) => {
+                setPassword(e);
+              }}
+            />
+            <EscendiaInput
+              outlineStyle={{
+                borderColor: colors.escendia_text_faded,
+              }}
+              style={{
+                borderColor: "black",
+                marginBottom: 15,
+              }}
+              placeholder={t("Page_SignUp_Password_Confirm")}
+              onChangeText={(e) => {
+                setPasswordConfirm(e);
+              }}
             />
             <EscendiaText
               style={{
-                fontSize: 25,
+                fontSize: 15,
                 fontWeight: "100",
                 alignSelf: "flex-end",
                 color: colors.escendia_light,
                 marginBottom: 15,
               }}
-              onPress={() => {}}
+              //onPress={() => {}}
             >
-              {t("Page_SignIn_PasswordForget")}
+              {passwordError}
             </EscendiaText>
+
             <EscendiaButton
               disabled={buttonDisabled}
               style={{
-                padding:15,
+                padding: 15,
                 backgroundColor: colors.escendia_light,
                 alignItems: "center",
-                
               }}
               textStyle={{ color: colors.escendia_dark }}
-              onPress={()=>{}}
+              onPress={() => {}}
             >
-              {t("Page_SignIn_SignIn")}
-              
+              {t("Page_SignUp_SignUp")}
             </EscendiaButton>
             <View
               style={{
                 backgroundColor: "transparent",
                 flexDirection: "row",
                 marginTop: 40,
-                marginBottom:40
-                
+                marginBottom: 40,
               }}
             >
               <View
@@ -140,7 +189,6 @@ function SignInPage() {
                   borderBottomColor: colors.escendia_text_faded,
                   borderBottomWidth: 1,
                   marginVertical: 15,
-
                 }}
               ></View>
               <EscendiaText
@@ -149,10 +197,8 @@ function SignInPage() {
                   fontWeight: "bold",
                   alignSelf: "center",
                   color: colors.escendia_light,
-                  paddingRight:10,
-                  paddingLeft:10,
-                  
-
+                  paddingRight: 10,
+                  paddingLeft: 10,
                 }}
               >
                 {t("Page_SignIn_Or")}
@@ -164,7 +210,6 @@ function SignInPage() {
                   borderBottomColor: colors.escendia_text_faded,
                   borderBottomWidth: 1,
                   marginVertical: 15,
-                  
                 }}
               ></View>
             </View>
@@ -172,11 +217,9 @@ function SignInPage() {
               style={{
                 backgroundColor: "transparent",
                 alignItems: "center",
-                padding:15,
-                borderColor:colors.escendia_text_faded
-
+                padding: 15,
+                borderColor: colors.escendia_text_faded,
               }}
-
             >
               {t("Page_SignIn_Google")}
             </EscendiaButton>
@@ -188,4 +231,4 @@ function SignInPage() {
   );
 }
 
-export default SignInPage;
+export default SignUpPage;

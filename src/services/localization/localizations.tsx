@@ -38,6 +38,20 @@ const de = {
   Page_SignIn_Title: "Anmelden",
   Page_SignIn_Password : "Passwort",
   Page_SignIn_PasswordForget: "Passwort vergessen?",
+  Page_SignIn_Email: "E-mail",
+  Page_SignIn_SignIn: "Anmelden",
+  Page_SignIn_Or: "Oder",
+  Page_SignIn_Google: "Weiter mit Google",
+
+  Page_SignUp_Title: "Account Erstellen",
+  Page_SignUp_Email: "E-Mail",
+  Page_SignUp_SignUp: "Erstellen",
+  Page_SignUp_Password: "Passwort",
+  Page_SignUp_Username: "Benutzername",
+  Page_SignUp_Password_Confirm: "Passwort wiederholen",
+  Page_SignUp_PasswordDifference:"Die beiden Passwörter müssen übereinstimmen",
+  Page_SignUp_PasswordLength:"Die Passwortlänge muss zwischen 6-16 Zeichen liegen",
+  Page_SignUp_LetterReq:"Das Passwort muss mindestens einen Großbuchstaben,einen Kleinbuchstaben,eine Zahl und ein Sonderzeichen enthalten",
 
   Page_Landing_Feature_CommingSoon:"Kommt bald..."
 };
