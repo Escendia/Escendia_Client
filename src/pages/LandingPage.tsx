@@ -29,11 +29,7 @@ import { calculate } from "@services/functions";
 function LandingPage() {
   const navigation = useNavigation();
   const { t } = useTranslation();
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
+
 
   function HeaderText(props: any) {
     return (

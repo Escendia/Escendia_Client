@@ -17,6 +17,7 @@ interface EscendiaButtonProps {
   onPress?: (event: GestureResponderEvent) => void;
   iconRight?: React.ReactNode;
   iconLeft?: React.ReactNode;
+  disabled?:boolean;
 }
 
 const EscendiaButton = ({
@@ -26,6 +27,7 @@ const EscendiaButton = ({
   textStyle,
   iconRight,
   iconLeft,
+  disabled,
   ...rest
 }: EscendiaButtonProps) => (
   <TouchableOpacity
@@ -39,6 +41,7 @@ const EscendiaButton = ({
       ...style,
     }}
     onPress={onPress}
+    disabled={disabled}
   >
     <View style={{ paddingRight: 5 }}>{iconLeft}</View>
     <EscendiaText style={{ color: colors.escendia_light, ...textStyle }}>

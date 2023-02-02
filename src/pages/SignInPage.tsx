@@ -3,9 +3,11 @@ import EscendiaDefaultPage from "@components/EscendiaDefaultPage";
 import EscendiaInput from "@components/EscendiaInput";
 import EscendiaText from "@components/EscendiaText";
 import { useNavigation } from "@react-navigation/native";
+import { calculate } from "@services/functions";
 import { colors } from "@services/styling/styles";
-import React, { useLayoutEffect } from "react";
-import { Image, View } from "react-native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Alert, Image, View } from "react-native";
 
 function ImageView(props: any) {
   return (
@@ -20,8 +22,8 @@ function ImageView(props: any) {
       <Image
         style={{
           //resizeMode: "contain",
-          height: 350,
-          width: 250,
+          height: calculate("height", 350,350),
+          width: calculate("width", 250,250),
           margin: 50,
         }}
         source={require("../assets/test.jpg")}
@@ -33,11 +35,21 @@ function ImageView(props: any) {
 function SignInPage() {
   const navigation = useNavigation();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    
+    if(email.length>10){
+      setButtonDisabled(false)
+    }else{
+      setButtonDisabled(true)
+    }
+ 
+  }, [email])
+  
+  const { t } = useTranslation();
 
   return (
     <EscendiaDefaultPage title={"Page_SignIn_Title"}>
@@ -67,7 +79,8 @@ function SignInPage() {
                 borderColor: colors.escendia_light,
                 marginBottom: 15,
               }}
-              placeholder={"Email*"}
+              placeholder={t("Email")}
+              onChangeText={(e) => {setEmail(e)}}
             />
 
             <EscendiaInput
@@ -75,7 +88,8 @@ function SignInPage() {
                 borderColor: colors.escendia_light,
                 marginBottom: 5,
               }}
-              placeholder={"Passwort*"}
+              placeholder={t("Page_SignIn_Password")}
+              onChangeText={(e) => {setPassword(e)}}
             />
             <EscendiaText
               style={{
@@ -87,14 +101,16 @@ function SignInPage() {
               }}
               onPress={() => {}}
             >
-              Passwort vergessen?
+              {t("Page_SignIn_PasswordForget")}
             </EscendiaText>
             <EscendiaButton
+              disabled={buttonDisabled}
               style={{
                 backgroundColor: colors.escendia_light,
                 alignItems: "center",
               }}
               textStyle={{ color: colors.escendia_dark }}
+              onPress={()=>{}}
             >
               Anmelden
             </EscendiaButton>

@@ -1,6 +1,7 @@
+import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useUserStore } from "@services/store/store";
-import { DefaultStackParams } from "App";
+import { DefaultStackParams, RootStackParams } from "App";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -46,7 +47,7 @@ function HeaderImage(props: any) {
 }
 
 function Header(props: any) {
-  const { navigate, dispatch }: NavigationProp<DefaultStackParams> =
+  const { navigate, openDrawer }: DrawerNavigationProp<DefaultStackParams> =
     useNavigation();
 
   return (
@@ -57,10 +58,10 @@ function Header(props: any) {
           flexDirection: "column",
         }}
       >
-        {/*         <TouchableOpacity
+        <TouchableOpacity
           style={{ width: 40 }}
           onPress={() => {
-            console.log("TEST");
+            openDrawer();
           }}
         >
           <View
@@ -85,11 +86,12 @@ function Header(props: any) {
               margin: 5,
             }}
           />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
+      <View style={{ flex: Platform.OS == "web" ? 5 : 0 }}></View>
       <View
         style={{
-          flex: Platform.OS == "web" ? 15 : 1,
+          flex: Platform.OS == "web" ? 10 : 1,
           alignItems: Platform.OS == "web" ? "stretch" : "center",
         }}
       >

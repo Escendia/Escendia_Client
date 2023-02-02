@@ -1,5 +1,6 @@
 const de = {
   Name: "Escendia",
+  
   Page_Landing: "Hautpseite",
   Page_SingIn: "Anmelden",
   Page_SignUp: "Registrierung",
@@ -35,35 +36,14 @@ const de = {
   Page_Landing_IOSStore: "App Store",
 
   Page_SignIn_Title: "Anmelden",
-
+  Page_SignIn_Password : "Passwort",
+  Page_SignIn_PasswordForget: "Passwort vergessen?",
 
   Page_Landing_Feature_CommingSoon:"Kommt bald..."
 };
 
 const en = {
-  escendia_login: "Log In",
-  escendia_register: "Register",
-  escendia_name: "Escendia",
-  escendia_features: "Features",
-  escendia_service: "Service",
-  escendia_agb: "ABG",
-  escendia_privacy: "Privacy",
-  escendia_cookiesetting: "Cookie-Settings",
-  escendia_payment: "Payment methods",
-  escendia_company: "Company",
-  escendia_impressum: "Impressum",
-  escendia_aboutus: "About us",
-  escendia_contactus: "Contact us",
-  escendia_landingpage_text:
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
-  escendia_landingpage_features:
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
-  escendia_landingpage_footertext:
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
-  escendia_available: "Available On",
-  escendia_androidstore: "App Store",
-  escendia_appstore: "Play Store",
-  welcome: "Welcome",
+  Name: "Escendia",
 };
 
 export { de, en };
