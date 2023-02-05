@@ -1,10 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Platform, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { TouchableOpacity, View } from "react-native";
 import CarouselComponent, { Carousel } from "react-native-snap-carousel";
-import { colors } from "../services/styling/styles";
-import EscendiaText from "./EscendiaText";
-import LeftArrowIcon from "./icons/LeftArrowIcon";
-import RightArrowIcon from "./icons/RightArrowIcon";
+import { colors } from "../../services/styling/styles";
+import LeftArrowIcon from "../icons/LeftArrowIcon";
+import RightArrowIcon from "../icons/RightArrowIcon";
 
 interface EscendiaCarouselProps {
   data: any[];

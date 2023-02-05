@@ -1,35 +1,20 @@
-import { useNavigation } from "@react-navigation/native";
-import { useLayoutEffect } from "react";
-import {
-  Dimensions,
-  Image,
-  Linking,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import EscendiaCarousel from "../components/EscendiaCarousel";
-import EscendiaText from "../components/EscendiaText";
+import { Image, Linking, StyleSheet, View } from "react-native";
 import AppleIcon from "../components/icons/AppleIcon";
-import FacebookIcon from "../components/icons/FacebookIcon";
 import GoogleIcon from "../components/icons/GoogleIcon";
-import InstagramIcon from "../components/icons/InstagramIcon";
 import LeafIcon from "../components/icons/LeafIcon";
-import TwitterIcon from "../components/icons/TwitterIcon";
 import { colors } from "../services/styling/styles";
 
-import EscendiaDefaultPage from "@components/EscendiaDefaultPage";
-import { useRef, useState } from "react";
+import EscendiaButton from "@components/default/EscendiaButton";
+import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
+import EscendiaSocialMedia from "@components/default/EscendiaSocialMedia";
+import { calculate, isWeb } from "@services/functions";
 import { useTranslation } from "react-i18next";
-import { ICarouselInstance } from "react-native-reanimated-carousel";
-import EscendiaButton from "@components/EscendiaButton";
-import { calculate } from "@services/functions";
+
+import { Ionicons } from "@expo/vector-icons";
+import EscendiaText from "@components/default/EscendiaText";
 
 function LandingPage() {
-  const navigation = useNavigation();
   const { t } = useTranslation();
-
 
   function HeaderText(props: any) {
     return (
@@ -65,7 +50,11 @@ function LandingPage() {
               }}
             >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <AppleIcon width={30} fill={colors.escendia_light} />
+                <Ionicons
+                  size={50}
+                  color={colors.escendia_light}
+                  name="logo-google-playstore"
+                />
                 <View style={{ paddingLeft: 20 }}>
                   <EscendiaText
                     color={colors.escendia_light}
@@ -94,7 +83,11 @@ function LandingPage() {
               }}
             >
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <GoogleIcon width={30} fill={colors.escendia_light} />
+                <Ionicons
+                  size={50}
+                  color={colors.escendia_light}
+                  name="logo-apple-appstore"
+                />
                 <View style={{ paddingLeft: 20 }}>
                   <EscendiaText
                     color={colors.escendia_light}
@@ -118,7 +111,9 @@ function LandingPage() {
             </EscendiaButton>
           </View>
         </View>
-        <SocialMediaSide />
+        <View style={{ paddingRight: 50 }}>
+          <EscendiaSocialMedia size={30} color={colors.escendia_dark} />
+        </View>
       </View>
     );
   }
@@ -197,56 +192,6 @@ function LandingPage() {
             </View>
           </View>
         </EscendiaButton>
-      </View>
-    );
-  }
-
-  function SocialMediaSide(props: any) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          paddingRight: 50,
-          paddingTop: 200,
-        }}
-      >
-        <View style={{ flexDirection: "column", alignItems: "center" }}>
-          <TouchableOpacity
-            style={{ flex: 1, padding: 10 }}
-            onPress={() => {
-              Linking.openURL("http://www.facebook.de");
-            }}
-          >
-            <FacebookIcon width={23} fill={colors.escendia_dark} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL("http://www.twitter.de");
-            }}
-            style={{
-              flex: 1,
-              borderRadius: 1,
-              borderBottomWidth: 1,
-              borderTopWidth: 1,
-              borderStyle: "dashed",
-              borderColor: colors.escendia_dark,
-              paddingTop: 10,
-              paddingBottom: 3,
-            }}
-          >
-            <TwitterIcon width={28} fill={colors.escendia_dark} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ flex: 1, padding: 10 }}
-            onPress={() => {
-              Linking.openURL("http://www.instagram.de");
-            }}
-          >
-            <InstagramIcon width={28} fill={colors.escendia_dark} />
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -352,67 +297,18 @@ function LandingPage() {
         >
           {t("Page_Landing_Feature_CommingSoon")}
         </EscendiaText>
-        {/*           <EscendiaCarousel
-            itemWidth={600}
-            sliderWidth={800}
-            data={[
-              {
-                image: require("../assets/test.jpg"),
-                text: "Hier könnte ein Text stehen für Sie",
-              },
-            ]}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => console.log("GEILOMEILO")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 20,
-                }}
-              >
-                <Image
-                  style={{
-                    flex: 1,
-                    width: 800,
-                    height: 600,
-                  }}
-                  source={item.image}
-                />
-                <View
-                  style={{
-                    position: "absolute",
-                    bottom: 20,
-                    backgroundColor: colors.escendia_light,
-                    padding: 20,
-                  }}
-                >
-                  <EscendiaText
-                    style={{
-                      color: colors.escendia_dark,
-                      fontWeight: "600",
-                      fontSize: 26,
-                      lineHeight: 30,
-                    }}
-                  >
-                    {item.text}
-                  </EscendiaText>
-                </View>
-              </TouchableOpacity>
-            )}
-          /> */}
       </View>
     );
   }
 
   const indexLeafTop = calculate("height", 750, 0);
 
-  const bottle1Top = calculate("height", 350, 200);
+  const bottle1Top = calculate("height", 350, 170);
   const bottle1Left = calculate("width", 400, 0);
-  const bottleWidth = Platform.OS == "web" ? 300 : calculate("width", 0, 200);
-  const bottleHeight = Platform.OS == "web" ? 600 : calculate("height", 0, 200);
+  const bottleWidth = calculate("width", 300, 200);
+  const bottleHeight = calculate("height", 600, 200);
 
-  const bottle2Top = calculate("height", 270, 180);
+  const bottle2Top = calculate("height", 270, 150);
   const bottle2Left = calculate("width", 600, 60);
 
   return (
@@ -455,11 +351,9 @@ function LandingPage() {
           </View>
         </View>
       }
-      childrenHeader={
-        Platform.OS == "web" ? <HeaderText /> : <HeaderTextMobile />
-      }
+      childrenHeader={isWeb() ? <HeaderText /> : <HeaderTextMobile />}
     >
-      {Platform.OS == "web" ? <FeatureLine /> : <FeatureLineMobile />}
+      {isWeb() ? <FeatureLine /> : <FeatureLineMobile />}
     </EscendiaDefaultPage>
   );
 }

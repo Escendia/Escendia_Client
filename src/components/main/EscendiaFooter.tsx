@@ -1,73 +1,14 @@
-import React, { Children } from "react";
-import {
-  GestureResponderEvent,
-  Text as RNText,
-  TextStyle,
-  TouchableOpacity,
-  ViewStyle,
-  Platform,
-  StyleSheet,
-  View,
-  Image,
-  Dimensions,
-  Linking,
-} from "react-native";
-import { colors } from "../services/styling/styles";
-import EscendiaText from "./EscendiaText";
-import FacebookIcon from "./icons/FacebookIcon";
-import TwitterIcon from "./icons/TwitterIcon";
-import InstagramIcon from "./icons/InstagramIcon";
+import React from "react";
+import { Image, View } from "react-native";
+import { colors } from "../../services/styling/styles";
+import EscendiaText from "../default/EscendiaText";
 
-import EscendiaInput from "./EscendiaInput";
+import { isWeb } from "@services/functions";
 import { useTranslation } from "react-i18next";
+import EscendiaSocialMedia from "../default/EscendiaSocialMedia";
 
 interface EscendiaHeaderProps {
   children?: React.ReactNode;
-}
-
-function SocialMediaRow(props: any) {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 10,
-      }}
-    >
-      <TouchableOpacity
-        style={{ flex: 1, padding: 5 }}
-        onPress={() => {
-          Linking.openURL("http://www.facebook.de");
-        }}
-      >
-        <FacebookIcon height={24} fill={colors.escendia_dark} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          Linking.openURL("http://www.twitter.de");
-        }}
-        style={{
-          flex: 1,
-          borderRadius: 1,
-          borderLeftWidth: 1,
-          borderRightWidth: 1,
-          borderStyle: "dashed",
-          borderColor: colors.escendia_dark,
-          padding: 5,
-        }}
-      >
-        <TwitterIcon height={24} fill={colors.escendia_dark} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{ flex: 1, padding: 5 }}
-        onPress={() => {
-          Linking.openURL("http://www.instagram.de");
-        }}
-      >
-        <InstagramIcon height={24} fill={colors.escendia_dark} />
-      </TouchableOpacity>
-    </View>
-  );
 }
 
 const EscendiaFooter = ({ children, ...rest }: EscendiaHeaderProps) => {
@@ -88,7 +29,7 @@ const EscendiaFooter = ({ children, ...rest }: EscendiaHeaderProps) => {
         style={{
           paddingTop: 20,
           flex: 1,
-          flexDirection: Platform.OS === "web" ? "row" : "column",
+          flexDirection: isWeb() ? "row" : "column",
         }}
       >
         <View
@@ -113,7 +54,7 @@ const EscendiaFooter = ({ children, ...rest }: EscendiaHeaderProps) => {
         <View
           style={{
             flex: 1,
-            alignItems: Platform.OS === "web" ? undefined : "center",
+            alignItems: isWeb() ? undefined : "center",
           }}
         >
           <Image
@@ -121,7 +62,7 @@ const EscendiaFooter = ({ children, ...rest }: EscendiaHeaderProps) => {
               resizeMode: "contain",
               height: 150,
             }}
-            source={require("../assets/logo.png")}
+            source={require("../../assets/logo.png")}
           />
         </View>
         <View style={{ flex: 2, alignItems: "center" }}>
@@ -155,7 +96,13 @@ const EscendiaFooter = ({ children, ...rest }: EscendiaHeaderProps) => {
         >
           <EscendiaText>{t("Page_All_Footer_CopyRight")}</EscendiaText>
         </View>
-        {SocialMediaRow({})}
+        <View style={{ alignItems: "center" }}>
+          <EscendiaSocialMedia
+            size={25}
+            color={colors.escendia_dark}
+            type={"row"}
+          />
+        </View>
       </View>
     </View>
   );

@@ -1,13 +1,9 @@
-import React, { Children } from "react";
+import React from "react";
 import {
-  GestureResponderEvent,
-  Text as RNText,
-  TextStyle,
-  TouchableOpacity,
-  ViewStyle,
-  View,
+  GestureResponderEvent, TextStyle,
+  TouchableOpacity, View, ViewStyle
 } from "react-native";
-import { colors } from "../services/styling/styles";
+import { colors } from "../../services/styling/styles";
 import EscendiaText from "./EscendiaText";
 
 interface EscendiaButtonProps {
@@ -17,7 +13,7 @@ interface EscendiaButtonProps {
   onPress?: (event: GestureResponderEvent) => void;
   iconRight?: React.ReactNode;
   iconLeft?: React.ReactNode;
-  disabled?:boolean;
+  disabled?: boolean;
 }
 
 const EscendiaButton = ({

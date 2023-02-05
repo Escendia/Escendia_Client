@@ -1,29 +1,25 @@
 import {
-  DrawerActions,
+  createNavigationContainerRef,
   NavigationContainer,
-  useNavigation,
 } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import i18n, { t } from "i18next";
+import i18n from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
+import { Dimensions } from "react-native";
 import LandingPage from "./src/pages/LandingPage";
-import TestPage from "./src/pages/TestPage";
 import SignInPage from "./src/pages/SignInPage";
-import { View } from "react-native";
-
-import { de, en } from "./src/services/localization/localizations";
-import React, { useEffect, useState } from "react";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { calculate } from "@services/functions";
 import { useFonts } from "expo-font";
+import { initializeApp } from "firebase/app";
+import React, { useEffect } from "react";
 import "react-native-gesture-handler";
 import "react-native-reanimated";
-import {
-  createDrawerNavigator,
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-  DrawerNavigationProp,
-} from "@react-navigation/drawer";
-import EscendiaText from "@components/EscendiaText";
-import { colors } from "@services/styling/styles";
+import SignUpPage from "./src/pages/SignUpPage";
+import { de, en } from "./src/services/localization/localizations";
+import EscendiaSidebar from "@components/sidebar/EscendiaSidebar";
+import { useDBStore, useUserStore } from "@services/store/store";
+import TestPage from "./src/pages/TestPage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -35,133 +31,105 @@ i18n.use(initReactI18next).init({
   fallbackLng: "de",
 });
 
-/*
- */
-
-export type RootStackParams = {
+/* export type RootStackParams = {
   DefaultStack: undefined;
 };
 
-const RootStack = createDrawerNavigator<RootStackParams>();
+const RootStack = createDrawerNavigator<RootStackParams>(); */
 
-export type DefaultStackParams = {
+export type StackParams = {
   Landing: undefined;
-  SingIn: undefined;
-  SingUp: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
+  Test: undefined;
 };
 
-const DefaultStack = createDrawerNavigator<DefaultStackParams>();
+const Stack = createDrawerNavigator<StackParams>();
 
-const DefaultScreenStack = ({ props }) => {
-  return (
-    <DefaultStack.Navigator
-      initialRouteName="Landing"
-      screenOptions={{
-        headerShown: false,
-      }}
-      useLegacyImplementation={false}
-      drawerContent={(props) => {
-        return (
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: colors.escendia_dark,
-            }}
-          >
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 20,
-                borderBottomWidth: 1,
-                borderBottomColor: colors.escendia_text_faded,
-                backgroundColor: colors.escendia_light,
-              }}
-            >
-              <EscendiaText
-                onPress={() => {
-                  props.navigation.closeDrawer();
-                }}
-              >
-                X
-              </EscendiaText>
-            </View>
-            <DrawerContentScrollView
-              contentContainerStyle={{
-                alignItems: "center",
-                flex: 200,
-                backgroundColor: colors.escendia_dark,
-              }}
-            >
-              <EscendiaText>Seite 1</EscendiaText>
-              <EscendiaText>Seite 1</EscendiaText>
-              <EscendiaText>Seite 1</EscendiaText>
-              <EscendiaText>Seite 1</EscendiaText>
-              <EscendiaText>Seite 1</EscendiaText>
-              <EscendiaText>Seite 1</EscendiaText>
-            </DrawerContentScrollView>
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 20,
-                borderTopWidth: 1,
-                borderTopColor: colors.escendia_text_faded,
-              }}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <EscendiaText>F</EscendiaText>
-                <EscendiaText>|</EscendiaText>
-                <EscendiaText>T</EscendiaText>
-                <EscendiaText>|</EscendiaText>
-                <EscendiaText>I</EscendiaText>
-              </View>
-            </View>
-          </View>
-        );
-      }}
-    >
-      <DefaultStack.Screen
-        name="Landing"
-        component={SignInPage}
-        options={{
-          title: t("Page_Landing"),
-        }}
-      />
-      <DefaultStack.Screen
-        name="SingIn"
-        component={SignInPage}
-        options={{ title: t("Page_SingIn") }}
-      />
-      <DefaultStack.Screen
-        name="SingUp"
-        component={SignInPage}
-        options={{ title: t("Page_SingUp") }}
-      />
-    </DefaultStack.Navigator>
-  );
-};
+export const globalNavigation = createNavigationContainerRef<StackParams>();
 
 export default function App({ props }) {
-  const { t } = useTranslation();
   const [fontsLoaded] = useFonts({
     "Josefin Sans": require("./src/assets/fonts/JosefinSans-Regular.otf"),
     "Simply Conception": require("./src/assets/fonts/Simply-Conception-Regular.otf"),
   });
-  /*    */
-  console.log(props);
+
+  const setApp = useDBStore((state) => state.setApp);
+  const app = useDBStore((state) => state.app);
+  const auth = useDBStore((state) => state.auth);
+  const setUser = useUserStore((state) => state.setUser);
+  const { t } = useTranslation();
+
+  // Initialize Firebase
+  useEffect(() => {
+    setApp(
+      initializeApp({
+        apiKey: "AIzaSyDBK5uZCVMoMBlchiyri9NO4bYM9jsNCLg",
+
+        authDomain: "escendia-374212.firebaseapp.com",
+
+        projectId: "escendia-374212",
+
+        storageBucket: "escendia-374212.appspot.com",
+
+        messagingSenderId: "943523318087",
+
+        appId: "1:943523318087:web:479105c34ecb0588016462",
+
+        measurementId: "G-YC52M51XS5",
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    if (auth === undefined) return;
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+      globalNavigation.navigate("Landing");
+    });
+  }, [auth]);
+
+  const width = calculate("width", 450, Dimensions.get("screen").width);
+
   return (
-    <NavigationContainer>
-      {fontsLoaded ? (
-        <RootStack.Navigator
-          initialRouteName="DefaultStack"
-          screenOptions={({ route }) => ({ headerShown: false })}
+    <NavigationContainer ref={globalNavigation}>
+      {fontsLoaded && app !== undefined ? (
+        <Stack.Navigator
+          initialRouteName="Landing"
+          screenOptions={{
+            headerShown: false,
+            drawerStyle: {
+              width: width,
+            },
+          }}
+          useLegacyImplementation={false}
+          drawerContent={(props) => {
+            return <EscendiaSidebar props={props} />;
+          }}
         >
-          <RootStack.Screen
-            name="DefaultStack"
-            component={DefaultScreenStack}
+          <Stack.Screen
+            name="Landing"
+            component={LandingPage}
+            options={{
+              title: t("Page_Landing"),
+            }}
           />
-        </RootStack.Navigator>
+          <Stack.Screen
+            name="SignIn"
+            component={SignInPage}
+            options={{ title: t("Page_SignIn") }}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUpPage}
+            options={{ title: t("Page_SignUp") }}
+          />
+          <Stack.Screen
+            name="Test"
+            component={TestPage}
+            options={{ title: t("Page_TestPage") }}
+          />
+        </Stack.Navigator>
       ) : null}
     </NavigationContainer>
   );

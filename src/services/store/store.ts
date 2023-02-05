@@ -1,36 +1,65 @@
+import { FirebaseApp } from "firebase/app";
+import {
+  getAnalytics,
+  Analytics,
+  initializeAnalytics,
+} from "firebase/analytics";
+import {
+  getFirestore,
+  Firestore,
+  initializeFirestore,
+} from "firebase/firestore/lite";
+import { getAuth, Auth, User, initializeAuth } from "firebase/auth";
+
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-
-type User = {
-  _id: string;
-};
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getReactNativePersistence } from "firebase/auth/react-native";
 
 interface UserState {
   user: User | undefined;
   setUser: (user: User) => void;
 }
 
-interface CookieState {
-  token: string | undefined;
+interface DBState {
+  app: FirebaseApp;
+  analytics: Analytics;
+  db: Firestore;
+  auth: Auth;
+  setApp: (app: FirebaseApp) => void;
 }
 
-export const useCookieStore = create<CookieState>()(
+export const useUserStore = create<UserState>()(
   devtools(
-    persist(
-      (set) => ({
-        token: undefined,
-      }),
-      { name: "user_cookies" }
-    )
+    (set) => ({
+      user: undefined,
+      setUser(user) {
+        set((state) => ({
+          user: user,
+        }));
+      },
+    }),
+    {
+      name: "user_cookies",
+    }
   )
 );
 
-export const useUserStore = create<UserState>()(
+export const useDBStore = create<DBState>()(
   devtools((set) => ({
-    user: undefined,
-    setUser(user) {
-      set((state) => ({ user: user }));
+    app: undefined,
+    analytics: undefined,
+    db: undefined,
+    auth: undefined,
+    setApp(app) {
+      set((state) => ({
+        app: app,
+        auth: initializeAuth(app, {
+          persistence: getReactNativePersistence(AsyncStorage),
+        }),
+        //analytics: initializeAnalytics(app),
+        db: getFirestore(app),
+      }));
     },
   }))
 );
-

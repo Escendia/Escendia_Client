@@ -1,14 +1,16 @@
-import EscendiaButton from "@components/EscendiaButton";
-import EscendiaDefaultPage from "@components/EscendiaDefaultPage";
-import EscendiaInput from "@components/EscendiaInput";
-import EscendiaText from "@components/EscendiaText";
+import EscendiaButton from "@components/default/EscendiaButton";
+import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
+import EscendiaInput from "@components/default/EscendiaInput";
+import EscendiaText from "@components/default/EscendiaText";
 import { useNavigation } from "@react-navigation/native";
 import { calculate } from "@services/functions";
+import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { FirebaseError } from "firebase/app";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Image, View } from "react-native";
-import { transparent } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import { Image, View } from "react-native";
 
 function ImageView(props: any) {
   return (
@@ -23,8 +25,8 @@ function ImageView(props: any) {
       <Image
         style={{
           //resizeMode: "contain",
-          height: calculate("height", 550,550),
-          width: calculate("width", 450,450),
+          height: calculate("height", 550, 550),
+          width: calculate("width", 450, 450),
           margin: 50,
         }}
         source={require("../assets/test.jpg")}
@@ -35,22 +37,23 @@ function ImageView(props: any) {
 
 function SignInPage() {
   const navigation = useNavigation();
+  const { t } = useTranslation();
+
+  const auth = useDBStore((state) => state.auth);
+  const setUser = useUserStore((state) => state.setUser);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  useEffect(() => {
-    
-    if(email.length>10){
-      setButtonDisabled(false)
-    }else{
-      setButtonDisabled(true)
-    }
- 
-  }, [email])
-  
-  const { t } = useTranslation();
+  function onSignIn() {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        navigation.navigate("Landing");
+      })
+      .catch((error: FirebaseError) => {
+        console.log(t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, "")));
+      });
+  }
 
   return (
     <EscendiaDefaultPage title={"Page_SignIn_Title"}>
@@ -76,27 +79,34 @@ function SignInPage() {
             }}
           >
             <EscendiaInput
-            outlineStyle={{
-              borderColor: colors.escendia_text_faded
-            }}
+              outlineStyle={{
+                borderColor: colors.escendia_text_faded,
+              }}
               style={{
                 borderColor: "black",
                 marginBottom: 15,
               }}
+              value={email}
               placeholder={t("Page_SignIn_Email")}
-              onChangeText={(e) => {setEmail(e)}}
+              onChangeText={(e) => {
+                setEmail(e);
+              }}
             />
 
             <EscendiaInput
-             outlineStyle={{
-              borderColor: colors.escendia_text_faded
-            }}
+              secureTextEntry={true}
+              outlineStyle={{
+                borderColor: colors.escendia_text_faded,
+              }}
               style={{
                 borderColor: colors.escendia_light,
                 marginBottom: 5,
               }}
+              value={password}
               placeholder={t("Page_SignIn_Password")}
-              onChangeText={(e) => {setPassword(e)}}
+              onChangeText={(e) => {
+                setPassword(e);
+              }}
             />
             <EscendiaText
               style={{
@@ -111,26 +121,22 @@ function SignInPage() {
               {t("Page_SignIn_PasswordForget")}
             </EscendiaText>
             <EscendiaButton
-              disabled={buttonDisabled}
               style={{
-                padding:15,
+                padding: 15,
                 backgroundColor: colors.escendia_light,
                 alignItems: "center",
-                
               }}
               textStyle={{ color: colors.escendia_dark }}
-              onPress={()=>{}}
+              onPress={onSignIn}
             >
               {t("Page_SignIn_SignIn")}
-              
             </EscendiaButton>
             <View
               style={{
                 backgroundColor: "transparent",
                 flexDirection: "row",
                 marginTop: 40,
-                marginBottom:40
-                
+                marginBottom: 40,
               }}
             >
               <View
@@ -140,7 +146,6 @@ function SignInPage() {
                   borderBottomColor: colors.escendia_text_faded,
                   borderBottomWidth: 1,
                   marginVertical: 15,
-
                 }}
               ></View>
               <EscendiaText
@@ -149,10 +154,8 @@ function SignInPage() {
                   fontWeight: "bold",
                   alignSelf: "center",
                   color: colors.escendia_light,
-                  paddingRight:10,
-                  paddingLeft:10,
-                  
-
+                  paddingRight: 10,
+                  paddingLeft: 10,
                 }}
               >
                 {t("Page_SignIn_Or")}
@@ -164,7 +167,6 @@ function SignInPage() {
                   borderBottomColor: colors.escendia_text_faded,
                   borderBottomWidth: 1,
                   marginVertical: 15,
-                  
                 }}
               ></View>
             </View>
@@ -172,11 +174,9 @@ function SignInPage() {
               style={{
                 backgroundColor: "transparent",
                 alignItems: "center",
-                padding:15,
-                borderColor:colors.escendia_text_faded
-
+                padding: 15,
+                borderColor: colors.escendia_text_faded,
               }}
-
             >
               {t("Page_SignIn_Google")}
             </EscendiaButton>

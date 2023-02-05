@@ -1,13 +1,13 @@
 const de = {
   Name: "Escendia",
-  
+
   Page_Landing: "Hautpseite",
   Page_SingIn: "Anmelden",
   Page_SignUp: "Registrierung",
   Page_All_Header_Search: "Suche...",
   Page_All_Header_SignUp: "Registrieren",
   Page_All_Header_SignIn: "Anmelden",
-
+  Page_All_Header_Welcome: "Willkommen,",
   Page_All_Footer_Text:
     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
 
@@ -36,7 +36,7 @@ const de = {
   Page_Landing_IOSStore: "App Store",
 
   Page_SignIn_Title: "Anmelden",
-  Page_SignIn_Password : "Passwort",
+  Page_SignIn_Password: "Passwort",
   Page_SignIn_PasswordForget: "Passwort vergessen?",
   Page_SignIn_Email: "E-mail",
   Page_SignIn_SignIn: "Anmelden",
@@ -49,11 +49,26 @@ const de = {
   Page_SignUp_Password: "Passwort",
   Page_SignUp_Username: "Benutzername",
   Page_SignUp_Password_Confirm: "Passwort wiederholen",
-  Page_SignUp_PasswordDifference:"Die beiden Passwörter müssen übereinstimmen",
-  Page_SignUp_PasswordLength:"Die Passwortlänge muss zwischen 6-16 Zeichen liegen",
-  Page_SignUp_LetterReq:"Das Passwort muss mindestens einen Großbuchstaben,einen Kleinbuchstaben,eine Zahl und ein Sonderzeichen enthalten",
+  Page_SignUp_PasswordDifference: "Die beiden Passwörter müssen übereinstimmen",
+  Page_SignUp_PasswordLength:
+    "Die Passwortlänge muss zwischen 6-16 Zeichen liegen",
+  Page_SignUp_LetterReq:
+    "Das Passwort muss mindestens einen Großbuchstaben,einen Kleinbuchstaben,eine Zahl und ein Sonderzeichen enthalten",
 
-  Page_Landing_Feature_CommingSoon:"Kommt bald..."
+  Sidebar_Landing: "Hauptseite",
+  Sidebar_SignIn: "Anmelden",
+  Sidebar_SignUp: "Registrieren",
+  Sidebar_LogOut: "Ausloggen",
+  Sidebar_Test: "Testseite (für User)",
+
+  DB_Error_authinvalidemail: "Keine gültige E-Mail Adresse!",
+  DB_Error_authinternalerror: "Interner Fehler!",
+  DB_Error_authconfigurationnotfound: "Authentifizierungsmethode nicht aktiv!",
+  DB_Error_authusernotfound: "E-Mail Adresse nicht gefunden!",
+  DB_Error_authwrongpassword: "Falsches Passwort!",
+  DB_Error_authemailalreadyinuse: "E-Mail ist bereits verwendet!",
+
+  Page_Landing_Feature_CommingSoon: "Kommt bald...",
 };
 
 const en = {

@@ -1,22 +1,21 @@
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { calculate, isWeb } from "@services/functions";
 import { useUserStore } from "@services/store/store";
-import { DefaultStackParams, RootStackParams } from "App";
+import { DefaultStackParams } from "App";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
   Dimensions,
   Image,
-  Platform,
   StyleSheet,
-  View,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { colors } from "../services/styling/styles";
-import EscendiaButton from "./EscendiaButton";
-import EscendiaInput from "./EscendiaInput";
-import EscendiaText from "./EscendiaText";
-import LeafIcon from "./icons/LeafIcon";
+import { colors } from "../../services/styling/styles";
+import EscendiaInput from "../default/EscendiaInput";
+import EscendiaText from "../default/EscendiaText";
+import LeafIcon from "../icons/LeafIcon";
 
 interface EscendiaHeaderProps {
   children?: React.ReactNode;
@@ -27,7 +26,7 @@ interface EscendiaHeaderProps {
 }
 
 function HeaderImage(props: any) {
-  const indexLeafTop = Platform.OS == "web" ? 750 : 250;
+  const indexLeafTop = calculate("height", 750, 250);
 
   return (
     <View
@@ -49,6 +48,7 @@ function HeaderImage(props: any) {
 function Header(props: any) {
   const { navigate, openDrawer }: DrawerNavigationProp<DefaultStackParams> =
     useNavigation();
+  const user = useUserStore((state) => state.user);
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -88,25 +88,26 @@ function Header(props: any) {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ flex: Platform.OS == "web" ? 5 : 0 }}></View>
-      <View
+      <View style={{ flex: calculate("none", 5, 0) }}></View>
+      <TouchableOpacity
         style={{
-          flex: Platform.OS == "web" ? 10 : 1,
-          alignItems: Platform.OS == "web" ? "stretch" : "center",
+          flex: calculate("none", 10, 1),
+          alignItems: "center",
         }}
+        onPress={() => navigate("Landing")}
       >
         <Image
           style={{
-            resizeMode: "contain",
-            height: 150,
+            height: calculate("height", 150, 90),
+            width: calculate("width", 100, 50),
           }}
-          source={require("../assets/logo.png")}
+          source={require("../../assets/logo.png")}
         />
-      </View>
+      </TouchableOpacity>
       <EscendiaInput
         outlineStyle={{ borderWidth: 0 }}
         style={{
-          flex: Platform.OS == "web" ? 4 : 3,
+          flex: calculate("none", 4, 3),
           borderWidth: 0,
           borderBottomWidth: 1,
           marginRight: 50,
@@ -114,7 +115,7 @@ function Header(props: any) {
         placeholder={props.search}
         iconName="text-search"
       />
-      {Platform.OS == "web" ? (
+      {props.isWebValue && !user ? (
         <View
           style={{
             flexDirection: "row-reverse",
@@ -138,6 +139,33 @@ function Header(props: any) {
           </EscendiaText>
         </View>
       ) : null}
+      {user && !props.isWebValue ? (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            paddingRight: 50,
+          }}
+        >
+          <View style={{ alignItems: "flex-end" }}>
+            <EscendiaText>{"Page_All_Header_Welcome"}</EscendiaText>
+            <EscendiaText>{user.displayName}</EscendiaText>
+          </View>
+          <View style={{ borderRadius: 80 }}>
+            <Image
+              style={{
+                height: 50,
+                width: 50,
+                marginLeft: 10,
+                borderRadius: 80,
+              }}
+              source={
+                user.photoURL ? user.photoURL : require("../../assets/logo.png")
+              }
+            />
+          </View>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -149,40 +177,67 @@ function HeadLine(props: any) {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        left:
-          Platform.OS === "web"
-            ? props.pyramideStyle == "left"
-              ? -100
-              : -300
-            : props.pyramideStyle == "left"
-            ? 70
-            : 30,
+        left: calculate(
+          "width",
+          props.pyramideStyle == "left" ? -100 : -300,
+          props.pyramideStyle == "left" ? 70 : 30
+        ),
       }}
     >
       <EscendiaText
         fontFamily="Simply Conception"
         color={colors.escendia_img_background_light}
         style={{
-          fontSize: Platform.OS == "web" ? 250 : 75,
+          fontSize: calculate("none", 250, 75),
           fontWeight: "600",
           textAlign: "center",
-          flex: Platform.OS == "web" ? 1 : undefined,
-          marginHorizontal: Platform.OS == "web" ? 50 : -160,
+          flex: props.isWebValue ? 1 : undefined,
+          marginHorizontal: calculate("none", 50, -160),
         }}
       >
         {props.backgroundTitle}
       </EscendiaText>
       <EscendiaText
         style={{
-          fontSize: Platform.OS == "web" ? 100 : 35,
+          fontSize: calculate("none", 100, 35),
           fontWeight: "600",
-          flex: Platform.OS == "web" ? 1 : undefined,
-          marginHorizontal: Platform.OS == "web" ? -650 : 0,
+          flex: props.isWebValue ? 1 : undefined,
+          marginHorizontal: calculate("none", -650, 0),
         }}
       >
         {props.title}
       </EscendiaText>
     </View>
+  );
+}
+
+function HeaderPyramide(props: any) {
+  const lineHeaderMidValues = calculate("height", 40, 10);
+  const lineHeaderHeightMidValues = calculate("height", 100, 40);
+  const lineHeaderLeftValues = calculate("height", 400, 100);
+  const lineHeaderHeightLeftValues = calculate("height", 300, 50);
+
+  const lineHeader =
+    props.pyramideStyle == "left" ? lineHeaderLeftValues : lineHeaderMidValues;
+  const lineHeaderHeight =
+    props.pyramideStyle == "left"
+      ? lineHeaderHeightLeftValues
+      : lineHeaderHeightMidValues;
+
+  const lineHeaderLeftBorder = Dimensions.get("window").width / 2 - lineHeader;
+  const lineHeaderRightBorder = Dimensions.get("window").width / 2 + lineHeader;
+
+  return (
+    <View
+      style={{
+        borderBottomWidth: lineHeaderHeight,
+        borderBottomColor: colors.escendia_dark,
+        borderLeftWidth: lineHeaderLeftBorder,
+        borderRightWidth: lineHeaderRightBorder,
+        borderLeftColor: colors.escendia_light,
+        borderRightColor: colors.escendia_light,
+      }}
+    ></View>
   );
 }
 
@@ -197,21 +252,7 @@ const EscendiaHeader = ({
   const { t } = useTranslation();
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
-
-  const lineHeaderMidValues = Platform.OS == "web" ? 40 : 10;
-  const lineHeaderHeightMidValues = Platform.OS == "web" ? 100 : 40;
-  const lineHeaderLeftValues = Platform.OS == "web" ? 400 : 100;
-  const lineHeaderHeightLeftValues = Platform.OS == "web" ? 300 : 50;
-
-  const lineHeader =
-    pyramideStyle == "left" ? lineHeaderLeftValues : lineHeaderMidValues;
-  const lineHeaderHeight =
-    pyramideStyle == "left"
-      ? lineHeaderHeightLeftValues
-      : lineHeaderHeightMidValues;
-
-  const lineHeaderLeftBorder = Dimensions.get("window").width / 2 - lineHeader;
-  const lineHeaderRightBorder = Dimensions.get("window").width / 2 + lineHeader;
+  const isWebValue = isWeb();
 
   return (
     <>
@@ -220,23 +261,18 @@ const EscendiaHeader = ({
         login: t("Page_All_Header_SignIn"),
         register: t("Page_All_Header_SignUp"),
         search: t("Page_All_Header_Search"),
+        isWebValue: isWebValue,
       })}
       {HeadLine({
         pyramideStyle: pyramideStyle,
         backgroundTitle: t("Escendia"),
         title: t(title),
+        isWebValue: isWebValue,
       })}
       {children}
-      <View
-        style={{
-          borderBottomWidth: lineHeaderHeight,
-          borderBottomColor: colors.escendia_dark,
-          borderLeftWidth: lineHeaderLeftBorder,
-          borderRightWidth: lineHeaderRightBorder,
-          borderLeftColor: colors.escendia_light,
-          borderRightColor: colors.escendia_light,
-        }}
-      ></View>
+      {HeaderPyramide({
+        pyramideStyle: pyramideStyle,
+      })}
       {childrenBelowPyramide}
     </>
   );

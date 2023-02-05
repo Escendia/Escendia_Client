@@ -1,13 +1,12 @@
 import React from "react";
-import { ScrollView, StyleSheet, View, Platform } from "react-native";
-import { colors } from "../services/styling/styles";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { colors } from "../../services/styling/styles";
 
+import { calculate } from "@services/functions";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EscendiaFooter from "./EscendiaFooter";
 import EscendiaHeader from "./EscendiaHeader";
-import LeafIcon from "./icons/LeafIcon";
-import { calculate } from "@services/functions";
-import EscendiaText from "./EscendiaText";
+import LeafIcon from "../icons/LeafIcon";
 
 interface EscendiaDefaultPageProps {
   children?: React.ReactNode;
@@ -42,7 +41,7 @@ const EscendiaDefaultPage = ({
         <View
           style={{
             backgroundColor: colors.escendia_dark,
-            minHeight: 500,
+            minHeight: calculate("height", 500, 500),
             justifyContent: "center",
           }}
         >
@@ -50,8 +49,8 @@ const EscendiaDefaultPage = ({
             style={{
               ...StyleSheet.absoluteFillObject,
               position: "absolute",
-              width: 500,
-              height: 500,
+              width: calculate("width", 400, 400),
+              height: calculate("height", 500, 500),
             }}
           >
             <LeafIcon

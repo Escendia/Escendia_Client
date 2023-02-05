@@ -1,14 +1,20 @@
-import EscendiaButton from "@components/EscendiaButton";
-import EscendiaDefaultPage from "@components/EscendiaDefaultPage";
-import EscendiaInput from "@components/EscendiaInput";
-import EscendiaText from "@components/EscendiaText";
+import EscendiaButton from "@components/default/EscendiaButton";
+import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
+import EscendiaInput from "@components/default/EscendiaInput";
+import EscendiaText from "@components/default/EscendiaText";
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { calculate } from "@services/functions";
+import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Image, View } from "react-native";
-import { transparent } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import { Image, View } from "react-native";
 
 function ImageView(props: any) {
   return (
@@ -34,11 +40,12 @@ function ImageView(props: any) {
 }
 
 function SignUpPage() {
-  function validatePassword(password:string, passwordconfirm:string) {
+  function validatePassword(password: string, passwordconfirm: string) {
     var minNumberofChars = 6;
     var maxNumberofChars = 16;
-    var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-    if (password.length<3) {
+    var regularExpression =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    if (password.length < 3) {
       setPasswordError("");
       return;
     }
@@ -59,13 +66,38 @@ function SignUpPage() {
     }
     setPasswordError("");
   }
-  const navigation = useNavigation();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  function onSignUp() {
+    //Ab 3 Läuft die Prüfung
+    if (password.length > 3 && passwordError === "" && userName !== "") {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredentials) => {
+          //
+          updateProfile(auth.currentUser, { displayName: userName })
+            .then(() => {
+              navigation.navigate("Landing");
+            })
+            .catch((error) => {
+              t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""));
+            });
+        })
+        .catch((error) => {
+          console.log(
+            t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""))
+          );
+        });
+    }
+  }
+
+  const auth = useDBStore((state) => state.auth);
+  const setUser = useUserStore((state) => state.setUser);
+
+  const navigation = useNavigation();
+  const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
 
   useEffect(() => {
     validatePassword(password, passwordConfirm);
@@ -105,8 +137,9 @@ function SignUpPage() {
                 marginBottom: 15,
               }}
               placeholder={t("Page_SignUp_Username")}
+              value={userName}
               onChangeText={(e) => {
-                setEmail(e);
+                setUserName(e);
               }}
             />
             <EscendiaInput
@@ -118,6 +151,7 @@ function SignUpPage() {
                 marginBottom: 15,
               }}
               placeholder={t("Page_SignUp_Email")}
+              value={email}
               onChangeText={(e) => {
                 setEmail(e);
               }}
@@ -131,7 +165,9 @@ function SignUpPage() {
                 borderColor: colors.escendia_light,
                 marginBottom: 5,
               }}
+              value={password}
               placeholder={t("Page_SignUp_Password")}
+              secureTextEntry={true}
               onChangeText={(e) => {
                 setPassword(e);
               }}
@@ -144,7 +180,9 @@ function SignUpPage() {
                 borderColor: "black",
                 marginBottom: 15,
               }}
+              value={passwordConfirm}
               placeholder={t("Page_SignUp_Password_Confirm")}
+              secureTextEntry={true}
               onChangeText={(e) => {
                 setPasswordConfirm(e);
               }}
@@ -163,14 +201,13 @@ function SignUpPage() {
             </EscendiaText>
 
             <EscendiaButton
-              disabled={buttonDisabled}
               style={{
                 padding: 15,
                 backgroundColor: colors.escendia_light,
                 alignItems: "center",
               }}
               textStyle={{ color: colors.escendia_dark }}
-              onPress={() => {}}
+              onPress={onSignUp}
             >
               {t("Page_SignUp_SignUp")}
             </EscendiaButton>
@@ -201,7 +238,7 @@ function SignUpPage() {
                   paddingLeft: 10,
                 }}
               >
-                {t("Page_SignIn_Or")}
+                {t("Page_SignUp_Or")}
               </EscendiaText>
               <View
                 style={{
@@ -220,8 +257,15 @@ function SignUpPage() {
                 padding: 15,
                 borderColor: colors.escendia_text_faded,
               }}
+              iconLeft={
+                <AntDesign
+                  name="google"
+                  size={20}
+                  color={colors.escendia_img_background_light}
+                />
+              }
             >
-              {t("Page_SignIn_Google")}
+              {t("Page_SignUp_Google")}
             </EscendiaButton>
           </View>
           <View style={{ backgroundColor: "transparent", flex: 1 }}></View>

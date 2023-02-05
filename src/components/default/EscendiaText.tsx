@@ -1,11 +1,11 @@
-import React, { Children } from "react";
+import React from "react";
 import {
   GestureResponderEvent,
   Text as RNText,
   TextStyle,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
-import { colors } from "../services/styling/styles";
+import { colors } from "../../services/styling/styles";
 
 
 interface EscendiaTextProps {
