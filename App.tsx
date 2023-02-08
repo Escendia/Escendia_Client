@@ -87,6 +87,7 @@ export default function App({ props }) {
       setUser(user);
       globalNavigation.navigate("Landing");
     });
+    
   }, [auth]);
 
   const width = calculate("width", 450, Dimensions.get("screen").width);

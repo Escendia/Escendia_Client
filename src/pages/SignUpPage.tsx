@@ -75,7 +75,7 @@ function SignUpPage() {
           //
           updateProfile(auth.currentUser, { displayName: userName })
             .then(() => {
-              navigation.navigate("Landing");
+              setUser(auth.currentUser);
             })
             .catch((error) => {
               t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""));

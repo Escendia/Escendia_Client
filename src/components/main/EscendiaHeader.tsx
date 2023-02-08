@@ -123,7 +123,7 @@ function Header(props: any) {
             paddingRight: 50,
           }}
         >
-          <EscendiaText onPress={() => navigate("SingIn")}>
+          <EscendiaText onPress={() => navigate("SignIn")}>
             {props.login}
           </EscendiaText>
           <EscendiaText
@@ -134,12 +134,12 @@ function Header(props: any) {
           >
             |
           </EscendiaText>
-          <EscendiaText onPress={() => navigate("SingUp")}>
+          <EscendiaText onPress={() => navigate("SignUp")}>
             {props.register}
           </EscendiaText>
         </View>
       ) : null}
-      {user && !props.isWebValue ? (
+      {user && props.isWebValue ? (
         <View
           style={{
             flexDirection: "row",

@@ -48,7 +48,7 @@ function SignInPage() {
   function onSignIn() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        navigation.navigate("Landing");
+        
       })
       .catch((error: FirebaseError) => {
         console.log(t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, "")));
