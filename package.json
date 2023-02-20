@@ -20,6 +20,7 @@
     "@react-navigation/drawer": "^6.5.7",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
+    "@shopify/react-native-performance": "^4.1.2",
     "@types/react-native-snap-carousel": "^3.8.5",
     "expo": "~47.0.12",
     "expo-font": "~11.0.1",
@@ -40,8 +41,10 @@
     "react-native-sideswipe": "^1.5.0",
     "react-native-snap-carousel": "^4.0.0-beta.6",
     "react-native-svg": "13.4.0",
+    "react-native-toast-notifications": "^3.3.1",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.9",
+    "web-vitals": "^3.1.1",
     "zustand": "^4.3.2"
   },
   "devDependencies": {

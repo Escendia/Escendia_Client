@@ -112,6 +112,7 @@ function Header(props: any) {
           borderBottomWidth: 1,
           marginRight: 50,
         }}
+        textColor={colors.escendia_dark}
         placeholder={props.search}
         iconName="text-search"
       />
@@ -148,7 +149,7 @@ function Header(props: any) {
           }}
         >
           <View style={{ alignItems: "flex-end" }}>
-            <EscendiaText>{"Page_All_Header_Welcome"}</EscendiaText>
+            <EscendiaText>{props.welcome}</EscendiaText>
             <EscendiaText>{user.displayName}</EscendiaText>
           </View>
           <View style={{ borderRadius: 80 }}>
@@ -261,6 +262,7 @@ const EscendiaHeader = ({
         login: t("Page_All_Header_SignIn"),
         register: t("Page_All_Header_SignUp"),
         search: t("Page_All_Header_Search"),
+        welcome: t("Page_All_Header_Welcome"),
         isWebValue: isWebValue,
       })}
       {HeadLine({

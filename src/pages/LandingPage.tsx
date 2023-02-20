@@ -5,13 +5,16 @@ import LeafIcon from "../components/icons/LeafIcon";
 import { colors } from "../services/styling/styles";
 
 import EscendiaButton from "@components/default/EscendiaButton";
-import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import EscendiaSocialMedia from "@components/default/EscendiaSocialMedia";
+import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import { calculate, isWeb } from "@services/functions";
 import { useTranslation } from "react-i18next";
 
-import { Ionicons } from "@expo/vector-icons";
 import EscendiaText from "@components/default/EscendiaText";
+import { Ionicons } from "@expo/vector-icons";
+import { useUserStore } from "@services/store/store";
+import { useEffect } from "react";
+import { useToast } from "react-native-toast-notifications";
 
 function LandingPage() {
   const { t } = useTranslation();
@@ -310,6 +313,15 @@ function LandingPage() {
 
   const bottle2Top = calculate("height", 270, 150);
   const bottle2Left = calculate("width", 600, 60);
+
+  const toast = useToast();
+  const user = useUserStore((state) => state.user);
+
+  useEffect(() => {
+    if (user) {
+      toast.show("Toast_Success_Login");
+    }
+  }, [user]);
 
   return (
     <EscendiaDefaultPage

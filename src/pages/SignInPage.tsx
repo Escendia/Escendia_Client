@@ -1,7 +1,8 @@
 import EscendiaButton from "@components/default/EscendiaButton";
-import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import EscendiaInput from "@components/default/EscendiaInput";
 import EscendiaText from "@components/default/EscendiaText";
+import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { calculate } from "@services/functions";
 import { useDBStore, useUserStore } from "@services/store/store";
@@ -11,6 +12,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, View } from "react-native";
+import { useToast } from "react-native-toast-notifications";
 
 function ImageView(props: any) {
   return (
@@ -44,14 +46,15 @@ function SignInPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useToast();
 
   function onSignIn() {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        
-      })
+      .then((userCredentials) => {})
       .catch((error: FirebaseError) => {
-        console.log(t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, "")));
+        toast.show(
+          t("Toast_Warning_SignIn_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""))
+        );
       });
   }
 
@@ -177,6 +180,13 @@ function SignInPage() {
                 padding: 15,
                 borderColor: colors.escendia_text_faded,
               }}
+              iconLeft={
+                <AntDesign
+                  name="google"
+                  size={20}
+                  color={colors.escendia_img_background_light}
+                />
+              }
             >
               {t("Page_SignIn_Google")}
             </EscendiaButton>

@@ -62,6 +62,7 @@ const EscendiaInput = ({
       placeholderTextColor={
         placeholderTextColor ? placeholderTextColor : colors.escendia_text_faded
       }
+      selectionColor={"grey"}
       left={left}
       right={
         secureTextEntry ? (

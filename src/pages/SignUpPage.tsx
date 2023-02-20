@@ -1,20 +1,17 @@
 import EscendiaButton from "@components/default/EscendiaButton";
-import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import EscendiaInput from "@components/default/EscendiaInput";
 import EscendiaText from "@components/default/EscendiaText";
+import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { calculate } from "@services/functions";
 import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, View } from "react-native";
+import { useToast } from "react-native-toast-notifications";
 
 function ImageView(props: any) {
   return (
@@ -66,6 +63,7 @@ function SignUpPage() {
     }
     setPasswordError("");
   }
+  const toast = useToast();
 
   function onSignUp() {
     //Ab 3 Läuft die Prüfung
@@ -78,12 +76,19 @@ function SignUpPage() {
               setUser(auth.currentUser);
             })
             .catch((error) => {
-              t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""));
+              toast.show(
+                t(
+                  "Toast_Warning_SingUp_" +
+                    error.code.replace(/[^a-zA-Z0-9 ]/g, "")
+                )
+              );
             });
         })
         .catch((error) => {
-          console.log(
-            t("DB_Error_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""))
+          toast.show(
+            t(
+              "Toast_Warning_SingUp_" + error.code.replace(/[^a-zA-Z0-9 ]/g, "")
+            )
           );
         });
     }
@@ -92,7 +97,6 @@ function SignUpPage() {
   const auth = useDBStore((state) => state.auth);
   const setUser = useUserStore((state) => state.setUser);
 
-  const navigation = useNavigation();
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

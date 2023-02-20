@@ -8,6 +8,7 @@ const de = {
   Page_All_Header_SignUp: "Registrieren",
   Page_All_Header_SignIn: "Anmelden",
   Page_All_Header_Welcome: "Willkommen,",
+  
   Page_All_Footer_Text:
     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
 
@@ -21,6 +22,7 @@ const de = {
   Page_All_Footer_Impress: "Impressum",
   Page_All_Footer_AboutUs: "Über uns",
   Page_All_Footer_ContactUs: "Kontakiere uns",
+  
 
   Page_All_Footer_CopyRight: "Copyright © 2023. All rights reserved.",
 
@@ -61,12 +63,17 @@ const de = {
   Sidebar_LogOut: "Ausloggen",
   Sidebar_Test: "Testseite (für User)",
 
-  DB_Error_authinvalidemail: "Keine gültige E-Mail Adresse!",
-  DB_Error_authinternalerror: "Interner Fehler!",
-  DB_Error_authconfigurationnotfound: "Authentifizierungsmethode nicht aktiv!",
-  DB_Error_authusernotfound: "E-Mail Adresse nicht gefunden!",
-  DB_Error_authwrongpassword: "Falsches Passwort!",
-  DB_Error_authemailalreadyinuse: "E-Mail ist bereits verwendet!",
+  Toast_Warning_authinvalidemail: "Keine gültige E-Mail Adresse!",
+  Toast_Warning_authinternalerror: "Interner Fehler!",
+  Toast_Warning_authconfigurationnotfound:
+    "Authentifizierungsmethode nicht aktiv!",
+  Toast_Warning_authusernotfound: "E-Mail Adresse nicht gefunden!",
+  Toast_Warning_authwrongpassword: "Falsches Passwort!",
+  Toast_Warning_authemailalreadyinuse: "E-Mail ist bereits verwendet!",
+  Toast_Warning_SingUp_: "TBD",
+  Toast_Warning_SignIn_: "TBD",
+
+  Toast_Success_Login: "Anmeldung~Du wurdest erfolgreich angemeldet!",
 
   Page_Landing_Feature_CommingSoon: "Kommt bald...",
 };

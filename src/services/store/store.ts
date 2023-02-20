@@ -16,10 +16,13 @@ import { devtools, persist } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
 
+
 interface UserState {
   user: User | undefined;
   setUser: (user: User) => void;
 }
+
+
 
 interface DBState {
   app: FirebaseApp;

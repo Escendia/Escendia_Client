@@ -1,7 +1,10 @@
 import React from "react";
 import {
-  GestureResponderEvent, TextStyle,
-  TouchableOpacity, View, ViewStyle
+  GestureResponderEvent,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from "react-native";
 import { colors } from "../../services/styling/styles";
 import EscendiaText from "./EscendiaText";
@@ -28,7 +31,7 @@ const EscendiaButton = ({
 }: EscendiaButtonProps) => (
   <TouchableOpacity
     style={{
-      borderWidth: 2,
+      borderWidth: 1,
       borderColor: colors.escendia_img_background_dark,
       padding: 5,
       alignItems: "center",
@@ -40,7 +43,13 @@ const EscendiaButton = ({
     disabled={disabled}
   >
     <View style={{ paddingRight: 5 }}>{iconLeft}</View>
-    <EscendiaText style={{ color: colors.escendia_light, ...textStyle }}>
+    <EscendiaText
+      style={{
+        marginTop: iconRight === undefined && iconLeft === undefined ? 0 : 5,
+        color: colors.escendia_light,
+        ...textStyle,
+      }}
+    >
       {children}
     </EscendiaText>
     <View style={{ paddingLeft: 5 }}>{iconRight}</View>
