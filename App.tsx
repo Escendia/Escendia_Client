@@ -82,9 +82,9 @@ export default function App({ props }) {
         measurementId: "G-YC52M51XS5",
       })
     );
-    onCLS(logDelta);
+/*     onCLS(logDelta);
     onFID(logDelta);
-    onLCP(logDelta);
+    onLCP(logDelta); */
     //setToast(useToast());
   }, []);
 
