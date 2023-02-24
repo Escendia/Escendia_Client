@@ -62,7 +62,7 @@ const EscendiaSidebar = ({ props, ...rest }: EscendiaSidebarProps) => {
 
   useEffect(() => {
     if (user) {
-      setPages(["Landing", "Test"]);
+      setPages(["Landing","Profile", "Test"]);
     } else {
       setPages(["Landing", "SignIn", "SignUp"]);
     }

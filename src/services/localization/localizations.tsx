@@ -44,6 +44,7 @@ const de = {
   Page_SignIn_SignIn: "Anmelden",
   Page_SignIn_Or: "Oder",
   Page_SignIn_Google: "Weiter mit Google",
+  Page_SignIn_NoAccount: "Sie haben noch keinen Account? Jetzt erstellen!",
 
   Page_SignUp_Title: "Account Erstellen",
   Page_SignUp_Email: "E-Mail",
@@ -52,10 +53,17 @@ const de = {
   Page_SignUp_Username: "Benutzername",
   Page_SignUp_Password_Confirm: "Passwort wiederholen",
   Page_SignUp_PasswordDifference: "Die beiden Passwörter müssen übereinstimmen",
+  Page_SignUp_Or: "Oder",
+  Page_SignUp_Google: "Weiter mit Google",
   Page_SignUp_PasswordLength:
     "Die Passwortlänge muss zwischen 6-16 Zeichen liegen",
   Page_SignUp_LetterReq:
     "Das Passwort muss mindestens einen Großbuchstaben,einen Kleinbuchstaben,eine Zahl und ein Sonderzeichen enthalten",
+
+  Page_Profile_Name:"Benutzername",
+  Page_Profile_Email:"Email",
+  Page_Profile_Password:"Passwort",
+  Page_Profile_Delete:"Benutzername",
 
   Sidebar_Landing: "Hauptseite",
   Sidebar_SignIn: "Anmelden",
@@ -80,6 +88,7 @@ const de = {
 
 const en = {
   Name: "Escendia",
+  Page_Profile_Name:"Username",
 };
 
 export { de, en };

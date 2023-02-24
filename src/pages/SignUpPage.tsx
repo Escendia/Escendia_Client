@@ -4,7 +4,7 @@ import EscendiaText from "@components/default/EscendiaText";
 import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { calculate } from "@services/functions";
+import { calculate, isWeb } from "@services/functions";
 import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -14,6 +14,7 @@ import { Image, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 
 function ImageView(props: any) {
+  if(!isWeb())return;
   return (
     <View
       style={{
@@ -272,7 +273,7 @@ function SignUpPage() {
               {t("Page_SignUp_Google")}
             </EscendiaButton>
           </View>
-          <View style={{ backgroundColor: "transparent", flex: 1 }}></View>
+          {isWeb() ?<View style={{ backgroundColor: "transparent", flex: 1 }}></View> : undefined}
         </View>
       </View>
     </EscendiaDefaultPage>

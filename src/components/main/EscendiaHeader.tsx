@@ -2,7 +2,7 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { calculate, isWeb } from "@services/functions";
 import { useUserStore } from "@services/store/store";
-import { DefaultStackParams } from "App";
+import { StackParams } from "App";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -46,7 +46,7 @@ function HeaderImage(props: any) {
 }
 
 function Header(props: any) {
-  const { navigate, openDrawer }: DrawerNavigationProp<DefaultStackParams> =
+  const { navigate, openDrawer }: DrawerNavigationProp<StackParams> =
     useNavigation();
   const user = useUserStore((state) => state.user);
 

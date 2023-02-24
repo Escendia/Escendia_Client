@@ -20,6 +20,7 @@ import "react-native-reanimated";
 import { ToastProvider } from "react-native-toast-notifications";
 import { onCLS, onFID, onLCP } from "web-vitals";
 import LandingPage from "./src/pages/LandingPage";
+import ProfilePage from "./src/pages/ProfilePage";
 import SignInPage from "./src/pages/SignInPage";
 import SignUpPage from "./src/pages/SignUpPage";
 import TestPage from "./src/pages/TestPage";
@@ -40,6 +41,7 @@ export type StackParams = {
   SignIn: undefined;
   SignUp: undefined;
   Test: undefined;
+  Profile: undefined;
 };
 
 const Stack = createDrawerNavigator<StackParams>();
@@ -92,7 +94,7 @@ export default function App({ props }) {
     if (auth === undefined) return;
     auth.onAuthStateChanged((user) => {
       setUser(user);
-      globalNavigation.navigate("Landing");
+      globalNavigation.navigate("Profile");
     });
   }, [auth]);
 
@@ -238,6 +240,11 @@ export default function App({ props }) {
               name="Test"
               component={TestPage}
               options={{ title: t("Page_TestPage") }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfilePage}
+              options={{ title: t("Page_ProfilePage") }}
             />
           </Stack.Navigator>
         ) : null}
