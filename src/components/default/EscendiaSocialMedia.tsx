@@ -18,7 +18,14 @@ const EscendiaSocialMedia = ({
   type === "row" ? (
     <View style={{ flexDirection: "row" }}>
       <TouchableOpacity style={{ paddingRight: 10 }}>
-        <FontAwesome name="facebook-f" size={size} color={color} />
+        <FontAwesome
+          name="facebook-f"
+          onPress={() => {
+            Linking.openURL("http://www.facebook.de");
+          }}
+          size={size}
+          color={color}
+        />
       </TouchableOpacity>
       <TouchableOpacity
         style={{
@@ -30,10 +37,18 @@ const EscendiaSocialMedia = ({
           paddingLeft: 8,
           paddingRight: 11,
         }}
+        onPress={() => {
+          Linking.openURL("http://www.twitter.de");
+        }}
       >
         <FontAwesome name="twitter" size={size} color={color} />
       </TouchableOpacity>
-      <TouchableOpacity style={{ paddingLeft: 10 }}>
+      <TouchableOpacity
+        style={{ paddingLeft: 10 }}
+        onPress={() => {
+          Linking.openURL("http://www.instagram.de");
+        }}
+      >
         <FontAwesome name="instagram" size={size} color={color} />
       </TouchableOpacity>
     </View>

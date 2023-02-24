@@ -4,12 +4,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import {
   DrawerContentComponentProps,
-  DrawerContentScrollView,
+  DrawerContentScrollView
 } from "@react-navigation/drawer";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { calculate } from "@services/functions";
 import { useDBStore, useUserStore } from "@services/store/store";
-import { StackParams } from "App";
+import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -57,12 +57,11 @@ export const SideBarOption = ({ pageName }: SideBarOptionProps) => {
 const EscendiaSidebar = ({ props, ...rest }: EscendiaSidebarProps) => {
   const user = useUserStore((state) => state.user);
   const auth = useDBStore((state) => state.auth);
-  const { t } = useTranslation();
   const [pages, setPages] = useState(["Landing", "SignIn", "SignUp"]);
 
   useEffect(() => {
     if (user) {
-      setPages(["Landing","Profile", "Test"]);
+      setPages(["Landing", "Profile", "Creation", "Test"]);
     } else {
       setPages(["Landing", "SignIn", "SignUp"]);
     }
@@ -120,9 +119,9 @@ const EscendiaSidebar = ({ props, ...rest }: EscendiaSidebarProps) => {
             />
           </View>
           <View style={{ alignItems: "center", paddingBottom: 10 }}>
-            <EscendiaText>Herzlich Wilkommen</EscendiaText>
+            <EscendiaText>{t("Sidebar_Header_Title1")}</EscendiaText>
             <EscendiaText>
-              {user ? user.displayName : "bei Escendia!"}
+              {user ? user.displayName : t("Sidebar_Header_Title2")}
             </EscendiaText>
           </View>
         </View>

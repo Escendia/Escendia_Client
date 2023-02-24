@@ -18,6 +18,7 @@ import { Dimensions, View } from "react-native";
 import "react-native-gesture-handler";
 import "react-native-reanimated";
 import { ToastProvider } from "react-native-toast-notifications";
+import CreationPage from "./src/pages/CreationPage";
 import { onCLS, onFID, onLCP } from "web-vitals";
 import LandingPage from "./src/pages/LandingPage";
 import ProfilePage from "./src/pages/ProfilePage";
@@ -42,6 +43,7 @@ export type StackParams = {
   SignUp: undefined;
   Test: undefined;
   Profile: undefined;
+  Creation: undefined;
 };
 
 const Stack = createDrawerNavigator<StackParams>();
@@ -84,7 +86,7 @@ export default function App({ props }) {
         measurementId: "G-YC52M51XS5",
       })
     );
-/*     onCLS(logDelta);
+    /*     onCLS(logDelta);
     onFID(logDelta);
     onLCP(logDelta); */
     //setToast(useToast());
@@ -245,6 +247,11 @@ export default function App({ props }) {
               name="Profile"
               component={ProfilePage}
               options={{ title: t("Page_ProfilePage") }}
+            />
+            <Stack.Screen
+              name="Creation"
+              component={CreationPage}
+              options={{ title: t("Page_CreationPage") }}
             />
           </Stack.Navigator>
         ) : null}

@@ -64,12 +64,26 @@ const de = {
   Page_Profile_Email:"Email",
   Page_Profile_Password:"Passwort",
   Page_Profile_Delete:"Benutzername",
+  
+  Page_Creation_Title: "Erstellen",
+  Page_Creation: "Anlegen",
 
   Sidebar_Landing: "Hauptseite",
   Sidebar_SignIn: "Anmelden",
   Sidebar_SignUp: "Registrieren",
   Sidebar_LogOut: "Ausloggen",
   Sidebar_Test: "Testseite (für User)",
+  Sidebar_Creation: "Anlegen",
+
+  Sidebar_Header_Title1: "Herzlich Willkommen",
+  Sidebar_Header_Title2: "bei Escendia!",
+
+  Creation_Option_Drink: "Getränke",
+  Creation_Option_Producer: "Hersteller",
+  Creation_Option_Events: "Termine",
+  Creation_Option_Type: "Eigenschaften",
+  Creation_Option_Awards: "Auszeichnungen",
+
 
   Toast_Warning_authinvalidemail: "Keine gültige E-Mail Adresse!",
   Toast_Warning_authinternalerror: "Interner Fehler!",
