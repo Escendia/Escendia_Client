@@ -1,96 +1,183 @@
+import { AntDesign } from "@expo/vector-icons";
 import { uuidv4 } from "@firebase/util";
-import React, { useState } from "react";
+import { calculate, isWeb } from "@services/functions";
+import { t } from "i18next";
+import React, { useEffect, useState } from "react";
 import {
-  GestureResponderEvent,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
+  Dimensions,
   Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
-  Pressable,
-  Dimensions,
+  View,
 } from "react-native";
 import { colors } from "../../services/styling/styles";
-import EscendiaText from "./EscendiaText";
 import LeafIcon from "../icons/LeafIcon";
-import { calculate } from "@services/functions";
-import { AntDesign } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
+import EscendiaText from "./EscendiaText";
 
 interface EscendiaModalProps {
   children: React.ReactNode;
-  //onPress?: (event: GestureResponderEvent) => void;
   titleRight?: React.ReactNode;
-  tilteLeft?: React.ReactNode;
-  title: string;
-  modalState: boolean;
-  onClose: () => void;
+  titleLeft?: React.ReactNode;
+  title?: string;
+  modalState?: boolean;
+  onClose?: () => void;
 }
-
-/* const [openModal, setOpenModal] = useState(false);
-const [modalUUID, setModelUUID] = useState(uuidv4()); */
-//const { t } = useTranslation();
 
 const EscendiaModal = ({
   title,
+  titleLeft,
+  titleRight,
   modalState,
   onClose,
   children,
   ...rest
-}: EscendiaModalProps) => (
-  <Modal
-    key={"modal_" + title}
-    visible={modalState}
-    transparent={true}
-    onRequestClose={onClose}
-  >
-    <ScrollView
-      key={"modal_scrollview_" + title}
-      style={{
-        //minHeight: Dimensions.get("window").width,
-        backgroundColor: colors.escendia_text_background,
-        margin: 20,
+}: EscendiaModalProps) => {
+  const [state, setState] = useState(false);
+  const [key, setKey] = useState(uuidv4());
+  const isWebValue = isWeb();
+  /*   const [number, setNumber] = useState([]);
+   */
+  /*   useEffect(() => {
+    let array = [];
+    for (let i = 0; i <= 1000; i++) {
+      array.push(Math.random() * i * 1000);
+    }
+    console.log("ARRAY", array);
+    setNumber(array);
+  }, []);
+
+  useEffect(() => {}, [number]); */
+
+  useEffect(() => {
+    if (modalState !== undefined) {
+      setState(modalState);
+    }
+  }, [modalState]);
+
+  return (
+    <Modal
+      key={"EscendiaModal_" + key}
+      visible={state}
+      transparent={true}
+      onRequestClose={() => {
+        setState(!state);
+        if (onClose) onClose();
       }}
     >
       <View
         style={{
-          ...StyleSheet.absoluteFillObject,
-          position: "absolute",
-          alignItems: "flex-end",
-        }}
-      >
-        <LeafIcon
-          width={calculate("width", 1000, 300)}
-          height={calculate("height", 1000, 300)}
-          fill={colors.escendia_img_background_light}
-        />
-      </View>
-      <View
-        style={{
           flex: 1,
-          alignItems: "center",
-          flexDirection: "row",
-          padding: 10,
-          borderBottomWidth: 1,
-          borderBottomColor: colors.escendia_img_background_light,
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
         }}
       >
-        <View style={{ flex: 1000 }}>
-          <EscendiaText style={{ textAlign: "center" }}>{title}</EscendiaText>
-        </View>
-        <View style={{ alignSelf: "flex-end" }}>
-          <Pressable onPress={onClose}>
-            <AntDesign name="close" size={24} color="black" />
-          </Pressable>
-        </View>
+        <ScrollView
+          style={{
+            margin: isWebValue ? 100 : 0,
+            minHeight: Dimensions.get("window").height - 200,
+            backgroundColor: colors.escendia_light,
+          }}
+        >
+          <View
+            key={"EscendiaModal_ScrollView_View_" + key}
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              position: "absolute",
+              alignItems: "flex-end",
+              right: isWebValue ? -250 : 0,
+            }}
+          >
+            <LeafIcon
+              key={"EscendiaModal_ScrollView_Image_" + key}
+              width={calculate("width", 1000, 200)}
+              height={calculate("height", 1000, 200)}
+              fill={colors.escendia_img_background_light}
+            />
+          </View>
+          <View
+            key={"EscendiaModal_ScrollView_Header_" + key}
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <View style={{ flex: 1000 }}>
+              {/* <EscendiaText style={{ textAlign: "center" }}>{title}</EscendiaText> */}
+            </View>
+            <View
+              style={{
+                paddingTop: 20,
+                paddingRight: 20,
+                alignSelf: "flex-end",
+              }}
+            >
+              <Pressable
+                onPress={() => {
+                  setState(!state);
+                  if (onClose) onClose();
+                }}
+              >
+                <AntDesign
+                  name="close"
+                  size={40}
+                  color={colors.escendia_dark}
+                />
+              </Pressable>
+            </View>
+          </View>
+
+          <View
+            key={"HeadLineTitle_Container_" + key}
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              left: calculate("width", -200, -20),
+            }}
+          >
+            <EscendiaText
+              key={"HeadLineTitle_Container_BackgroundText_" + key}
+              fontFamily="Simply Conception"
+              color={colors.escendia_img_background_light}
+              style={{
+                fontSize: calculate("none", 200, 80),
+                fontWeight: "600",
+                textAlign: "center",
+                flex: isWebValue ? 1 : undefined,
+                marginHorizontal: calculate("none", 0, -100),
+              }}
+            >
+              {t("Page_All_Header_Escendia")}
+            </EscendiaText>
+            <EscendiaText
+              fontFamily="Simply Conception"
+              key={"HeadLineTitle_Container_Title_" + key}
+              style={{
+                fontSize: calculate("none", 80, 40),
+                fontWeight: "600",
+                flex: isWebValue ? 1 : undefined,
+                marginHorizontal: calculate("none", -500, -100),
+              }}
+            >
+              {t(title)}
+            </EscendiaText>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              minHeight: calculate(
+                "height",
+                470,
+                Dimensions.get("screen").height - 450
+              ),
+            }}
+          >
+            {children}
+          </View>
+        </ScrollView>
       </View>
-      <View style={{ minHeight: Dimensions.get("window").height - 200 }}>
-        {children}
-      </View>
-    </ScrollView>
-  </Modal>
-);
+    </Modal>
+  );
+};
 
 export default EscendiaModal;

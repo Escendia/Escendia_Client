@@ -3,18 +3,17 @@ import EscendiaInput from "@components/default/EscendiaInput";
 import EscendiaText from "@components/default/EscendiaText";
 import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { calculate, isWeb } from "@services/functions";
 import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { t } from "i18next";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Image, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 
 function ImageView(props: any) {
-  if(!isWeb())return;
+  if (!isWeb()) return;
   return (
     <View
       style={{
@@ -107,8 +106,6 @@ function SignUpPage() {
   useEffect(() => {
     validatePassword(password, passwordConfirm);
   }, [password, passwordConfirm]);
-
-  const { t } = useTranslation();
 
   return (
     <EscendiaDefaultPage title={"Page_SignUp_Title"}>
@@ -273,7 +270,9 @@ function SignUpPage() {
               {t("Page_SignUp_Google")}
             </EscendiaButton>
           </View>
-          {isWeb() ?<View style={{ backgroundColor: "transparent", flex: 1 }}></View> : undefined}
+          {isWeb() ? (
+            <View style={{ backgroundColor: "transparent", flex: 1 }}></View>
+          ) : undefined}
         </View>
       </View>
     </EscendiaDefaultPage>

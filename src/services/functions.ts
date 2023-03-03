@@ -1,4 +1,9 @@
-import { Platform, useWindowDimensions, Dimensions } from "react-native";
+import {
+  Platform,
+  useWindowDimensions,
+  Dimensions,
+  NativeModules,
+} from "react-native";
 
 /**
  * Method to calculate dynamic width or height - Recalculate by dynamisch change

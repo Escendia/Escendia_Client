@@ -7,11 +7,10 @@ import { View, ViewBase } from "react-native";
 import { transparent } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { colors } from "../services/styling/styles";
 
-
 export default function ProfilePage() {
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("")
+  const [password, setPassword] = useState<string>("");
   return (
     <EscendiaDefaultPage title={"Page_Profile_Title"}>
       <View
@@ -29,33 +28,32 @@ export default function ProfilePage() {
             alignSelf: "flex-start",
             color: colors.escendia_light,
             paddingRight: 10,
-            paddingLeft: 15,
           }}
         >
           {t("Page_Profile_Email")}
         </EscendiaText>
         <EscendiaInput
-        disabled={true}
-              outlineStyle={{
-                borderColor: "transparent",
-                alignSelf:"flex-start",
-                paddingLeft:0,
-                marginLeft:0
-              }}
-              style={{
-                borderColor: "Blue",
-                marginBottom: 15,
-                alignSelf:"flex-start",
-                paddingLeft:0,
-                marginLeft:0
-              }}
-              placeholder={t("Page_Profile_Email")}
-              value={email}
-              onChangeText={(e) => {
-                setEmail(e);
-              }}
-            />
-             <EscendiaText
+          disabled={true}
+          editable={true}
+          style={{
+            borderColor: "Blue",
+            marginBottom: 15,
+            alignSelf: "flex-start",
+            paddingLeft: 0,
+            marginLeft: 0,
+          }}
+          placeholder={t("Page_Profile_Email")}
+          value={email}
+          onChangeText={(e) => {
+            console.log("onChangeText",e)
+            setEmail(e);
+          }}
+          onConfirm={(e) => {
+            console.log("onConfirm",e)
+            setEmail(e);
+          }}
+        />
+        <EscendiaText
           style={{
             fontSize: 25,
             fontWeight: "bold",
@@ -68,21 +66,21 @@ export default function ProfilePage() {
           {t("Page_Profile_Password")}
         </EscendiaText>
         <EscendiaInput
-        disabled={true}
-              outlineStyle={{
-                borderColor: colors.escendia_text_faded,
-              }}
-              style={{
-                borderColor: "yellow",
-                marginBottom: 15,
-                alignSelf:"flex-start"
-              }}
-              placeholder={t("Page_Profile_Password")}
-              value={password}
-              onChangeText={(d) => {
-                setPassword(d);
-              }}
-            />
+          disabled={true}
+          outlineStyle={{
+            borderColor: colors.escendia_text_faded,
+          }}
+          style={{
+            borderColor: "yellow",
+            marginBottom: 15,
+            alignSelf: "flex-start",
+          }}
+          placeholder={t("Page_Profile_Password")}
+          value={password}
+          onChangeText={(d) => {
+            setPassword(d);
+          }}
+        />
       </View>
     </EscendiaDefaultPage>
   );

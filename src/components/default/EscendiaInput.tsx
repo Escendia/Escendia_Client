@@ -15,18 +15,23 @@ interface EscendiaInputProps {
   contentStyle?: TextStyle;
   placeholder?: string;
   iconName?: string;
+  iconColor?: string;
   textColor?: string | undefined;
   onChangeText?: ((e: string) => void) | undefined;
   onConfirm?: ((e: string) => void) | undefined;
   onIconPress?: ((e: GestureResponderEvent) => void) | undefined;
+  onChangeStart?: (() => void) | undefined;
+  setToggle?: ((e: boolean) => void) | undefined;
   left?: React.ReactNode;
   right?: React.ReactNode;
   disabled?: boolean | undefined;
-  hasBorder?: boolean | undefined;
+  editable?: boolean | undefined;
   placeholderTextColor?: string | undefined;
   secureTextEntry?: boolean | undefined;
   dense?: boolean;
-  editable?: boolean | undefined;
+  selectionColor?: string | undefined;
+  mode?: "outlined" | "flat" | undefined;
+  toggle?: boolean | undefined;
 }
 
 const EscendiaInput = ({
@@ -41,27 +46,49 @@ const EscendiaInput = ({
   left,
   right,
   disabled,
-  hasBorder,
   secureTextEntry,
   dense,
   contentStyle,
   editable,
+  iconColor,
+  selectionColor,
+  mode,
+  onChangeStart,
+  toggle,
+  setToggle,
 }: EscendiaInputProps) => {
   const [isSecure, setIsSecure] = useState(secureTextEntry);
 
   const [isDisabled, setIsDisabled] = useState(disabled);
-  const [isEditable, setIsEditable] = useState(editable);
+  const [isEditable, setIsEditable] = useState(true);
 
   const [valueForEdit, setValueForEdit] = useState(value);
   const [key, setKey] = useState(uuidv4());
   const [ref, setRef] = useState(React.createRef<TextInput>());
 
   useEffect(() => {
+    if (
+      disabled === undefined ||
+      (disabled === false && editable === undefined)
+    ) {
+      setIsDisabled(true);
+    }
+    if (disabled === false && editable === true) {
+      setIsEditable(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (toggle) {
+      setIsEditable(!isEditable);
+      setIsDisabled(!isDisabled);
+      setToggle(!toggle);
+    }
+  }, [toggle]);
+
+  useEffect(() => {
     setValueForEdit(value);
   }, [value]);
-
-  useEffect(() => {}, [isEditable, isDisabled, key]);
-  useEffect(() => {}, [ref]);
 
   return (
     <Input
@@ -70,9 +97,9 @@ const EscendiaInput = ({
       dense={dense}
       disabled={isDisabled}
       placeholder={placeholder}
-      value={editable ? valueForEdit : value}
+      value={value ? value : valueForEdit}
       onChangeText={(e) => {
-        editable ? setValueForEdit(e) : onChangeText(e);
+        onChangeText ? onChangeText(e) : setValueForEdit(e);
       }}
       onSubmitEditing={(
         e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
@@ -92,7 +119,7 @@ const EscendiaInput = ({
           if (onConfirm) onConfirm(valueForEdit);
         }
       }}
-      mode="outlined"
+      mode={mode ? mode : "outlined"}
       secureTextEntry={isSecure}
       contentStyle={{ paddingLeft: isDisabled ? 0 : 15, ...contentStyle }}
       style={{
@@ -105,30 +132,29 @@ const EscendiaInput = ({
       }}
       outlineStyle={{
         borderRadius: 1,
-        borderColor:
-          (!hasBorder && !editable) || isDisabled
-            ? "transparent"
-            : colors.escendia_img_background_light,
+        borderColor: isDisabled
+          ? "transparent"
+          : colors.escendia_img_background_light,
         ...outlineStyle,
       }}
       textColor={textColor ? textColor : colors.escendia_light}
       placeholderTextColor={
         placeholderTextColor ? placeholderTextColor : colors.escendia_text_faded
       }
-      selectionColor={"grey"}
+      selectionColor={selectionColor ? selectionColor : "grey"}
       left={left}
-      autoFocus={true}
       right={
         editable ? (
           <Input.Icon
             icon={isEditable ? "pencil" : "content-save"}
-            iconColor={"white"}
+            iconColor={iconColor ? iconColor : "white"}
             onPress={() => {
               setIsEditable(!isEditable);
               setIsDisabled(!isDisabled);
               if (isEditable) {
                 //Hier Auto Open Keyboad ?!
                 ref.current.focus();
+                if (onChangeStart) onChangeStart();
               } else {
                 if (onChangeText) onChangeText(valueForEdit);
               }
@@ -137,7 +163,7 @@ const EscendiaInput = ({
         ) : secureTextEntry ? (
           <Input.Icon
             icon={isSecure ? "eye" : "eye-off"}
-            iconColor={"white"}
+            iconColor={iconColor ? iconColor : "white"}
             onPress={() => setIsSecure(!isSecure)}
           />
         ) : (

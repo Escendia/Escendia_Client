@@ -11,15 +11,15 @@ import { colors } from "@services/styling/styles";
 import { StackParams } from "App";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { t } from "i18next";
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Image, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 
 function ImageView(props: any) {
   const [testImage, setTestImage] = useState("TEST");
-  if(!isWeb())return;
-  
+  if (!isWeb()) return;
+
   return (
     <View
       style={{
@@ -29,13 +29,12 @@ function ImageView(props: any) {
         alignItems: "flex-end",
       }}
     >
-      
       <Image
         style={{
           //resizeMode: "contain",
           height: calculate("height", 550, 550),
           width: calculate("width", 450, 450),
-          margin: 50
+          margin: 50,
         }}
         source={require("../assets/test.jpg")}
       />
@@ -44,17 +43,12 @@ function ImageView(props: any) {
 }
 
 function SignInPage() {
-
-  const { t } = useTranslation();
-
   const auth = useDBStore((state) => state.auth);
-  const setUser = useUserStore((state) => state.setUser);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
-  const { navigate, openDrawer }: DrawerNavigationProp<StackParams> =
-  useNavigation();
+  const { navigate }: DrawerNavigationProp<StackParams> = useNavigation();
 
   function onSignIn() {
     signInWithEmailAndPassword(auth, email, password)
@@ -119,10 +113,10 @@ function SignInPage() {
                 setPassword(e);
               }}
             />
-            
+
             <EscendiaText
               style={{
-                fontSize: isWeb()?20:15 ,
+                fontSize: isWeb() ? 20 : 15,
                 fontWeight: "100",
                 alignSelf: "flex-end",
                 color: colors.escendia_light,
@@ -132,7 +126,7 @@ function SignInPage() {
             >
               {t("Page_SignIn_PasswordForget")}
             </EscendiaText>
-            
+
             <EscendiaButton
               style={{
                 padding: 15,
@@ -202,19 +196,21 @@ function SignInPage() {
             </EscendiaButton>
             <EscendiaText
               style={{
-                fontSize: isWeb()?20:15 ,
+                fontSize: isWeb() ? 20 : 15,
                 fontWeight: "100",
                 alignSelf: "center",
                 color: colors.escendia_light,
                 marginBottom: 15,
-                paddingTop:25
+                paddingTop: 25,
               }}
               onPress={() => navigate("SignUp")}
             >
               {t("Page_SignIn_NoAccount")}
             </EscendiaText>
           </View>
-          {isWeb()?<View style={{ backgroundColor: "transparent", flex: 1 }}></View>:undefined}
+          {isWeb() ? (
+            <View style={{ backgroundColor: "transparent", flex: 1 }}></View>
+          ) : undefined}
         </View>
       </View>
     </EscendiaDefaultPage>

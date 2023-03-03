@@ -15,10 +15,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { useUserStore } from "@services/store/store";
 import { useEffect } from "react";
 import { useToast } from "react-native-toast-notifications";
+import { t } from "i18next";
 
 function LandingPage() {
-  const { t } = useTranslation();
-
   function HeaderText(props: any) {
     return (
       <View

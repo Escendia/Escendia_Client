@@ -1,10 +1,11 @@
+import { uuidv4 } from "@firebase/util";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { calculate, isWeb } from "@services/functions";
 import { useUserStore } from "@services/store/store";
 import { StackParams } from "App";
-import React from "react";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -25,11 +26,29 @@ interface EscendiaHeaderProps {
   title: string;
 }
 
-function HeaderImage(props: any) {
+interface EscendiaHeaderLineProps {
+  isWebValue?: boolean;
+}
+
+interface EscendiaHeadLineTitleProps {
+  pyramideStyle?: "left" | "mid" | undefined;
+  isWebValue?: boolean;
+  pyramide?: boolean;
+  title: string;
+}
+
+interface EscendiaHeadPyramideProps {
+  pyramideStyle?: "left" | "mid" | undefined;
+  pyramide?: boolean;
+}
+
+export const HeaderImage = React.memo(({}) => {
+  const [key, setKey] = useState(uuidv4());
   const indexLeafTop = calculate("height", 750, 250);
 
   return (
     <View
+      key={"HeaderImage_" + key}
       style={{
         ...StyleSheet.absoluteFillObject,
         position: "absolute",
@@ -37,210 +56,260 @@ function HeaderImage(props: any) {
       }}
     >
       <LeafIcon
+        key={"HeaderImage_Icon_" + key}
         width={indexLeafTop}
         height={indexLeafTop}
         fill={colors.escendia_img_background_light}
       />
     </View>
   );
-}
+});
 
-function Header(props: any) {
-  const { navigate, openDrawer }: DrawerNavigationProp<StackParams> =
-    useNavigation();
-  const user = useUserStore((state) => state.user);
+export const HeaderLine = React.memo(
+  ({ isWebValue }: EscendiaHeaderLineProps) => {
+    const [key, setKey] = useState(uuidv4());
+    const { navigate, openDrawer }: DrawerNavigationProp<StackParams> =
+      useNavigation();
+    const user = useUserStore((state) => state.user);
 
-  return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
+    return (
       <View
-        style={{
-          paddingLeft: 20,
-          flexDirection: "column",
-        }}
+        key={"HeaderLine_Container_" + key}
+        style={{ flexDirection: "row", alignItems: "center" }}
       >
-        <TouchableOpacity
-          style={{ width: 40 }}
-          onPress={() => {
-            openDrawer();
-          }}
-        >
-          <View
-            style={{
-              borderBottomColor: "black",
-              borderBottomWidth: 1,
-              margin: 5,
-            }}
-          />
-          <View
-            style={{
-              borderBottomColor: "black",
-              borderBottomWidth: 1,
-              margin: 5,
-              width: 20,
-            }}
-          />
-          <View
-            style={{
-              borderBottomColor: "black",
-              borderBottomWidth: 1,
-              margin: 5,
-            }}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={{ flex: calculate("none", 5, 0) }}></View>
-      <TouchableOpacity
-        style={{
-          flex: calculate("none", 10, 1),
-          alignItems: "center",
-        }}
-        onPress={() => navigate("Landing")}
-      >
-        <Image
-          style={{
-            height: calculate("height", 150, 90),
-            width: calculate("width", 100, 50),
-          }}
-          source={require("../../assets/logo.png")}
-        />
-      </TouchableOpacity>
-      <EscendiaInput
-        outlineStyle={{ borderWidth: 0 }}
-        style={{
-          flex: calculate("none", 4, 3),
-          borderWidth: 0,
-          borderBottomWidth: 1,
-          marginRight: 50,
-        }}
-        textColor={colors.escendia_dark}
-        placeholder={props.search}
-        iconName="text-search"
-      />
-      {props.isWebValue && !user ? (
         <View
+          key={"HeaderLine_Container_Drawer_" + key}
           style={{
-            flexDirection: "row-reverse",
-            justifyContent: "flex-end",
-            paddingRight: 50,
+            paddingLeft: 20,
+            flexDirection: "column",
           }}
         >
-          <EscendiaText onPress={() => navigate("SignIn")}>
-            {props.login}
-          </EscendiaText>
-          <EscendiaText
-            style={{
-              marginLeft: 5,
-              marginRight: 5,
+          <TouchableOpacity
+            style={{ width: 40 }}
+            onPress={() => {
+              openDrawer();
             }}
           >
-            |
-          </EscendiaText>
-          <EscendiaText onPress={() => navigate("SignUp")}>
-            {props.register}
-          </EscendiaText>
+            <View
+              style={{
+                borderBottomColor: "black",
+                borderBottomWidth: 1,
+                margin: 5,
+              }}
+            />
+            <View
+              style={{
+                borderBottomColor: "black",
+                borderBottomWidth: 1,
+                margin: 5,
+                width: 20,
+              }}
+            />
+            <View
+              style={{
+                borderBottomColor: "black",
+                borderBottomWidth: 1,
+                margin: 5,
+              }}
+            />
+          </TouchableOpacity>
         </View>
-      ) : null}
-      {user && props.isWebValue ? (
         <View
+          key={"HeaderLine_Container_MiddlePart_" + key}
+          style={{ flex: calculate("none", 5, 0) }}
+        ></View>
+        <TouchableOpacity
+          key={"HeaderLine_Container_Icon_" + key}
           style={{
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            paddingRight: 50,
+            flex: calculate("none", 10, 1),
+            alignItems: "center",
+          }}
+          onPress={() => navigate("Landing")}
+        >
+          <Image
+            style={{
+              height: calculate("height", 150, 90),
+              width: calculate("width", 100, 50),
+            }}
+            source={require("../../assets/logo.png")}
+          />
+        </TouchableOpacity>
+        <EscendiaText
+          key={"HeaderLine_Container_Filter_" + key}
+          //outlineStyle={{ borderWidth: 0 }}
+          style={{
+            flex: calculate("none", 4, 3),
+            borderWidth: 0,
+            borderBottomWidth: 1,
+            marginRight: 50,
+          }}
+          //textColor={colors.escendia_dark}
+          //placeholder={t("Page_All_Header_Search")}
+          //iconName="text-search"
+        >
+          {t("TO BE DEFINED - Autocomplete")}
+        </EscendiaText>
+        {isWebValue && !user ? (
+          <View
+            key={"HeaderLine_Container_LoginView_" + key}
+            style={{
+              flexDirection: "row-reverse",
+              justifyContent: "flex-end",
+              paddingRight: 50,
+            }}
+          >
+            <EscendiaText
+              key={"HeaderLine_Container_LoginView_SignIn_" + key}
+              onPress={() => navigate("SignIn")}
+            >
+              {t("Page_All_Header_SignIn")}
+            </EscendiaText>
+            <EscendiaText
+              style={{
+                marginLeft: 5,
+                marginRight: 5,
+              }}
+            >
+              |
+            </EscendiaText>
+            <EscendiaText
+              key={"HeaderLine_Container_LoginView_SignUp_" + key}
+              onPress={() => navigate("SignUp")}
+            >
+              {t("Page_All_Header_SignUp")}
+            </EscendiaText>
+          </View>
+        ) : null}
+        {user && isWebValue ? (
+          <View
+            key={"HeaderLine_Container_LoginView_LoginContainer_" + key}
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              paddingRight: 50,
+            }}
+          >
+            <View
+              key={"HeaderLine_Container_LoginView_LoginContainer_Text_" + key}
+              style={{ alignItems: "flex-end" }}
+            >
+              <EscendiaText>{t("Page_All_Header_Welcome")}</EscendiaText>
+              <EscendiaText>{user.displayName}</EscendiaText>
+            </View>
+            <View
+              key={"HeaderLine_Container_LoginView_LoginContainer_Icon_" + key}
+              style={{ borderRadius: 80 }}
+            >
+              <Image
+                style={{
+                  height: 50,
+                  width: 50,
+                  marginLeft: 10,
+                  borderRadius: 80,
+                }}
+                source={
+                  user.photoURL
+                    ? user.photoURL
+                    : require("../../assets/logo.png")
+                }
+              />
+            </View>
+          </View>
+        ) : null}
+      </View>
+    );
+  }
+);
+
+export const HeaderLineTitle = React.memo(
+  ({
+    pyramideStyle,
+    isWebValue,
+    title,
+    pyramide,
+  }: EscendiaHeadLineTitleProps) => {
+    const [key, setKey] = useState(uuidv4());
+
+    return pyramide === undefined || pyramide === true ? (
+      <View
+        key={"HeadLineTitle_Container_" + key}
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          left: calculate(
+            "width",
+            pyramideStyle == "left" ? -100 : -300,
+            pyramideStyle == "left" ? 70 : 30
+          ),
+        }}
+      >
+        <EscendiaText
+          key={"HeadLineTitle_Container_BackgroundText_" + key}
+          fontFamily="Simply Conception"
+          color={colors.escendia_img_background_light}
+          style={{
+            fontSize: calculate("none", 250, 75),
+            fontWeight: "600",
+            textAlign: "center",
+            flex: isWebValue ? 1 : undefined,
+            marginHorizontal: calculate("none", 50, -160),
           }}
         >
-          <View style={{ alignItems: "flex-end" }}>
-            <EscendiaText>{props.welcome}</EscendiaText>
-            <EscendiaText>{user.displayName}</EscendiaText>
-          </View>
-          <View style={{ borderRadius: 80 }}>
-            <Image
-              style={{
-                height: 50,
-                width: 50,
-                marginLeft: 10,
-                borderRadius: 80,
-              }}
-              source={
-                user.photoURL ? user.photoURL : require("../../assets/logo.png")
-              }
-            />
-          </View>
-        </View>
-      ) : null}
-    </View>
-  );
-}
+          {t("Page_All_Header_Escendia")}
+        </EscendiaText>
+        <EscendiaText
+          key={"HeadLineTitle_Container_Title_" + key}
+          style={{
+            fontSize: calculate("none", 100, 35),
+            fontWeight: "600",
+            flex: isWebValue ? 1 : undefined,
+            marginHorizontal: calculate("none", -650, 0),
+          }}
+        >
+          {t(title)}
+        </EscendiaText>
+      </View>
+    ) : undefined;
+  }
+);
 
-function HeadLine(props: any) {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        left: calculate(
-          "width",
-          props.pyramideStyle == "left" ? -100 : -300,
-          props.pyramideStyle == "left" ? 70 : 30
-        ),
-      }}
-    >
-      <EscendiaText
-        fontFamily="Simply Conception"
-        color={colors.escendia_img_background_light}
+export const HeaderPyramide = React.memo(
+  ({ pyramideStyle, pyramide }: EscendiaHeadPyramideProps) => {
+    const [key, setKey] = useState(uuidv4());
+
+    const lineHeaderMidValues = calculate("height", 40, 10);
+    const lineHeaderHeightMidValues = calculate("height", 100, 40);
+    const lineHeaderLeftValues = calculate("height", 400, 100);
+    const lineHeaderHeightLeftValues = calculate("height", 300, 50);
+
+    const lineHeader =
+      pyramideStyle == "left" ? lineHeaderLeftValues : lineHeaderMidValues;
+    const lineHeaderHeight =
+      pyramideStyle == "left"
+        ? lineHeaderHeightLeftValues
+        : lineHeaderHeightMidValues;
+
+    const lineHeaderLeftBorder =
+      Dimensions.get("window").width / 2 - lineHeader;
+    const lineHeaderRightBorder =
+      Dimensions.get("window").width / 2 + lineHeader;
+
+    return pyramide === undefined || pyramide === true ? (
+      <View
+        key={"HeadPyramide_Container_" + key}
         style={{
-          fontSize: calculate("none", 250, 75),
-          fontWeight: "600",
-          textAlign: "center",
-          flex: props.isWebValue ? 1 : undefined,
-          marginHorizontal: calculate("none", 50, -160),
+          borderBottomWidth: lineHeaderHeight,
+          borderBottomColor: colors.escendia_dark,
+          borderLeftWidth: lineHeaderLeftBorder,
+          borderRightWidth: lineHeaderRightBorder,
+          borderLeftColor: colors.escendia_light,
+          borderRightColor: colors.escendia_light,
         }}
-      >
-        {props.backgroundTitle}
-      </EscendiaText>
-      <EscendiaText
-        style={{
-          fontSize: calculate("none", 100, 35),
-          fontWeight: "600",
-          flex: props.isWebValue ? 1 : undefined,
-          marginHorizontal: calculate("none", -650, 0),
-        }}
-      >
-        {props.title}
-      </EscendiaText>
-    </View>
-  );
-}
-
-function HeaderPyramide(props: any) {
-  const lineHeaderMidValues = calculate("height", 40, 10);
-  const lineHeaderHeightMidValues = calculate("height", 100, 40);
-  const lineHeaderLeftValues = calculate("height", 400, 100);
-  const lineHeaderHeightLeftValues = calculate("height", 300, 50);
-
-  const lineHeader =
-    props.pyramideStyle == "left" ? lineHeaderLeftValues : lineHeaderMidValues;
-  const lineHeaderHeight =
-    props.pyramideStyle == "left"
-      ? lineHeaderHeightLeftValues
-      : lineHeaderHeightMidValues;
-
-  const lineHeaderLeftBorder = Dimensions.get("window").width / 2 - lineHeader;
-  const lineHeaderRightBorder = Dimensions.get("window").width / 2 + lineHeader;
-
-  return (
-    <View
-      style={{
-        borderBottomWidth: lineHeaderHeight,
-        borderBottomColor: colors.escendia_dark,
-        borderLeftWidth: lineHeaderLeftBorder,
-        borderRightWidth: lineHeaderRightBorder,
-        borderLeftColor: colors.escendia_light,
-        borderRightColor: colors.escendia_light,
-      }}
-    ></View>
-  );
-}
+      />
+    ) : undefined;
+  }
+);
 
 const EscendiaHeader = ({
   title,
@@ -250,34 +319,22 @@ const EscendiaHeader = ({
   children,
   ...rest
 }: EscendiaHeaderProps) => {
-  const { t } = useTranslation();
-  const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
   const isWebValue = isWeb();
 
   return (
     <>
-      {HeaderImage({})}
-      {Header({
-        login: t("Page_All_Header_SignIn"),
-        register: t("Page_All_Header_SignUp"),
-        search: t("Page_All_Header_Search"),
-        welcome: t("Page_All_Header_Welcome"),
-        isWebValue: isWebValue,
-      })}
-      {HeadLine({
-        pyramideStyle: pyramideStyle,
-        backgroundTitle: t("Escendia"),
-        title: t(title),
-        isWebValue: isWebValue,
-      })}
+      <HeaderImage />
+      <HeaderLine isWebValue={isWebValue} />
       {children}
-      {HeaderPyramide({
-        pyramideStyle: pyramideStyle,
-      })}
+      <HeaderLineTitle
+        title={title}
+        isWebValue={isWebValue}
+        pyramideStyle={pyramideStyle}
+      />
+      <HeaderPyramide pyramide={pyramide} pyramideStyle={pyramideStyle} />
       {childrenBelowPyramide}
     </>
   );
 };
 
-export default EscendiaHeader;
+export default React.memo(EscendiaHeader);

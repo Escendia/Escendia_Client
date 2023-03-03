@@ -6,14 +6,13 @@ import EscendiaText from "../default/EscendiaText";
 import { isWeb } from "@services/functions";
 import { useTranslation } from "react-i18next";
 import EscendiaSocialMedia from "../default/EscendiaSocialMedia";
+import { t } from "i18next";
 
 interface EscendiaHeaderProps {
   children?: React.ReactNode;
 }
 
 const EscendiaFooter = ({ children, ...rest }: EscendiaHeaderProps) => {
-  const { t } = useTranslation();
-
   return (
     <View
       style={{

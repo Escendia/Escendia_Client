@@ -22,6 +22,12 @@ import LeafIcon from "../components/icons/LeafIcon";
 import EscendiaInput from "@components/default/EscendiaInput";
 import EscendiaModal from "@components/default/EscendiaModal";
 import { t } from "i18next";
+import { uuidv4 } from "@firebase/util";
+import EscendiaCard from "@components/default/EscendiaCard";
+import EscendiaCheckBox from "@components/default/EscendiaCheckbox";
+import EscendiaDropwDown from "@components/default/EscendiaDropDown";
+import EscendiaDate from "@components/default/EscendiaDate";
+import EscendiaAutoComplete from "@components/default/EscendiaAutoComplete";
 
 /* 
       {index % 4 === 0 && index > 0 ? (
@@ -31,35 +37,32 @@ import { t } from "i18next";
         ></View>
       ) : undefined}
 */
-interface EscendiaCardProps {
+/* interface EscendiaCardProps {
   title: string;
   index: number;
   size: number;
-}
+} */
 
-export const EscendiaCard = ({ title, index, size }: EscendiaCardProps) => {
-  const { t } = useTranslation();
-  const [openModal, setOpenModal] = useState(false);
+/* export const EscendiaCard = ({ title, index, size }: EscendiaCardProps) => {
+  const [modalState, setModalState] = useState(false);
+  const [key, setKey] = useState(uuidv4());
+
   return (
     <>
-      <EscendiaInput
-        disabled={true}
-        editable={true}
-        placeholder={title}
-        onConfirm={(e) => {
-          console.log(e);
-        }}
-      />
-      {/*       <EscendiaModal title={title} modalState={openModal} onClose=>
+      <EscendiaModal
+        key={"EscendiaCard_" + key}
+        title={title}
+        modalState={modalState}
+      >
         <EscendiaText>TEST</EscendiaText>
       </EscendiaModal>
       <TouchableOpacity
-        key={"creation_card_touch_" + index}
+        key={"EscendiaCard_Touch_" + key}
         style={{ flex: 1 }}
-        onPress={() => setOpenModal(!openModal)}
+        onPress={() => setModalState(!modalState)}
       >
         <ImageBackground
-          key={"creation_card_image_" + index}
+          key={"EscendiaCard_Touch_Image_" + key}
           style={{
             flex: 1,
             borderWidth: 1,
@@ -77,6 +80,7 @@ export const EscendiaCard = ({ title, index, size }: EscendiaCardProps) => {
           source={require("../assets/test.jpg")}
         >
           <View
+            key={"EscendiaCard_Touch_Image_View" + key}
             style={{
               width: size,
               height: size,
@@ -84,6 +88,7 @@ export const EscendiaCard = ({ title, index, size }: EscendiaCardProps) => {
             }}
           >
             <View
+              key={"EscendiaCard_Touch_Image_View_View" + key}
               style={{
                 justifyContent: "flex-end",
                 backgroundColor: "rgba(90,69,60,0.6)",
@@ -91,8 +96,8 @@ export const EscendiaCard = ({ title, index, size }: EscendiaCardProps) => {
               }}
             >
               <EscendiaText
+                key={"EscendiaCard_Touch_Image_View_Text" + key}
                 style={{ opacity: 1 }}
-                key={"sidebar_option_text_" + index}
                 color={colors.escendia_text_background}
               >
                 {t(title)}
@@ -100,10 +105,10 @@ export const EscendiaCard = ({ title, index, size }: EscendiaCardProps) => {
             </View>
           </View>
         </ImageBackground>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </>
   );
-};
+}; */
 
 function CreationPage() {
   const [creationOptions, setCreationOptions] = useState([
@@ -113,12 +118,17 @@ function CreationPage() {
     "Creation_Option_Type",
     "Creation_Option_Awards",
   ]);
+  const [key, setKey] = useState(uuidv4());
 
   useEffect(() => {}, []);
 
   return (
-    <EscendiaDefaultPage title={t("Page_Creation_Title")}>
+    <EscendiaDefaultPage
+      key={"CreationPage_" + key}
+      title={t("Page_Creation_Title")}
+    >
       <View
+        key={"CreationPage_View_" + key}
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -127,7 +137,67 @@ function CreationPage() {
         }}
       >
         {creationOptions.map((value, index) => {
-          return <EscendiaCard title={value} index={index} size={300} />;
+          const [modalState, setModalState] = useState(false);
+          const [text, setTest] = useState("");
+
+          return (
+            <View key={"CreationPage_Option_" + key + "_" + index}>
+              {/*               <EscendiaModal
+                key={"CreationPage_EscendiaModal_" + key + "_" + index}
+                title={"Manage your beverages"}
+                modalState={modalState}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    backgroundColor: "green",
+                    alignItems: "center",
+                  }}
+                >
+                  <EscendiaText>TEST</EscendiaText>
+                </View>
+              </EscendiaModal>
+              <EscendiaCard
+                onPress={() => setModalState(!modalState)}
+                key={"CreationPage_EscendiaCard_" + key + "_" + index}
+                title={value}
+                width={300}
+                height={300}
+                image={"test.jpg"}
+              /> */}
+              {/*               <EscendiaCheckBox
+                textStyle={{ color: "white" }}
+                title={"test"}
+                disabled={true}
+                editable={true}
+              /> */}
+              {/*               <EscendiaInput
+                placeholder="TEST"
+                value={text}
+                onChangeText={(e) => setTest(e)}
+                editable={true}
+                disabled={true}
+              /> */}
+              {/*               <EscendiaDropwDown
+                value={text}
+                onPress={(e) => setTest(e)}
+                optionList={[value]}
+                editable={true}
+              /> */}
+              <EscendiaDate type={"year"} date={new Date()} editable={true} />
+              {/*               <EscendiaAutoComplete
+                values={[]}
+                options={[
+                  { id: "ID_1", name: "Name_1" },
+                  { id: "ID_2", name: "Name_2" },
+                  { id: "ID_3", name: "Name_3" },
+                ]}
+                isMulti={true}
+                optionNameId="id"
+                optionNameValue="name"
+              /> */}
+            </View>
+          );
         })}
       </View>
     </EscendiaDefaultPage>

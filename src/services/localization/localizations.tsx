@@ -8,7 +8,8 @@ const de = {
   Page_All_Header_SignUp: "Registrieren",
   Page_All_Header_SignIn: "Anmelden",
   Page_All_Header_Welcome: "Willkommen,",
-  
+  Page_All_Header_Escendia: "Escendia",
+
   Page_All_Footer_Text:
     "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
 
@@ -22,7 +23,6 @@ const de = {
   Page_All_Footer_Impress: "Impressum",
   Page_All_Footer_AboutUs: "Über uns",
   Page_All_Footer_ContactUs: "Kontakiere uns",
-  
 
   Page_All_Footer_CopyRight: "Copyright © 2023. All rights reserved.",
 
@@ -60,11 +60,11 @@ const de = {
   Page_SignUp_LetterReq:
     "Das Passwort muss mindestens einen Großbuchstaben,einen Kleinbuchstaben,eine Zahl und ein Sonderzeichen enthalten",
 
-  Page_Profile_Name:"Benutzername",
-  Page_Profile_Email:"Email",
-  Page_Profile_Password:"Passwort",
-  Page_Profile_Delete:"Benutzername",
-  
+  Page_Profile_Name: "Benutzername",
+  Page_Profile_Email: "Email",
+  Page_Profile_Password: "Passwort",
+  Page_Profile_Delete: "Benutzername",
+
   Page_Creation_Title: "Erstellen",
   Page_Creation: "Anlegen",
 
@@ -84,6 +84,14 @@ const de = {
   Creation_Option_Type: "Eigenschaften",
   Creation_Option_Awards: "Auszeichnungen",
 
+  EscendiaDate_NoDate: "Kein Datum",
+  EscendiaDate_Week_Sunday: "Sonntag",
+  EscendiaDate_Week_Monday: "Montag",
+  EscendiaDate_Week_Tuesday: "Dienstag",
+  EscendiaDate_Week_Wednesday: "Mittwoch",
+  EscendiaDate_Week_Thursday: "Donnerstag",
+  EscendiaDate_Week_Friday: "Freitag",
+  EscendiaDate_Week_Saturday: "Samstag",
 
   Toast_Warning_authinvalidemail: "Keine gültige E-Mail Adresse!",
   Toast_Warning_authinternalerror: "Interner Fehler!",
@@ -102,7 +110,7 @@ const de = {
 
 const en = {
   Name: "Escendia",
-  Page_Profile_Name:"Username",
+  Page_Profile_Name: "Username",
 };
 
 export { de, en };
