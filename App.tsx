@@ -9,27 +9,27 @@ import {
 import { calculate } from "@services/functions";
 import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
+import Constants from "expo-constants";
 import { useFonts } from "expo-font";
 import { initializeApp } from "firebase/app";
-import i18n from "i18next";
+import i18n, { t } from "i18next";
 import React, { useEffect } from "react";
-import { initReactI18next, useTranslation } from "react-i18next";
-import { Dimensions, Platform, View } from "react-native";
+import { initReactI18next } from "react-i18next";
+import { Dimensions, View } from "react-native";
 import "react-native-gesture-handler";
+import {
+  MD3LightTheme as DefaultTheme,
+  Provider as PaperProvider,
+} from "react-native-paper";
 import "react-native-reanimated";
 import { ToastProvider } from "react-native-toast-notifications";
 import CreationPage from "./src/pages/CreationPage";
-import { onCLS, onFID, onLCP } from "web-vitals";
 import LandingPage from "./src/pages/LandingPage";
 import ProfilePage from "./src/pages/ProfilePage";
 import SignInPage from "./src/pages/SignInPage";
 import SignUpPage from "./src/pages/SignUpPage";
 import TestPage from "./src/pages/TestPage";
 import { de, en } from "./src/services/localization/localizations";
-import {
-  MD3LightTheme as DefaultTheme,
-  Provider as PaperProvider,
-} from "react-native-paper";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -51,51 +51,26 @@ export type StackParams = {
 };
 
 const Stack = createDrawerNavigator<StackParams>();
-
 export const globalNavigation = createNavigationContainerRef<StackParams>();
 
 export default function App({ props }) {
+  //Fonts die geladen werden
   const [fontsLoaded] = useFonts({
     "Josefin Sans": require("./src/assets/fonts/JosefinSans-Regular.otf"),
     "Simply Conception": require("./src/assets/fonts/Simply-Conception-Regular.otf"),
   });
-
-  function logDelta({ name, id, delta }) {
-    console.log(`${name} matching ID ${id} changed by ${delta}`);
-  }
 
   const setApp = useDBStore((state) => state.setApp);
   const app = useDBStore((state) => state.app);
   const auth = useDBStore((state) => state.auth);
   const setUser = useUserStore((state) => state.setUser);
 
-  const { t } = useTranslation();
-
-  // Initialize Firebase
+  // Initialisiere Firebase Datenbank, Rest in Zusatnd
   useEffect(() => {
-    setApp(
-      initializeApp({
-        apiKey: "AIzaSyDBK5uZCVMoMBlchiyri9NO4bYM9jsNCLg",
-
-        authDomain: "escendia-374212.firebaseapp.com",
-
-        projectId: "escendia-374212",
-
-        storageBucket: "escendia-374212.appspot.com",
-
-        messagingSenderId: "943523318087",
-
-        appId: "1:943523318087:web:479105c34ecb0588016462",
-
-        measurementId: "G-YC52M51XS5",
-      })
-    );
-    /*     onCLS(logDelta);
-    onFID(logDelta);
-    onLCP(logDelta); */
-    //setToast(useToast());
+    setApp(initializeApp(Constants.expoConfig.extra.firebase));
   }, []);
 
+  //Umschalten der Seiten nachdem ein User angemeldet wurde
   useEffect(() => {
     if (auth === undefined) return;
     auth.onAuthStateChanged((user) => {
@@ -104,8 +79,7 @@ export default function App({ props }) {
     });
   }, [auth]);
 
-  const width = calculate("width", 450, Dimensions.get("screen").width);
-
+  //Theme für React Native Paper für die
   const theme = {
     ...DefaultTheme,
     colors: {
@@ -152,8 +126,64 @@ export default function App({ props }) {
     }, // Copy it from the color codes scheme and then use it here
   };
 
-  return (
-    <PaperProvider theme={theme}>
+  const EscendiaStacks = ({}) => {
+    return (
+      <NavigationContainer ref={globalNavigation}>
+        {fontsLoaded && app !== undefined ? (
+          <Stack.Navigator
+            initialRouteName="Landing"
+            screenOptions={{
+              headerShown: false,
+              drawerStyle: {
+                width: calculate("width", 450, Dimensions.get("screen").width),
+              },
+            }}
+            useLegacyImplementation={false}
+            drawerContent={(props) => {
+              return <EscendiaSidebar props={props} />;
+            }}
+          >
+            <Stack.Screen
+              name="Landing"
+              component={LandingPage}
+              options={{
+                title: t("Page_Landing"),
+              }}
+            />
+            <Stack.Screen
+              name="SignIn"
+              component={SignInPage}
+              options={{ title: t("Page_SignIn") }}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUpPage}
+              options={{ title: t("Page_SignUp") }}
+            />
+            <Stack.Screen
+              name="Test"
+              component={TestPage}
+              options={{ title: t("Page_TestPage") }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfilePage}
+              options={{ title: t("Page_ProfilePage") }}
+            />
+            <Stack.Screen
+              name="Creation"
+              component={CreationPage}
+              options={{ title: t("Page_CreationPage") }}
+            />
+          </Stack.Navigator>
+        ) : null}
+      </NavigationContainer>
+    );
+  };
+
+  //Toast Provider mit eingezogenen Stacks
+  const EscendiaPageWithToast = ({}) => {
+    return (
       <ToastProvider
         swipeEnabled={true}
         icon={
@@ -257,57 +287,14 @@ export default function App({ props }) {
           );
         }}
       >
-        <NavigationContainer ref={globalNavigation}>
-          {fontsLoaded && app !== undefined ? (
-            <Stack.Navigator
-              initialRouteName="Landing"
-              screenOptions={{
-                headerShown: false,
-                drawerStyle: {
-                  width: width,
-                },
-              }}
-              useLegacyImplementation={false}
-              drawerContent={(props) => {
-                return <EscendiaSidebar props={props} />;
-              }}
-            >
-              <Stack.Screen
-                name="Landing"
-                component={LandingPage}
-                options={{
-                  title: t("Page_Landing"),
-                }}
-              />
-              <Stack.Screen
-                name="SignIn"
-                component={SignInPage}
-                options={{ title: t("Page_SignIn") }}
-              />
-              <Stack.Screen
-                name="SignUp"
-                component={SignUpPage}
-                options={{ title: t("Page_SignUp") }}
-              />
-              <Stack.Screen
-                name="Test"
-                component={TestPage}
-                options={{ title: t("Page_TestPage") }}
-              />
-              <Stack.Screen
-                name="Profile"
-                component={ProfilePage}
-                options={{ title: t("Page_ProfilePage") }}
-              />
-              <Stack.Screen
-                name="Creation"
-                component={CreationPage}
-                options={{ title: t("Page_CreationPage") }}
-              />
-            </Stack.Navigator>
-          ) : null}
-        </NavigationContainer>
+        <EscendiaStacks />
       </ToastProvider>
+    );
+  };
+
+  return (
+    <PaperProvider theme={theme}>
+      <EscendiaPageWithToast />
     </PaperProvider>
   );
 }

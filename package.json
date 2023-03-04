@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "npx cross-env NODE_OPTIONS=--openssl-legacy-provider expo start",
+    "start": "npx cross-env ENVIRONMENT=demo NODE_OPTIONS=--openssl-legacy-provider expo start",
+    "livestart": "npx cross-env ENVIRONMENT=live NODE_OPTIONS=--openssl-legacy-provider expo start",
     "reset": "expo start --clear",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -35,6 +36,7 @@
     "react-dom": "18.1.0",
     "react-i18next": "^12.1.4",
     "react-native": "0.70.5",
+    "react-native-dotenv": "^3.4.8",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-multi-selectbox": "^1.5.0",
     "react-native-paper": "^5.1.3",
