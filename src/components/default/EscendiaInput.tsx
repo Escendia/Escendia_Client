@@ -67,12 +67,14 @@ const EscendiaInput = ({
   const [ref, setRef] = useState(React.createRef<TextInput>());
 
   useEffect(() => {
-    if (
-      disabled === undefined ||
-      (disabled === false && editable === undefined)
-    ) {
+    if (disabled === undefined && editable === undefined) {
+      setIsDisabled(false);
+    }
+
+    if (disabled === undefined && editable !== undefined) {
       setIsDisabled(true);
     }
+
     if (disabled === false && editable === true) {
       setIsEditable(false);
     }
@@ -89,6 +91,10 @@ const EscendiaInput = ({
   useEffect(() => {
     setValueForEdit(value);
   }, [value]);
+
+  useEffect(() => {
+    console.log("isDisabled", isDisabled);
+  }, [isDisabled]);
 
   return (
     <Input
@@ -131,7 +137,7 @@ const EscendiaInput = ({
         ...style,
       }}
       outlineStyle={{
-        borderRadius: 1,
+        borderRadius: isDisabled ? 0 : 1,
         borderColor: isDisabled
           ? "transparent"
           : colors.escendia_img_background_light,

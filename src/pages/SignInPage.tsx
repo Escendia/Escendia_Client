@@ -84,11 +84,7 @@ function SignInPage() {
             }}
           >
             <EscendiaInput
-              outlineStyle={{
-                borderColor: colors.escendia_text_faded,
-              }}
               style={{
-                borderColor: "black",
                 marginBottom: 15,
               }}
               value={email}
@@ -100,12 +96,8 @@ function SignInPage() {
 
             <EscendiaInput
               secureTextEntry={true}
-              outlineStyle={{
-                borderColor: colors.escendia_text_faded,
-              }}
               style={{
-                borderColor: colors.escendia_light,
-                marginBottom: 5,
+                marginBottom: 15,
               }}
               value={password}
               placeholder={t("Page_SignIn_Password")}

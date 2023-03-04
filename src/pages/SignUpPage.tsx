@@ -131,11 +131,7 @@ function SignUpPage() {
             }}
           >
             <EscendiaInput
-              outlineStyle={{
-                borderColor: colors.escendia_text_faded,
-              }}
               style={{
-                borderColor: "black",
                 marginBottom: 15,
               }}
               placeholder={t("Page_SignUp_Username")}
@@ -145,11 +141,7 @@ function SignUpPage() {
               }}
             />
             <EscendiaInput
-              outlineStyle={{
-                borderColor: colors.escendia_text_faded,
-              }}
               style={{
-                borderColor: "black",
                 marginBottom: 15,
               }}
               placeholder={t("Page_SignUp_Email")}
