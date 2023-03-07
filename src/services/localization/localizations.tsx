@@ -62,8 +62,13 @@ const de = {
 
   Page_Profile_Name: "Benutzername",
   Page_Profile_Email: "Email",
-  Page_Profile_Password: "Passwort",
+  Page_Profile_Password: "Passwort zurücksetzen",
   Page_Profile_Delete: "Benutzername",
+  Page_Profile_Title: "Profilseite" ,
+  Page_Profile_Username: "Username" ,
+  Page_Profile_Logout:"Logout",
+  Page_Profile_CurrentSub:"Subscription XYZ",
+  Page_Profile_Shop:"Zum Shop",
 
   Page_Creation_Title: "Erstellen",
   Page_Creation: "Anlegen",
