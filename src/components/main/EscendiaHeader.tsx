@@ -325,12 +325,12 @@ const EscendiaHeader = ({
     <>
       <HeaderImage />
       <HeaderLine isWebValue={isWebValue} />
-      {children}
       <HeaderLineTitle
         title={title}
         isWebValue={isWebValue}
         pyramideStyle={pyramideStyle}
       />
+      {children}
       <HeaderPyramide pyramide={pyramide} pyramideStyle={pyramideStyle} />
       {childrenBelowPyramide}
     </>

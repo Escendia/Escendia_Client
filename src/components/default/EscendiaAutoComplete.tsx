@@ -53,12 +53,14 @@ const EscendiaAutoComplete = ({
   const [ref, setRef] = useState(React.createRef<TextInput>());
 
   useEffect(() => {
-    if (
-      disabled === undefined ||
-      (disabled === false && editable === undefined)
-    ) {
+    if (disabled === undefined && editable === undefined) {
+      setIsDisabled(false);
+    }
+
+    if (disabled === undefined && editable !== undefined) {
       setIsDisabled(true);
     }
+
     if (disabled === false && editable === true) {
       setIsEditable(false);
     }

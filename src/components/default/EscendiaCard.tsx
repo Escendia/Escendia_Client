@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ImageBackground, View } from "react-native";
+import { ImageBackground, ImageSourcePropType, View } from "react-native";
 
 import EscendiaText from "@components/default/EscendiaText";
 import { uuidv4 } from "@firebase/util";
@@ -13,7 +13,7 @@ interface EscendiaCardProps {
   title: string;
   width: number;
   height: number;
-  image: string;
+  image: ImageSourcePropType;
 }
 
 interface EscendiaCardBodyProps {
@@ -21,7 +21,7 @@ interface EscendiaCardBodyProps {
   title: string;
   width: number;
   height: number;
-  image: string;
+  image: ImageSourcePropType;
 }
 
 export const EscendiaCardBody = ({
@@ -32,7 +32,8 @@ export const EscendiaCardBody = ({
 }: EscendiaCardBodyProps) => {
   const [key, setKey] = useState(uuidv4());
 
-  return (
+
+  return image ? (
     <ImageBackground
       key={"EscendiaCard_Touch_Image_" + key}
       style={{
@@ -49,7 +50,7 @@ export const EscendiaCardBody = ({
         justifyContent: "flex-end",
       }}
       resizeMode="stretch"
-      source={require("../../assets/" + image)}
+      source={image}
     >
       {title !== undefined ? (
         <View
@@ -79,7 +80,7 @@ export const EscendiaCardBody = ({
         </View>
       ) : undefined}
     </ImageBackground>
-  );
+  ) : undefined;
 };
 
 const EscendiaCard = ({

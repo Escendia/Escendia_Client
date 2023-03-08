@@ -142,7 +142,7 @@ function CreationPage() {
 
           return (
             <View key={"CreationPage_Option_" + key + "_" + index}>
-              {/*               <EscendiaModal
+              <EscendiaModal
                 key={"CreationPage_EscendiaModal_" + key + "_" + index}
                 title={"Manage your beverages"}
                 modalState={modalState}
@@ -150,10 +150,153 @@ function CreationPage() {
                 <View
                   style={{
                     flex: 1,
-                    backgroundColor: "green",
+                    //backgroundColor: "green",
                     alignItems: "center",
                   }}
                 >
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
+                  <EscendiaText>TEST</EscendiaText>
                   <EscendiaText>TEST</EscendiaText>
                 </View>
               </EscendiaModal>
@@ -164,7 +307,7 @@ function CreationPage() {
                 width={300}
                 height={300}
                 image={"test.jpg"}
-              /> */}
+              />
               {/*               <EscendiaCheckBox
                 textStyle={{ color: "white" }}
                 title={"test"}
@@ -184,7 +327,7 @@ function CreationPage() {
                 optionList={[value]}
                 editable={true}
               /> */}
-              <EscendiaDate type={"year"} date={new Date()} editable={true} />
+              {/* <EscendiaDate type={"year"} date={new Date()} editable={true} /> */}
               {/*               <EscendiaAutoComplete
                 values={[]}
                 options={[

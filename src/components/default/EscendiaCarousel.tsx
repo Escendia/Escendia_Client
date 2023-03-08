@@ -18,19 +18,10 @@ const EscendiaCarousel = ({
   sliderWidth,
   itemWidth,
   renderItem,
-  onSnapItem,
 }: EscendiaCarouselProps) => {
   const [sliderActiveSlide, setSliderActiveSlide] = useState(0);
   const refer = useRef<Carousel<any>>(null);
-  const sideDiff = (sliderWidth - itemWidth) / 2 - 10;
-
-  useEffect(() => {
-    console.log("useffect");
-  }, []);
-
-  useEffect(() => {
-    console.log("sliderActiveSlide", sliderActiveSlide);
-  }, [sliderActiveSlide]);
+  const sideDiff = (sliderWidth - itemWidth) / 2 - 20;
 
   return (
     <View
@@ -56,7 +47,6 @@ const EscendiaCarousel = ({
           data={data}
           renderItem={renderItem}
           onScrollIndexChanged={(index) => {
-            console.log("onScrollIndexChanged:", index);
             setSliderActiveSlide(index);
           }}
         />
@@ -69,19 +59,20 @@ const EscendiaCarousel = ({
           backgroundColor: colors.escendia_light,
         }}
         onPress={() => {
-          console.log(
-            "Left1",
-            sliderActiveSlide,
-            sliderActiveSlide - 1,
-            refer.current
-          );
-          refer.current?.snapToItem(sliderActiveSlide - 1);
-          console.log(
-            "Left2",
-            sliderActiveSlide,
-            sliderActiveSlide - 1,
-            refer.current?.realIndex
-          );
+          let toIndex = sliderActiveSlide - 1;
+
+          if (toIndex === 0) {
+            //0 Index, da BUG in Modul,
+            refer.current._scrollTo({
+              offset: 0,
+              index: toIndex,
+              animated: true,
+            });
+          } else {
+            //sowie wenn links scroll über Index hinaus, dann wieder hinten anfangen
+            toIndex = toIndex === -1 ? data.length - 1 : toIndex;
+            refer.current.snapToItem(toIndex);
+          }
         }}
       >
         <LeftArrowIcon height={10} fill={colors.escendia_img_background_dark} />
@@ -94,13 +85,17 @@ const EscendiaCarousel = ({
           backgroundColor: colors.escendia_light,
         }}
         onPress={() => {
-          console.log(
-            "Right",
-            sliderActiveSlide,
-            sliderActiveSlide + 1,
-            refer.current
-          );
-          refer.current?.snapToItem(sliderActiveSlide + 1);
+          let toIndex = sliderActiveSlide + 1;
+          if (toIndex === data.length) {
+            //Wenn Index zu Groß, dann wieder zum Anfang
+            refer.current._scrollTo({
+              offset: 0,
+              index: 0,
+              animated: true,
+            });
+          } else {
+            refer.current.snapToItem(toIndex);
+          }
         }}
       >
         <RightArrowIcon
@@ -112,26 +107,4 @@ const EscendiaCarousel = ({
   );
 };
 
-/* 
-
-({ item }: { item: any }) => {
-            return (
-              <View
-                style={{
-                  backgroundColor: "floralwhite",
-                  borderRadius: 5,
-                  height: 250,
-                  padding: 30,
-                  marginLeft: 5,
-                  marginRight: 5,
-                }}
-              >
-                <EscendiaText style={{ fontSize: 30 }}>
-                  {item.title}
-                </EscendiaText>
-                <EscendiaText>{item.text}</EscendiaText>
-              </View>
-            );
-          }
-*/
 export default EscendiaCarousel;

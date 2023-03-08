@@ -92,10 +92,6 @@ const EscendiaInput = ({
     setValueForEdit(value);
   }, [value]);
 
-  useEffect(() => {
-    console.log("isDisabled", isDisabled);
-  }, [isDisabled]);
-
   return (
     <Input
       ref={ref}
@@ -127,7 +123,7 @@ const EscendiaInput = ({
       }}
       mode={mode ? mode : "outlined"}
       secureTextEntry={isSecure}
-      contentStyle={{ paddingLeft: isDisabled ? 0 : 15, ...contentStyle }}
+      contentStyle={{ paddingLeft: 15, ...contentStyle }}
       style={{
         padding: 2,
         backgroundColor: "transparent",

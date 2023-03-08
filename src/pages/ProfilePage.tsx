@@ -25,7 +25,7 @@ function ImageView(props: any) {
         //alignItems: "flex-start ",
       }}
     >
-      {/* <Image
+      <Image
         style={{
           backgroundColor: "black",
           borderRadius: 999999,
@@ -35,7 +35,7 @@ function ImageView(props: any) {
           margin: 50,
         }}
         source={require("../assets/test.jpg")}
-      /> */}
+      />
     </View>
   );
 }
@@ -59,7 +59,7 @@ export default function ProfilePage() {
             backgroundColor: "transparent",
           }}
         >
-          {/* {ImageView({})} */}
+          {ImageView({})}
         </View>
         <View
           style={{
@@ -190,7 +190,7 @@ export default function ProfilePage() {
                 fontSize: 25,
                 color: colors.escendia_light,
                 //alignSelf:"center",
-                marginBottom:100
+                marginBottom: 100,
               }}
             >
               {t("Page_Profile_Password")}
@@ -227,7 +227,7 @@ export default function ProfilePage() {
         <View
           style={{
             backgroundColor: "transparent",
-            flex: 0.002 ,
+            flex: 0.002,
           }}
         >
           <View
@@ -240,7 +240,7 @@ export default function ProfilePage() {
             style={{
               flex: 10,
               backgroundColor: colors.escendia_img_background_light,
-              borderRadius:999999
+              borderRadius: 999999,
             }}
           ></View>
           <View
@@ -260,7 +260,7 @@ export default function ProfilePage() {
             //flexDirection:"column"
           }}
         >
-         {/*  {ImageView({})} */}
+          {ImageView({})}
 
           <EscendiaText
             style={{
@@ -278,7 +278,7 @@ export default function ProfilePage() {
               marginRight: 0,
               flex: 1,
               backgroundColor: colors.escendia_text_faded,
-              marginBottom:100
+              marginBottom: 100,
             }}
           >
             {t("Page_Profile_Shop")}

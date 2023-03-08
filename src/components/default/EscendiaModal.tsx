@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { colors } from "../../services/styling/styles";
 import LeafIcon from "../icons/LeafIcon";
+import EscendiaButton from "./EscendiaButton";
 import EscendiaText from "./EscendiaText";
 
 interface EscendiaModalProps {
@@ -73,7 +74,11 @@ const EscendiaModal = ({
       >
         <ScrollView
           style={{
-            margin: isWebValue ? 100 : 0,
+            //margin: isWebValue ? 100 : 0,
+            marginLeft: isWebValue ? 100 : 0,
+            marginRight: isWebValue ? 100 : 0,
+            marginTop: isWebValue ? 100 : 0,
+
             minHeight: Dimensions.get("window").height - 200,
             backgroundColor: colors.escendia_light,
           }}
@@ -175,6 +180,27 @@ const EscendiaModal = ({
             {children}
           </View>
         </ScrollView>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          paddingLeft: 100,
+          paddingRight: 100,
+          paddingBottom: 20,
+        }}
+      >
+        <EscendiaButton
+          style={{
+            borderTopWidth:1,
+            borderTopColor:"black",
+            flex: 1,
+            backgroundColor: colors.escendia_dark,
+          }}
+        >
+          Speichern
+        </EscendiaButton>
       </View>
     </Modal>
   );

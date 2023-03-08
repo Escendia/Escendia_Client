@@ -1,4 +1,11 @@
-import { Image, Linking, StyleSheet, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  Linking,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import AppleIcon from "../components/icons/AppleIcon";
 import GoogleIcon from "../components/icons/GoogleIcon";
 import LeafIcon from "../components/icons/LeafIcon";
@@ -13,9 +20,11 @@ import { useTranslation } from "react-i18next";
 import EscendiaText from "@components/default/EscendiaText";
 import { Ionicons } from "@expo/vector-icons";
 import { useUserStore } from "@services/store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { t } from "i18next";
+import EscendiaCarousel from "@components/default/EscendiaCarousel";
+import EscendiaModal from "@components/default/EscendiaModal";
 
 function LandingPage() {
   function HeaderText(props: any) {
@@ -198,6 +207,63 @@ function LandingPage() {
     );
   }
 
+  interface EscendiaCarouselBodyProps {
+    item: any;
+  }
+
+  const EscendiaCarouselBody = ({ item }: EscendiaCarouselBodyProps) => {
+    const [openModal, setOpenModal] = useState(false);
+    return (
+      <>
+        <EscendiaModal
+          title={item.name}
+          modalState={openModal}
+          onClose={() => setOpenModal(!openModal)}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 1, alignItems: "center" }}>
+              <Image
+                style={{
+                  width: 300,
+                  height: 500,
+                }}
+                source={item.image}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <EscendiaText>BLABLA TEXT HIER</EscendiaText>
+            </View>
+          </View>
+        </EscendiaModal>
+        <TouchableOpacity onPress={() => setOpenModal(true)}>
+          <ImageBackground
+            key={"EscendiaCard_Touch_Image_" + item.name}
+            style={{
+              width: 300,
+              height: 300,
+              justifyContent: "flex-end",
+            }}
+            //resizeMode="stretch"
+            source={item.image}
+          >
+            <EscendiaText
+              style={{
+                margin: 20,
+                padding: 10,
+                alignContent: "flex-end",
+                textAlign: "center",
+                color: colors.escendia_dark,
+                backgroundColor: colors.escendia_light,
+              }}
+            >
+              {item.name}
+            </EscendiaText>
+          </ImageBackground>
+        </TouchableOpacity>
+      </>
+    );
+  };
+
   function FeatureLine(props: any) {
     return (
       <View>
@@ -232,9 +298,30 @@ function LandingPage() {
             </EscendiaText>
           </View>
           <View style={{ flex: 1, alignItems: "center" }}>
-            <EscendiaText color={colors.escendia_light}>
+            {/*             <EscendiaText color={colors.escendia_light}>
               {t("Page_Landing_Feature_CommingSoon")}
-            </EscendiaText>
+            </EscendiaText> */}
+            <EscendiaCarousel
+              sliderWidth={400}
+              itemWidth={300}
+              data={[
+                {
+                  name: "Manage your beveragers",
+                  image: require("../assets/beverages.jpg"),
+                },
+                {
+                  name: "Manage your favourite producer",
+                  image: require("../assets/producer.jpg"),
+                },
+                {
+                  name: "Track events from your favourite producer",
+                  image: require("../assets/event.jpg"),
+                },
+              ]}
+              renderItem={({ item }) => {
+                return <EscendiaCarouselBody item={item} />;
+              }}
+            />
           </View>
         </View>
       </View>
@@ -243,7 +330,7 @@ function LandingPage() {
 
   function FeatureLineMobile(props: any) {
     return (
-      <View style={{}}>
+      <View>
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -293,12 +380,20 @@ function LandingPage() {
         >
           {t("Page_Landing_Feature_Text")}
         </EscendiaText>
-        <EscendiaText
+        {/*         <EscendiaText
           color={colors.escendia_light}
           style={{ textAlign: "center" }}
         >
           {t("Page_Landing_Feature_CommingSoon")}
-        </EscendiaText>
+        </EscendiaText> */}
+        {/*         <EscendiaCarousel
+          sliderWidth={100}
+          itemWidth={100}
+          data={[{ name: "Text1", image: "test.jpg" }]}
+          renderItem={(item) => {
+            return <EscendiaText>{item.name}</EscendiaText>;
+          }} 
+        />*/}
       </View>
     );
   }
