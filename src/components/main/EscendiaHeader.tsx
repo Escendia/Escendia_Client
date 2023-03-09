@@ -115,40 +115,22 @@ export const HeaderLine = React.memo(
           </TouchableOpacity>
         </View>
         <View
-          key={"HeaderLine_Container_MiddlePart_" + key}
-          style={{ flex: calculate("none", 5, 0) }}
-        ></View>
-        <TouchableOpacity
           key={"HeaderLine_Container_Icon_" + key}
           style={{
-            flex: calculate("none", 10, 1),
+            flex: calculate("none", 6, 1),
             alignItems: "center",
           }}
-          onPress={() => navigate("Landing")}
         >
-          <Image
-            style={{
-              height: calculate("height", 150, 90),
-              width: calculate("width", 100, 50),
-            }}
-            source={require("../../assets/logo.png")}
-          />
-        </TouchableOpacity>
-        <EscendiaText
-          key={"HeaderLine_Container_Filter_" + key}
-          //outlineStyle={{ borderWidth: 0 }}
-          style={{
-            flex: calculate("none", 4, 3),
-            borderWidth: 0,
-            borderBottomWidth: 1,
-            marginRight: 50,
-          }}
-          //textColor={colors.escendia_dark}
-          //placeholder={t("Page_All_Header_Search")}
-          //iconName="text-search"
-        >
-          {t("TO BE DEFINED - Autocomplete")}
-        </EscendiaText>
+          <TouchableOpacity onPress={() => navigate("Landing")}>
+            <Image
+              style={{
+                height: calculate("height", 150, 90),
+                width: calculate("width", 100, 50),
+              }}
+              source={require("../../assets/logo.png")}
+            />
+          </TouchableOpacity>
+        </View>
         {isWebValue && !user ? (
           <View
             key={"HeaderLine_Container_LoginView_" + key}
@@ -337,4 +319,4 @@ const EscendiaHeader = ({
   );
 };
 
-export default React.memo(EscendiaHeader);
+export default EscendiaHeader;

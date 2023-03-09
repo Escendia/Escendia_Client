@@ -11,7 +11,7 @@ const de = {
   Page_All_Header_Escendia: "Escendia",
 
   Page_All_Footer_Text:
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
+    "Folge uns gerne auf einer unserer Social-Media Seiten und gebe uns Feedback zu unserer App oder Website!",
 
   Page_All_Footer_Service: "Service",
   Page_All_Footer_AGB: "AGB",
@@ -22,16 +22,35 @@ const de = {
   Page_All_Footer_Company: "Unternehmen",
   Page_All_Footer_Impress: "Impressum",
   Page_All_Footer_AboutUs: "Über uns",
-  Page_All_Footer_ContactUs: "Kontakiere uns",
+  Page_All_Footer_ContactUs: "Kontaktiere uns",
 
   Page_All_Footer_CopyRight: "Copyright © 2023. All rights reserved.",
 
   Page_Landing_MainText:
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
+    "Du liebst Getränke?\n\nDu möchtest deine Getränke, dazugehöriger Hersteller und dessen Events verwalten?\n\nDann melde dich jetzt bei Escendia an!\n",
 
-  Page_Landing_Feature_Title: "Feature",
+  Page_Landing_Feature_Title: "Funktionen",
   Page_Landing_Feature_Text:
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.\nnonumy eirmod tempor invidunt ut labore et dolore\nmagna aliquyamerat, sed diam voluptua.",
+    "Lege von überall, egal ob PC oder Handy die Getränke, Hersteller und Events gemeinsam mit der Community an, um an den Events teilzunehmen!\n\nErstelle Probelistelisten zu den Events und Teile sie mit Freunden und macht das gemeinsame Tasting zum Erlebnis!",
+
+  Page_Landing_Carousel_Beverages_Title: "Verwalte deine Getränke",
+  Page_Landing_Carousel_Producer_Title: "Verwalte deine lieblings Hersteller",
+  Page_Landing_Carousel_Events_Title:
+    "Erstelle und verwalte Events der Hersteller",
+  Page_Landing_Carousel_TasteList_Title: "Erstelle und teile Probelisten mit Freunden!",
+
+  Page_Landing_Carousel_Beverages_Modal_Title: "Getränke",
+  Page_Landing_Carousel_Producer_Modal_Title: "Hersteller",
+  Page_Landing_Carousel_Events_Modal_Title: "Events",
+  Page_Landing_Carousel_TasteList_Modal_Title: "Probelisten",
+
+  Page_Landing_Carousel_Beverages_Modal_Body: "Zeile1\nZeile2\nZeile3",
+  Page_Landing_Carousel_Producer_Modal_Body: "Hersteller",
+  Page_Landing_Carousel_Events_Modal_Body: "Events",
+  Page_Landing_Carousel_TasteList_Modal_Body: "Probelisten",
+
+
+  Page_Landing_Scan_Title: "Kommt bald...",
 
   Page_Landing_Available: "Verfügbar auf",
   Page_Landing_AndroidStore: "Play Store",
@@ -64,11 +83,11 @@ const de = {
   Page_Profile_Email: "Email",
   Page_Profile_Password: "Passwort zurücksetzen",
   Page_Profile_Delete: "Benutzername",
-  Page_Profile_Title: "Profilseite" ,
-  Page_Profile_Username: "Username" ,
-  Page_Profile_Logout:"Logout",
-  Page_Profile_CurrentSub:"Subscription XYZ",
-  Page_Profile_Shop:"Zum Shop",
+  Page_Profile_Title: "Profil",
+  Page_Profile_Username: "Username",
+  Page_Profile_Logout: "Logout",
+  Page_Profile_CurrentSub: "Subscription XYZ",
+  Page_Profile_Shop: "Zum Shop",
 
   Page_Creation_Title: "Erstellen",
   Page_Creation: "Anlegen",

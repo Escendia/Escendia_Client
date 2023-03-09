@@ -207,63 +207,6 @@ function LandingPage() {
     );
   }
 
-  interface EscendiaCarouselBodyProps {
-    item: any;
-  }
-
-  const EscendiaCarouselBody = ({ item }: EscendiaCarouselBodyProps) => {
-    const [openModal, setOpenModal] = useState(false);
-    return (
-      <>
-        <EscendiaModal
-          title={item.name}
-          modalState={openModal}
-          onClose={() => setOpenModal(!openModal)}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <Image
-                style={{
-                  width: 300,
-                  height: 500,
-                }}
-                source={item.image}
-              />
-            </View>
-            <View style={{ flex: 1 }}>
-              <EscendiaText>BLABLA TEXT HIER</EscendiaText>
-            </View>
-          </View>
-        </EscendiaModal>
-        <TouchableOpacity onPress={() => setOpenModal(true)}>
-          <ImageBackground
-            key={"EscendiaCard_Touch_Image_" + item.name}
-            style={{
-              width: 300,
-              height: 300,
-              justifyContent: "flex-end",
-            }}
-            //resizeMode="stretch"
-            source={item.image}
-          >
-            <EscendiaText
-              style={{
-                margin: 20,
-                padding: 10,
-                alignContent: "flex-end",
-                textAlign: "center",
-                color: colors.escendia_dark,
-                backgroundColor: colors.escendia_light,
-              }}
-            >
-              {item.name}
-            </EscendiaText>
-          </ImageBackground>
-        </TouchableOpacity>
-      </>
-    );
-  };
-
   function FeatureLine(props: any) {
     return (
       <View>
@@ -302,25 +245,37 @@ function LandingPage() {
               {t("Page_Landing_Feature_CommingSoon")}
             </EscendiaText> */}
             <EscendiaCarousel
-              sliderWidth={400}
               itemWidth={300}
               data={[
                 {
-                  name: "Manage your beveragers",
+                  name: t("Page_Landing_Carousel_Beverages_Title"),
+                  modalTitle: t("Page_Landing_Carousel_Beverages_Modal_Title"),
+                  modalBody: t("Page_Landing_Carousel_Beverages_Modal_Body"),
                   image: require("../assets/beverages.jpg"),
                 },
                 {
-                  name: "Manage your favourite producer",
+                  name: t("Page_Landing_Carousel_Producer_Title"),
+                  modalTitle: t("Page_Landing_Carousel_Producer_Modal_Title"),
+                  modalBody: t("Page_Landing_Carousel_Producer_Modal_Body"),
                   image: require("../assets/producer.jpg"),
                 },
                 {
-                  name: "Track events from your favourite producer",
+                  name: t("Page_Landing_Carousel_Events_Title"),
+                  modalTitle: t("Page_Landing_Carousel_Events_Modal_Title"),
+                  modalBody: t("Page_Landing_Carousel_Events_Modal_Body"),
                   image: require("../assets/event.jpg"),
                 },
+                {
+                  name: t("Page_Landing_Carousel_TasteList_Title"),
+                  modalTitle: t("Page_Landing_Carousel_TasteList_Modal_Title"),
+                  modalBody: t("Page_Landing_Carousel_TasteList_Modal_Body"),
+                  image: require("../assets/tastinglist.jpg"),
+                },
+                {
+                  name: t("Page_Landing_Scan_Title"),
+                  image: require("../assets/questionmark.jpg"),
+                },
               ]}
-              renderItem={({ item }) => {
-                return <EscendiaCarouselBody item={item} />;
-              }}
             />
           </View>
         </View>
@@ -344,18 +299,16 @@ function LandingPage() {
             style={{ transform: [{ rotate: "270deg" }] }}
           />
         </View>
-        <View style={{ flex: 1 }}>
-          <EscendiaText
-            style={{
-              fontWeight: "100",
-              lineHeight: 34,
-              color: colors.escendia_light,
-              textAlign: "center",
-            }}
-          >
-            {t("Page_Landing_MainText")}
-          </EscendiaText>
-        </View>
+        <EscendiaText
+          style={{
+            fontWeight: "100",
+            lineHeight: 34,
+            color: colors.escendia_light,
+            textAlign: "center",
+          }}
+        >
+          {t("Page_Landing_MainText")}
+        </EscendiaText>
 
         <EscendiaText
           fontFamily={"Simply Conception"}
@@ -376,36 +329,58 @@ function LandingPage() {
             fontWeight: "300",
             lineHeight: 24,
             textAlign: "center",
+            margin: 10,
           }}
         >
           {t("Page_Landing_Feature_Text")}
         </EscendiaText>
-        {/*         <EscendiaText
-          color={colors.escendia_light}
-          style={{ textAlign: "center" }}
-        >
-          {t("Page_Landing_Feature_CommingSoon")}
-        </EscendiaText> */}
-        {/*         <EscendiaCarousel
-          sliderWidth={100}
-          itemWidth={100}
-          data={[{ name: "Text1", image: "test.jpg" }]}
-          renderItem={(item) => {
-            return <EscendiaText>{item.name}</EscendiaText>;
-          }} 
-        />*/}
+        <View style={{ flex: 1 }}>
+          <EscendiaCarousel
+            itemWidth={300}
+            data={[
+              {
+                name: t("Page_Landing_Carousel_Beverages_Title"),
+                modalTitle: t("Page_Landing_Carousel_Beverages_Modal_Title"),
+                modalBody: t("Page_Landing_Carousel_Beverages_Modal_Body"),
+                image: require("../assets/beverages.jpg"),
+              },
+              {
+                name: t("Page_Landing_Carousel_Producer_Title"),
+                modalTitle: t("Page_Landing_Carousel_Producer_Modal_Title"),
+                modalBody: t("Page_Landing_Carousel_Producer_Modal_Body"),
+                image: require("../assets/producer.jpg"),
+              },
+              {
+                name: t("Page_Landing_Carousel_Events_Title"),
+                modalTitle: t("Page_Landing_Carousel_Events_Modal_Title"),
+                modalBody: t("Page_Landing_Carousel_Events_Modal_Body"),
+                image: require("../assets/event.jpg"),
+              },
+              {
+                name: t("Page_Landing_Carousel_TasteList_Title"),
+                modalTitle: t("Page_Landing_Carousel_TasteList_Modal_Title"),
+                modalBody: t("Page_Landing_Carousel_TasteList_Modal_Body"),
+                image: require("../assets/tastinglist.jpg"),
+              },
+              {
+                name: t("Page_Landing_Scan_Title"),
+                image: require("../assets/questionmark.jpg"),
+              },
+            ]}
+          />
+        </View>
       </View>
     );
   }
 
   const indexLeafTop = calculate("height", 750, 0);
 
-  const bottle1Top = calculate("height", 350, 170);
+  const bottle1Top = calculate("height", 350, 105);
   const bottle1Left = calculate("width", 400, 0);
   const bottleWidth = calculate("width", 300, 200);
   const bottleHeight = calculate("height", 600, 200);
 
-  const bottle2Top = calculate("height", 270, 150);
+  const bottle2Top = calculate("height", 270, 120);
   const bottle2Left = calculate("width", 600, 60);
 
   const toast = useToast();

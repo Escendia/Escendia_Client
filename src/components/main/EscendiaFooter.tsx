@@ -19,7 +19,7 @@ const EscendiaFooter = ({ children, ...rest }: EscendiaHeaderProps) => {
         backgroundColor: colors.escendia_light,
       }}
     >
-      <View style={{ paddingTop: 20 }}>
+      <View style={{ paddingTop: 20, margin: 10 }}>
         <EscendiaText style={{ textAlign: "center" }}>
           {t("Page_All_Footer_Text")}
         </EscendiaText>

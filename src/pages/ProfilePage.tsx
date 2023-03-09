@@ -13,33 +13,6 @@ import { StackParams } from "App";
 import EscendiaButton from "@components/default/EscendiaButton";
 import { useDBStore } from "@services/store/store";
 
-function ImageView(props: any) {
-  if (!isWeb()) return;
-  return (
-    <View
-      style={{
-        backgroundColor: "transparent",
-        //flex: 1,
-        justifyContent: "flex-start",
-
-        //alignItems: "flex-start ",
-      }}
-    >
-      <Image
-        style={{
-          backgroundColor: "black",
-          borderRadius: 999999,
-          //resizeMode: "contain",
-          height: calculate("height", 250, 250),
-          width: calculate("width", 225, 225),
-          margin: 50,
-        }}
-        source={require("../assets/test.jpg")}
-      />
-    </View>
-  );
-}
-
 export default function ProfilePage() {
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -59,7 +32,27 @@ export default function ProfilePage() {
             backgroundColor: "transparent",
           }}
         >
-          {ImageView({})}
+          <View
+            style={{
+              backgroundColor: "transparent",
+              //flex: 1,
+              justifyContent: "flex-start",
+
+              //alignItems: "flex-start ",
+            }}
+          >
+            <Image
+              style={{
+                backgroundColor: "black",
+                borderRadius: 999999,
+                //resizeMode: "contain",
+                height: calculate("height", 250, 250),
+                width: calculate("width", 225, 225),
+                margin: 50,
+              }}
+              source={require("../assets/test.jpg")}
+            />
+          </View>
         </View>
         <View
           style={{
@@ -260,7 +253,27 @@ export default function ProfilePage() {
             //flexDirection:"column"
           }}
         >
-          {ImageView({})}
+          <View
+            style={{
+              backgroundColor: "transparent",
+              //flex: 1,
+              justifyContent: "flex-start",
+
+              //alignItems: "flex-start ",
+            }}
+          >
+            <Image
+              style={{
+                backgroundColor: "black",
+                borderRadius: 999999,
+                //resizeMode: "contain",
+                height: calculate("height", 250, 250),
+                width: calculate("width", 225, 225),
+                margin: 50,
+              }}
+              source={require("../assets/test.jpg")}
+            />
+          </View>
 
           <EscendiaText
             style={{

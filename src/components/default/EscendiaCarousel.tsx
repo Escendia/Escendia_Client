@@ -1,27 +1,130 @@
+import { calculate, isWeb } from "@services/functions";
 import React, { useEffect, useRef, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { ImageBackground, TouchableOpacity, View, Image } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import CarouselComponent, { Carousel } from "react-native-snap-carousel";
 import { colors } from "../../services/styling/styles";
 import LeftArrowIcon from "../icons/LeftArrowIcon";
 import RightArrowIcon from "../icons/RightArrowIcon";
+import EscendiaModal from "./EscendiaModal";
+import EscendiaText from "./EscendiaText";
 
 interface EscendiaCarouselProps {
   data: any[];
-  sliderWidth: number;
   itemWidth: number;
-  renderItem: ({ item }: { item: any }) => React.ReactNode;
+  //renderItem: ({ item }: { item: any }) => React.ReactNode;
   onSnapItem?: (index: number) => void;
 }
 
-const EscendiaCarousel = ({
-  data,
-  sliderWidth,
+interface EscendiaCarouselBodyProps {
+  item: any;
+  itemWidth: number;
+}
+
+const EscendiaCarouselBody = ({
+  item,
   itemWidth,
-  renderItem,
-}: EscendiaCarouselProps) => {
+}: EscendiaCarouselBodyProps) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    console.log("useEffect", itemWidth);
+  }, []);
+
+  return item.modalTitle ? (
+    <>
+      <EscendiaModal
+        title={item.modalTitle}
+        modalState={openModal}
+        onClose={() => setOpenModal(!openModal)}
+      >
+        <View style={{ flexDirection: "row" }}>
+          {isWeb() ? (
+            <View style={{ flex: 2, alignItems: "flex-end", paddingRight: 50 }}>
+              <Image
+                style={{
+                  width: calculate("width", 500, 500),
+                  height: calculate("height", 500, 500),
+                }}
+                source={item.image}
+              />
+            </View>
+          ) : undefined}
+          <View
+            style={{
+              flex: isWeb() ? 3 : 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ScrollView>
+              <EscendiaText>{item.modalBody}</EscendiaText>
+            </ScrollView>
+          </View>
+        </View>
+      </EscendiaModal>
+      <TouchableOpacity onPress={() => setOpenModal(true)}>
+        <ImageBackground
+          key={"EscendiaCard_Touch_Image_" + item.name}
+          style={{
+            width: calculate("width", itemWidth, itemWidth),
+            height: calculate("height", itemWidth, itemWidth),
+            justifyContent: "flex-end",
+          }}
+          //resizeMode="stretch"
+          source={item.image}
+        >
+          <EscendiaText
+            style={{
+              margin: 20,
+              padding: 10,
+              alignContent: "flex-end",
+              textAlign: "center",
+              color: colors.escendia_dark,
+              backgroundColor: colors.escendia_light,
+            }}
+          >
+            {item.name}
+          </EscendiaText>
+        </ImageBackground>
+      </TouchableOpacity>
+    </>
+  ) : (
+    <ImageBackground
+      key={"EscendiaCard_Touch_Image_" + item.name}
+      style={{
+        width: calculate("width", itemWidth, itemWidth),
+        height: calculate("height", itemWidth, itemWidth),
+        justifyContent: "flex-end",
+      }}
+      //resizeMode="stretch"
+      source={item.image}
+    >
+      <EscendiaText
+        style={{
+          margin: 20,
+          padding: 10,
+          alignContent: "flex-end",
+          textAlign: "center",
+          color: colors.escendia_dark,
+          backgroundColor: colors.escendia_light,
+        }}
+      >
+        {item.name}
+      </EscendiaText>
+    </ImageBackground>
+  );
+};
+
+const EscendiaCarousel = ({ data, itemWidth }: EscendiaCarouselProps) => {
   const [sliderActiveSlide, setSliderActiveSlide] = useState(0);
   const refer = useRef<Carousel<any>>(null);
+  const sliderWidth = (itemWidth / 3) * 4;
+
   const sideDiff = (sliderWidth - itemWidth) / 2 - 20;
+  useEffect(() => {
+    console.log("console.log(sideDiff);", sideDiff);
+  }, []);
 
   return (
     <View
@@ -40,12 +143,14 @@ const EscendiaCarousel = ({
           itemWidth={itemWidth}
           layout={"default"}
           useScrollView={false}
-          inactiveSlideScale={0.9}
+          inactiveSlideScale={isWeb() ? 0.9 : 0}
           inactiveSlideOpacity={0.3}
           apparitionDelay={100}
           enableSnap={true}
           data={data}
-          renderItem={renderItem}
+          renderItem={({ item }) => {
+            return <EscendiaCarouselBody itemWidth={itemWidth} item={item} />;
+          }}
           onScrollIndexChanged={(index) => {
             setSliderActiveSlide(index);
           }}
