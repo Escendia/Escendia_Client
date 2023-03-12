@@ -75,7 +75,7 @@ export default function App({ props }) {
     if (auth === undefined) return;
     auth.onAuthStateChanged((user) => {
       setUser(user);
-      globalNavigation.navigate("Profile");
+      globalNavigation.navigate("Creation");
     });
   }, [auth]);
 

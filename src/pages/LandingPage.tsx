@@ -1,11 +1,4 @@
-import {
-  Image,
-  ImageBackground,
-  Linking,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Linking, StyleSheet, View } from "react-native";
 import AppleIcon from "../components/icons/AppleIcon";
 import GoogleIcon from "../components/icons/GoogleIcon";
 import LeafIcon from "../components/icons/LeafIcon";
@@ -15,19 +8,17 @@ import EscendiaButton from "@components/default/EscendiaButton";
 import EscendiaSocialMedia from "@components/default/EscendiaSocialMedia";
 import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import { calculate, isWeb } from "@services/functions";
-import { useTranslation } from "react-i18next";
 
+import EscendiaCarousel from "@components/default/EscendiaCarousel";
 import EscendiaText from "@components/default/EscendiaText";
 import { Ionicons } from "@expo/vector-icons";
 import { useUserStore } from "@services/store/store";
-import { useEffect, useState } from "react";
-import { useToast } from "react-native-toast-notifications";
 import { t } from "i18next";
-import EscendiaCarousel from "@components/default/EscendiaCarousel";
-import EscendiaModal from "@components/default/EscendiaModal";
+import { useEffect } from "react";
+import { useToast } from "react-native-toast-notifications";
 
 function LandingPage() {
-  function HeaderText(props: any) {
+  const HeaderText = () => {
     return (
       <View
         style={{
@@ -127,9 +118,9 @@ function LandingPage() {
         </View>
       </View>
     );
-  }
+  };
 
-  function HeaderTextMobile(props: any) {
+  const HeaderTextMobile = () => {
     return (
       <View
         style={{
@@ -140,12 +131,12 @@ function LandingPage() {
         }}
       >
         <EscendiaButton
-          style={{ margin: 10, backgroundColor: colors.escendia_dark }}
+          style={{ backgroundColor: colors.escendia_dark }}
           onPress={() => {
             Linking.openURL("https://play.google.com/store/apps");
           }}
           iconLeft={
-            <AppleIcon height={30} width={30} fill={colors.escendia_light} />
+            <AppleIcon height={25} width={25} fill={colors.escendia_light} />
           }
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -172,12 +163,12 @@ function LandingPage() {
           </View>
         </EscendiaButton>
         <EscendiaButton
-          style={{ backgroundColor: colors.escendia_dark }}
+          style={{ marginTop: 10, backgroundColor: colors.escendia_dark }}
           onPress={() => {
             Linking.openURL("https://play.google.com/store/apps");
           }}
           iconLeft={
-            <GoogleIcon height={30} width={30} fill={colors.escendia_light} />
+            <GoogleIcon height={25} width={25} fill={colors.escendia_light} />
           }
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -205,9 +196,9 @@ function LandingPage() {
         </EscendiaButton>
       </View>
     );
-  }
+  };
 
-  function FeatureLine(props: any) {
+  const FeatureLine = () => {
     return (
       <View>
         <View
@@ -281,11 +272,11 @@ function LandingPage() {
         </View>
       </View>
     );
-  }
+  };
 
-  function FeatureLineMobile(props: any) {
+  const FeatureLineMobile = () => {
     return (
-      <View>
+      <View style={{ paddingTop: 10, paddingBottom: 10 }}>
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -300,10 +291,8 @@ function LandingPage() {
           />
         </View>
         <EscendiaText
+          color={colors.escendia_light}
           style={{
-            fontWeight: "100",
-            lineHeight: 34,
-            color: colors.escendia_light,
             textAlign: "center",
           }}
         >
@@ -326,10 +315,8 @@ function LandingPage() {
         <EscendiaText
           color={colors.escendia_light}
           style={{
-            fontWeight: "300",
-            lineHeight: 24,
-            textAlign: "center",
             margin: 10,
+            textAlign: "center",
           }}
         >
           {t("Page_Landing_Feature_Text")}
@@ -371,7 +358,7 @@ function LandingPage() {
         </View>
       </View>
     );
-  }
+  };
 
   const indexLeafTop = calculate("height", 750, 0);
 

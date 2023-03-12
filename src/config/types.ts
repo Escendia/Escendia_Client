@@ -4,6 +4,9 @@ export interface Extra {
   firebase: FirebaseOptions;
 }
 
-export interface Test {
-  
+export interface Type {
+  id: string;
+  name: string;
 }
+
+export interface Test {}

@@ -6,14 +6,18 @@ import { AntDesign } from "@expo/vector-icons";
 import { calculate, isWeb } from "@services/functions";
 import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
 import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 
-function ImageView(props: any) {
-  if (!isWeb()) return;
+const ImageView = () => {
   return (
     <View
       style={{
@@ -34,7 +38,7 @@ function ImageView(props: any) {
       />
     </View>
   );
-}
+};
 
 function SignUpPage() {
   function validatePassword(password: string, passwordconfirm: string) {
@@ -94,6 +98,22 @@ function SignUpPage() {
     }
   }
 
+  function onSignInGoogle() {
+    let googleProvider = new GoogleAuthProvider();
+    console.log("googleProvider", googleProvider);
+
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        console.log("onSignInGoogle-RESULT", result);
+      })
+      .catch((error) => {
+        console.log("onSignInGoogle-ERROR", error);
+        toast.show(
+          t("Toast_Warning_SignIn_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""))
+        );
+      });
+  }
+
   const auth = useDBStore((state) => state.auth);
   const setUser = useUserStore((state) => state.setUser);
 
@@ -114,7 +134,7 @@ function SignUpPage() {
           flexDirection: "row",
         }}
       >
-        {ImageView({})}
+        {isWeb() ? <ImageView /> : undefined}
         <View
           style={{
             backgroundColor: "transparent",
@@ -152,11 +172,7 @@ function SignUpPage() {
             />
 
             <EscendiaInput
-              outlineStyle={{
-                borderColor: colors.escendia_text_faded,
-              }}
               style={{
-                borderColor: colors.escendia_light,
                 marginBottom: 5,
               }}
               value={password}
@@ -167,11 +183,7 @@ function SignUpPage() {
               }}
             />
             <EscendiaInput
-              outlineStyle={{
-                borderColor: colors.escendia_text_faded,
-              }}
               style={{
-                borderColor: "black",
                 marginBottom: 15,
               }}
               value={passwordConfirm}
@@ -251,6 +263,7 @@ function SignUpPage() {
                 padding: 15,
                 borderColor: colors.escendia_text_faded,
               }}
+              onPress={onSignInGoogle}
               iconLeft={
                 <AntDesign
                   name="google"

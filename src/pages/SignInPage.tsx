@@ -10,16 +10,18 @@ import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
 import { StackParams } from "App";
 import { FirebaseError } from "firebase/app";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithCredential,
+  signInWithPopup,
+} from "firebase/auth";
 import { t } from "i18next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 
-function ImageView(props: any) {
-  const [testImage, setTestImage] = useState("TEST");
-  if (!isWeb()) return;
-
+const ImageView = () => {
   return (
     <View
       style={{
@@ -40,7 +42,7 @@ function ImageView(props: any) {
       />
     </View>
   );
-}
+};
 
 function SignInPage() {
   const auth = useDBStore((state) => state.auth);
@@ -60,6 +62,22 @@ function SignInPage() {
       });
   }
 
+  function onSignInGoogle() {
+    let googleProvider = new GoogleAuthProvider();
+    console.log("googleProvider", googleProvider);
+
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        console.log("onSignInGoogle-RESULT", result);
+      })
+      .catch((error) => {
+        console.log("onSignInGoogle-ERROR", error);
+        toast.show(
+          t("Toast_Warning_SignIn_" + error.code.replace(/[^a-zA-Z0-9 ]/g, ""))
+        );
+      });
+  }
+
   return (
     <EscendiaDefaultPage title={"Page_SignIn_Title"}>
       <View
@@ -67,7 +85,7 @@ function SignInPage() {
           flexDirection: "row",
         }}
       >
-        {ImageView({})}
+        {isWeb() ? <ImageView /> : undefined}
         <View
           style={{
             backgroundColor: "transparent",
@@ -176,6 +194,7 @@ function SignInPage() {
                 padding: 15,
                 borderColor: colors.escendia_text_faded,
               }}
+              onPress={onSignInGoogle}
               iconLeft={
                 <AntDesign
                   name="google"

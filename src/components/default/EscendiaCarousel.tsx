@@ -27,9 +27,7 @@ const EscendiaCarouselBody = ({
 }: EscendiaCarouselBodyProps) => {
   const [openModal, setOpenModal] = useState(false);
 
-  useEffect(() => {
-    console.log("useEffect", itemWidth);
-  }, []);
+  useEffect(() => {}, []);
 
   return item.modalTitle ? (
     <>
@@ -122,9 +120,7 @@ const EscendiaCarousel = ({ data, itemWidth }: EscendiaCarouselProps) => {
   const sliderWidth = (itemWidth / 3) * 4;
 
   const sideDiff = (sliderWidth - itemWidth) / 2 - 20;
-  useEffect(() => {
-    console.log("console.log(sideDiff);", sideDiff);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View

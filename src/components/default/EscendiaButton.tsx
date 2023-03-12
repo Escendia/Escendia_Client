@@ -45,7 +45,7 @@ const EscendiaButton = ({
     <View style={{ paddingRight: 5 }}>{iconLeft}</View>
     <EscendiaText
       style={{
-        marginTop: iconRight === undefined && iconLeft === undefined ? 0 : 5,
+        //marginTop: iconRight === undefined && iconLeft === undefined ? 0 : 5,
         color: colors.escendia_light,
         ...textStyle,
       }}

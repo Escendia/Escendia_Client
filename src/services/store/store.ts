@@ -9,7 +9,7 @@ import {
   Firestore,
   initializeFirestore,
 } from "firebase/firestore/lite";
-import { getAuth, Auth, User, initializeAuth } from "firebase/auth";
+import { getAuth, Auth, User, initializeAuth, browserPopupRedirectResolver } from "firebase/auth";
 
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -59,6 +59,7 @@ export const useDBStore = create<DBState>()(
         app: app,
         auth: initializeAuth(app, {
           persistence: getReactNativePersistence(AsyncStorage),
+          popupRedirectResolver: browserPopupRedirectResolver,
         }),
         //analytics: initializeAnalytics(app),
         db: getFirestore(app),

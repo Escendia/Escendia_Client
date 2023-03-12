@@ -37,18 +37,30 @@ const de = {
   Page_Landing_Carousel_Producer_Title: "Verwalte deine lieblings Hersteller",
   Page_Landing_Carousel_Events_Title:
     "Erstelle und verwalte Events der Hersteller",
-  Page_Landing_Carousel_TasteList_Title: "Erstelle und teile Probelisten mit Freunden!",
+  Page_Landing_Carousel_TasteList_Title:
+    "Erstelle und teile Probelisten mit Freunden!",
 
   Page_Landing_Carousel_Beverages_Modal_Title: "Getränke",
   Page_Landing_Carousel_Producer_Modal_Title: "Hersteller",
   Page_Landing_Carousel_Events_Modal_Title: "Events",
   Page_Landing_Carousel_TasteList_Modal_Title: "Probelisten",
 
-  Page_Landing_Carousel_Beverages_Modal_Body: "Zeile1\nZeile2\nZeile3",
-  Page_Landing_Carousel_Producer_Modal_Body: "Hersteller",
-  Page_Landing_Carousel_Events_Modal_Body: "Events",
-  Page_Landing_Carousel_TasteList_Modal_Body: "Probelisten",
+  Page_Landing_Carousel_Beverages_Modal_Body: "Hier Text für Funktion Wein",
+  Page_Landing_Carousel_Producer_Modal_Body:
+    "Hier Text für Funktion Hersteller",
+  Page_Landing_Carousel_Events_Modal_Body: "Hier Text für Funktion Events",
+  Page_Landing_Carousel_TasteList_Modal_Body:
+    "Hier Text für Funktion Probelisten",
 
+  EscendiaDataModal_SaveModal_Body_Save: "Speichern",
+  EscendiaDataModal_SaveModal_Body_Cancle: "Abbrechen",
+  EscendiaDataModal_SaveModal_Title: "Speichern?",
+  EscendiaDataModal_SaveModal_Body: "Möchtest du die Änderungen speichern?",
+
+  EscendiaDataModalType_Title: "Eigenschaften",
+  EscendiaDataModalType_Placeholder_Name: "Name",
+  EscendiaDataModalType_Name_Deutsch: "Deutsch",
+  EscendiaDataModalType_Name_Englisch: "Englisch",
 
   Page_Landing_Scan_Title: "Kommt bald...",
 

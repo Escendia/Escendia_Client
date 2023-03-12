@@ -28,6 +28,7 @@ import EscendiaCheckBox from "@components/default/EscendiaCheckbox";
 import EscendiaDropwDown from "@components/default/EscendiaDropDown";
 import EscendiaDate from "@components/default/EscendiaDate";
 import EscendiaAutoComplete from "@components/default/EscendiaAutoComplete";
+import EscendiaDataModalType from "@components/datamodals/types/EscendiaDataModalType";
 
 /* 
       {index % 4 === 0 && index > 0 ? (
@@ -108,16 +109,44 @@ import EscendiaAutoComplete from "@components/default/EscendiaAutoComplete";
       </TouchableOpacity>
     </>
   );
-}; */
-
-function CreationPage() {
-  const [creationOptions, setCreationOptions] = useState([
+}; 
+[
     "Creation_Option_Drink",
     "Creation_Option_Producer",
     "Creation_Option_Events",
     "Creation_Option_Type",
     "Creation_Option_Awards",
-  ]);
+  ]
+
+*/
+
+const EscendiaTypeCreation = () => {
+  const [modalState, setModalState] = useState(false);
+  const [key, setKey] = useState(uuidv4());
+
+  return (
+    <View key={"CreationPage_Option_" + key}>
+      <EscendiaDataModalType
+        modalState={modalState}
+        viewType={"edit"}
+        setModalState={setModalState}
+      />
+      <EscendiaCard
+        onPress={() => setModalState(!modalState)}
+        key={"CreationPage_EscendiaCard_" + key}
+        title={t("Creation_Option_Type")}
+        width={300}
+        height={300}
+        image={require("../assets/test.jpg")}
+      />
+    </View>
+  );
+};
+
+function CreationPage() {
+  /*   const [creationOptions, setCreationOptions] = useState([
+    { title: "Creation_Option_Type", component: <EscendiaTypeModal /> },
+  ]); */
   const [key, setKey] = useState(uuidv4());
 
   useEffect(() => {}, []);
@@ -136,199 +165,62 @@ function CreationPage() {
           justifyContent: "space-evenly",
         }}
       >
+        <EscendiaTypeCreation />
+      </View>
+    </EscendiaDefaultPage>
+  );
+}
+
+export default CreationPage;
+
+/* 
+                          
         {creationOptions.map((value, index) => {
           const [modalState, setModalState] = useState(false);
           const [text, setTest] = useState("");
 
           return (
             <View key={"CreationPage_Option_" + key + "_" + index}>
-              <EscendiaModal
-                key={"CreationPage_EscendiaModal_" + key + "_" + index}
-                title={"Manage your beverages"}
+              <EscendiaDataModalType
                 modalState={modalState}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    //backgroundColor: "green",
-                    alignItems: "center",
-                  }}
-                >
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                  <EscendiaText>TEST</EscendiaText>
-                </View>
-              </EscendiaModal>
+                viewType={"edit"}
+                setModalState={setModalState}
+              />
               <EscendiaCard
                 onPress={() => setModalState(!modalState)}
                 key={"CreationPage_EscendiaCard_" + key + "_" + index}
-                title={value}
+                title={value.title}
                 width={300}
                 height={300}
-                image={"test.jpg"}
+                image={require("../assets/test.jpg")}
               />
-              {/*               <EscendiaCheckBox
+            </View>
+          );
+        })}
+
+
+
+<EscendiaCheckBox
                 textStyle={{ color: "white" }}
                 title={"test"}
                 disabled={true}
                 editable={true}
-              /> */}
-              {/*               <EscendiaInput
+              /> 
+                            <EscendiaInput
                 placeholder="TEST"
                 value={text}
                 onChangeText={(e) => setTest(e)}
                 editable={true}
                 disabled={true}
-              /> */}
-              {/*               <EscendiaDropwDown
+              /> 
+                            <EscendiaDropwDown
                 value={text}
                 onPress={(e) => setTest(e)}
                 optionList={[value]}
                 editable={true}
-              /> */}
-              {/* <EscendiaDate type={"year"} date={new Date()} editable={true} /> */}
-              {/*               <EscendiaAutoComplete
+              /> 
+               <EscendiaDate type={"year"} date={new Date()} editable={true} /> 
+                            <EscendiaAutoComplete
                 values={[]}
                 options={[
                   { id: "ID_1", name: "Name_1" },
@@ -338,13 +230,6 @@ function CreationPage() {
                 isMulti={true}
                 optionNameId="id"
                 optionNameValue="name"
-              /> */}
-            </View>
-          );
-        })}
-      </View>
-    </EscendiaDefaultPage>
-  );
-}
+              /> 
 
-export default CreationPage;
+*/
