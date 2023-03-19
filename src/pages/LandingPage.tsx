@@ -7,17 +7,26 @@ import { colors } from "../services/styling/styles";
 import EscendiaButton from "@components/default/EscendiaButton";
 import EscendiaSocialMedia from "@components/default/EscendiaSocialMedia";
 import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
-import { calculate, isWeb } from "@services/functions";
+import {
+  calculate,
+  getDatabaseValues,
+  isWeb,
+  updateDatabaseValue,
+} from "@services/functions";
 
 import EscendiaCarousel from "@components/default/EscendiaCarousel";
 import EscendiaText from "@components/default/EscendiaText";
+import { EscendiaUser } from "@config/EscendiaUser";
 import { Ionicons } from "@expo/vector-icons";
-import { useUserStore } from "@services/store/store";
+import { useDBStore, useUserStore } from "@services/store/store";
 import { t } from "i18next";
 import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { StackParams } from "App";
 import { useToast } from "react-native-toast-notifications";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
 
-function LandingPage() {
+function LandingPage(props) {
   const HeaderText = () => {
     return (
       <View
@@ -369,15 +378,52 @@ function LandingPage() {
 
   const bottle2Top = calculate("height", 270, 120);
   const bottle2Left = calculate("width", 600, 60);
+  const auth = useDBStore((state) => state.auth);
+  const setUser = useUserStore((state) => state.setUser);
+  const setFireBaseUser = useUserStore((state) => state.setFireBaseUser);
+  const { navigate, openDrawer }: DrawerNavigationProp<StackParams> =
+    useNavigation();
 
   const toast = useToast();
-  const user = useUserStore((state) => state.user);
 
+  //Umschalten der Seiten nachdem ein User angemeldet wurde
   useEffect(() => {
-    if (user) {
-      toast.show("Toast_Success_Login");
-    }
-  }, [user]);
+    if (auth === undefined) return;
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setFireBaseUser(user);
+        getDatabaseValues("user", { fireBaseID: user.uid }, null, toast).then(
+          (values: Array<EscendiaUser>) => {
+            if (values.length > 0) {
+              setUser(values[0]);
+              toast.show("Toast_Success_Login");
+            } else {
+              var newUser: EscendiaUser = new EscendiaUser();
+              newUser.fireBaseID = user.uid;
+              var userArray = [newUser];
+              updateDatabaseValue(userArray, "user", null, toast).then(
+                (values: Array<EscendiaUser>) => {
+                  if (values.length > 0) {
+                    setUser(values[0]);
+                    toast.show("Toast_Success_Login");
+                  } else {
+                    toast.show("Toast_Danger_Creation");
+                    auth.signOut();
+                  }
+                }
+              );
+            }
+          }
+        );
+      } else {
+        setUser(null);
+        setFireBaseUser(null);
+        toast.show("Toast_Success_LogOut");
+      }
+
+      navigate("Creation");
+    });
+  }, [auth]);
 
   return (
     <EscendiaDefaultPage

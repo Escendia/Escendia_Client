@@ -4,7 +4,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import {
   DrawerContentComponentProps,
-  DrawerContentScrollView
+  DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { calculate } from "@services/functions";
@@ -55,7 +55,7 @@ export const SideBarOption = ({ pageName }: SideBarOptionProps) => {
 };
 
 const EscendiaSidebar = ({ props, ...rest }: EscendiaSidebarProps) => {
-  const user = useUserStore((state) => state.user);
+  const user = useUserStore((state) => state.fireBaseUser);
   const auth = useDBStore((state) => state.auth);
   const [pages, setPages] = useState(["Landing", "SignIn", "SignUp"]);
 

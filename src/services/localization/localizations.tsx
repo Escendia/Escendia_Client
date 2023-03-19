@@ -59,8 +59,8 @@ const de = {
 
   EscendiaDataModalType_Title: "Eigenschaften",
   EscendiaDataModalType_Placeholder_Name: "Name",
-  EscendiaDataModalType_Name_Deutsch: "Deutsch",
-  EscendiaDataModalType_Name_Englisch: "Englisch",
+  EscendiaDataModalType_Name_de: "Deutsch",
+  EscendiaDataModalType_Name_en: "Englisch",
 
   Page_Landing_Scan_Title: "Kommt bald...",
 

@@ -1,34 +1,11 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  ImageBackground,
-  Modal,
-  Pressable,
-  ScrollView,
-  Image,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { useEffect, useState } from "react";
+import { View } from "react-native";
 
-import { colors } from "../services/styling/styles";
-import { AntDesign } from "@expo/vector-icons";
-import EscendiaButton from "@components/default/EscendiaButton";
-import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
-import EscendiaText from "@components/default/EscendiaText";
-import { useTranslation } from "react-i18next";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { calculate, isWeb } from "@services/functions";
-import LeafIcon from "../components/icons/LeafIcon";
-import EscendiaInput from "@components/default/EscendiaInput";
-import EscendiaModal from "@components/default/EscendiaModal";
-import { t } from "i18next";
-import { uuidv4 } from "@firebase/util";
-import EscendiaCard from "@components/default/EscendiaCard";
-import EscendiaCheckBox from "@components/default/EscendiaCheckbox";
-import EscendiaDropwDown from "@components/default/EscendiaDropDown";
-import EscendiaDate from "@components/default/EscendiaDate";
-import EscendiaAutoComplete from "@components/default/EscendiaAutoComplete";
 import EscendiaDataModalType from "@components/datamodals/types/EscendiaDataModalType";
+import EscendiaCard from "@components/default/EscendiaCard";
+import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
+import { uuidv4 } from "@firebase/util";
+import { t } from "i18next";
 
 /* 
       {index % 4 === 0 && index > 0 ? (
@@ -144,9 +121,6 @@ const EscendiaTypeCreation = () => {
 };
 
 function CreationPage() {
-  /*   const [creationOptions, setCreationOptions] = useState([
-    { title: "Creation_Option_Type", component: <EscendiaTypeModal /> },
-  ]); */
   const [key, setKey] = useState(uuidv4());
 
   useEffect(() => {}, []);

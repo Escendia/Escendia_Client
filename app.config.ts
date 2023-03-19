@@ -12,6 +12,11 @@ const {
   FIREBASE_MEASUREMENT_ID,
 } = process.env;
 
+const AXIOS_URL =
+  ENVIRONMENT !== "live"
+    ? "http://localhost:5000"
+    : "https://api.escendia.com/";
+
 export default (context: ConfigContext): ExpoConfig => {
   const config: ExpoConfig = {
     name: name(),
@@ -31,6 +36,12 @@ const extra = (): Extra => ({
     messagingSenderId: "943523318087",
     appId: "1:943523318087:web:479105c34ecb0588016462",
     measurementId: "G-YC52M51XS5 ",
+  },
+  axios: {
+    AXION_ROUTE_DATA: AXIOS_URL + "/api/data",
+    AXION_HEADER: {
+      "Content-Type": "application/json",
+    },
   },
 });
 

@@ -4,77 +4,28 @@ import EscendiaText from "@components/default/EscendiaText";
 import { Type } from "@config/types";
 import { uuidv4 } from "@firebase/util";
 import { colors } from "@services/styling/styles";
-import { t } from "i18next";
+import i18next, { t } from "i18next";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { View } from "react-native";
 import EscendiaDataModal from "../EscendiaDataModal";
 import { Tab, TabView } from "@rneui/themed";
 import EscendiaTabView from "@components/default/EscendiaTabView";
 import { getLocales, getCalendars } from "expo-localization";
+import { Attribute } from "@config/Attribute";
+import { useToast } from "react-native-toast-notifications";
+import { updateDatabaseValue } from "@services/functions";
+import { useUserStore } from "@services/store/store";
 
 interface EscendiaDataModalTypeProps {
+  attribute?: Attribute;
   type?: Type;
   modalState: boolean;
   setModalState: Dispatch<SetStateAction<boolean>>;
   viewType: "view" | "edit" | undefined;
 }
 
-/* 
-              <EscendiaInput
-                outlineStyle={{ borderColor: colors.escendia_dark }}
-                textColor={colors.escendia_dark}
-                disabled={disabled}
-                placeholder={t("EscendiaDataModalType_Placeholder_Name")}
-                value={nameDE}
-                onChangeText={setNameDE}
-                onConfirm={setNameDE}
-              />
-
-*/
-/* const EscendiaTabView = ({ components }) => {
-  const [index, setIndex] = useState<number>(0);
-
-  useEffect(() => {}, []);
-
-  return (
-    <>
-      <Tab
-        value={index}
-        onChange={(e) => setIndex(e)}
-        indicatorStyle={{
-          backgroundColor: "white",
-          height: 3,
-        }}
-        buttonStyle={{
-          backgroundColor: colors.escendia_dark,
-        }}
-        variant="default"
-      >
-        {components.map((component) => {
-          return (
-            <Tab.Item
-              title={component.title}
-              titleStyle={{ color: colors.escendia_light, fontSize: 12 }}
-            />
-          );
-        })}
-      </Tab>
-      <TabView value={index} onChange={setIndex} animationType="spring">
-        {components.map((component, indexMap) => {
-          return (
-            <TabView.Item style={{ flex: 1, width: "100%" }}>
-              {index === indexMap ? (
-                <View>{component.component}</View>
-              ) : undefined}
-            </TabView.Item>
-          );
-        })}
-      </TabView>
-    </>
-  );
-}; */
-
 const EscendiaDataModalType = ({
+  attribute,
   type,
   modalState,
   viewType,
@@ -83,21 +34,26 @@ const EscendiaDataModalType = ({
 }: EscendiaDataModalTypeProps) => {
   const [key, setKey] = useState(uuidv4());
 
-  const [nameDE, setNameDE] = useState<string>("");
-  const [nameEN, setNameEN] = useState<string>("");
-
+  const [attributeValue, setAttributeValue] = useState(new Attribute());
   const [disabled, setDisabled] = useState<boolean>(false);
 
+  const toast = useToast();
+  const user = useUserStore((state) => state.user);
+
+  useEffect(() => {
+    if (attribute) {
+      setAttributeValue(attribute);
+    }
+  }, []);
+
   function onSave() {
-    var object = { namede: nameDE, nameen: nameEN };
-
-    setNameDE("");
-    setNameEN("");
-    console.log("onSave", object["name" + getLocales()[0].languageCode]);
-  }
-
-  function onCancle() {
-    console.log("onCancle");
+    updateDatabaseValue([attributeValue], "attribute", user, toast).then(
+      (valueList) => {
+        if (valueList.length > 0) {
+          setAttributeValue(new Attribute());
+        }
+      }
+    );
   }
 
   useEffect(() => {
@@ -109,9 +65,13 @@ const EscendiaDataModalType = ({
     }
   }, [type]);
 
+  function onChange(language, name) {
+    setAttributeValue(attributeValue.change("addName", language, name));
+  }
+
   return (
     <EscendiaDataModal
-      onCancle={onCancle}
+      onCancle={() => {}}
       onSave={onSave}
       modalState={modalState}
       setModalState={setModalState}
@@ -121,38 +81,23 @@ const EscendiaDataModalType = ({
       <View style={{ flex: 1, margin: 20 }}>
         <EscendiaTabView
           height={60}
-          components={[
-            {
-              title: t("EscendiaDataModalType_Name_Deutsch"),
+          components={i18next.languages.map((language) => {
+            return {
+              title: t("EscendiaDataModalType_Name_" + language),
               component: (
                 <EscendiaInput
-                  key={"EscendiaDataModalType_Input_DE_" + key}
+                  key={"EscendiaDataModalType_Input_" + language + "_" + key}
                   outlineStyle={{ borderColor: colors.escendia_dark }}
                   textColor={colors.escendia_dark}
                   disabled={disabled}
                   placeholder={t("EscendiaDataModalType_Placeholder_Name")}
-                  value={nameDE}
-                  onChangeText={setNameDE}
-                  onConfirm={setNameDE}
+                  value={attributeValue.getName(language)}
+                  onChangeText={(name) => onChange(language, name)}
+                  onConfirm={(name) => onChange(language, name)}
                 />
               ),
-            },
-            {
-              title: t("EscendiaDataModalType_Name_Englisch"),
-              component: (
-                <EscendiaInput
-                  key={"EscendiaDataModalType_Input_EN_" + key}
-                  outlineStyle={{ borderColor: colors.escendia_dark }}
-                  textColor={colors.escendia_dark}
-                  disabled={disabled}
-                  placeholder={t("EscendiaDataModalType_Placeholder_Name")}
-                  value={nameEN}
-                  onChangeText={setNameEN}
-                  onConfirm={setNameEN}
-                />
-              ),
-            },
-          ]}
+            };
+          })}
         />
       </View>
     </EscendiaDataModal>

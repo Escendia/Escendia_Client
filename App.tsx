@@ -1,19 +1,30 @@
 import EscendiaText from "@components/default/EscendiaText";
 import EscendiaSidebar from "@components/sidebar/EscendiaSidebar";
+import useInterval from "@components/useInterval";
+import { EscendiaUser } from "@config/EscendiaUser";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
   createNavigationContainerRef,
   NavigationContainer,
 } from "@react-navigation/native";
-import { calculate } from "@services/functions";
-import { useDBStore, useUserStore } from "@services/store/store";
+import {
+  calculate,
+  getDatabaseValues,
+  updateDatabaseValue,
+} from "@services/functions";
+import {
+  useAppStore,
+  useDBStore,
+  useToastStore,
+  useUserStore,
+} from "@services/store/store";
 import { colors } from "@services/styling/styles";
 import Constants from "expo-constants";
 import { useFonts } from "expo-font";
 import { initializeApp } from "firebase/app";
 import i18n, { t } from "i18next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { initReactI18next } from "react-i18next";
 import { Dimensions, View } from "react-native";
 import "react-native-gesture-handler";
@@ -22,7 +33,7 @@ import {
   Provider as PaperProvider,
 } from "react-native-paper";
 import "react-native-reanimated";
-import { ToastProvider } from "react-native-toast-notifications";
+import { ToastProvider, useToast } from "react-native-toast-notifications";
 import CreationPage from "./src/pages/CreationPage";
 import LandingPage from "./src/pages/LandingPage";
 import ProfilePage from "./src/pages/ProfilePage";
@@ -37,8 +48,8 @@ i18n.use(initReactI18next).init({
     en: { translation: en },
   },
   compatibilityJSON: "v3",
-  lng: "de",
-  fallbackLng: "de",
+  supportedLngs: ["de", "en"],
+  fallbackLng: ["de", "en"],
 });
 
 export type StackParams = {
@@ -64,20 +75,19 @@ export default function App({ props }) {
   const app = useDBStore((state) => state.app);
   const auth = useDBStore((state) => state.auth);
   const setUser = useUserStore((state) => state.setUser);
+  const setFireBaseUser = useUserStore((state) => state.setFireBaseUser);
+  //const toast = useToastStore((state) => state.toast);
 
   // Initialisiere Firebase Datenbank, Rest in Zusatnd
   useEffect(() => {
     setApp(initializeApp(Constants.expoConfig.extra.firebase));
   }, []);
 
-  //Umschalten der Seiten nachdem ein User angemeldet wurde
-  useEffect(() => {
-    if (auth === undefined) return;
-    auth.onAuthStateChanged((user) => {
-      setUser(user);
-      globalNavigation.navigate("Creation");
-    });
-  }, [auth]);
+  useInterval(onTick, 1000);
+
+  function onTick() {
+    //console.log("TICKTICKTICKF");
+  }
 
   //Theme für React Native Paper für die
   const theme = {
@@ -183,118 +193,116 @@ export default function App({ props }) {
 
   //Toast Provider mit eingezogenen Stacks
   const EscendiaPageWithToast = ({}) => {
-    return (
-      <ToastProvider
-        swipeEnabled={true}
-        icon={
-          <AntDesign
-            style={{ borderRadius: 9999 }}
-            name="info"
-            size={24}
-            color={colors.escendia_text_background}
-          />
-        }
-        successIcon={
-          <AntDesign
-            style={{ borderRadius: 9999 }}
-            name="check"
-            size={24}
-            color={colors.escendia_text_background}
-          />
-        }
-        dangerIcon={
-          <MaterialIcons
-            style={{ borderRadius: 9999 }}
-            name="dangerous"
-            size={24}
-            color="white"
-          />
-        }
-        warningIcon={
-          <MaterialIcons
-            style={{ borderRadius: 9999 }}
-            name="warning"
-            size={24}
-            color="white"
-          />
-        }
-        successColor={"green"}
-        dangerColor={"red"}
-        normalColor={"blue"}
-        warningColor={"yellow"}
-        renderToast={(toastOptions) => {
-          let icon = toastOptions.icon;
-          let colorType = toastOptions.normalColor;
-
-          let messageString = toastOptions.message.toString();
-          let messageStringLower = messageString.toLowerCase();
-
-          let message = t(messageString);
-          let hasTitle = message.indexOf("~") > 0;
-
-          if (messageStringLower.includes("success")) {
-            colorType = toastOptions.successColor;
-            icon = toastOptions.successIcon;
-          }
-
-          if (messageStringLower.includes("danger")) {
-            colorType = toastOptions.dangerColor;
-            icon = toastOptions.dangerIcon;
-          }
-
-          if (messageStringLower.includes("warning")) {
-            colorType = toastOptions.warningColor;
-            icon = toastOptions.warningIcon;
-          }
-
-          const titleText = hasTitle ? t(message.split("~")[0]) : "";
-          const messageText = hasTitle ? t(message.split("~")[1]) : t(message);
-
-          return (
-            <View
-              style={{
-                backgroundColor: colorType,
-                paddingLeft: 5,
-                margin: 10,
-                borderWidth: 1,
-                borderColor: "grey",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: colors.escendia_dark,
-                  padding: 10,
-                }}
-              >
-                <View style={{ paddingRight: 10 }}>{icon}</View>
-                <View style={{ flexDirection: "column" }}>
-                  <EscendiaText
-                    color={colors.escendia_light}
-                    fontWeight="bold"
-                    fontSize={20}
-                  >
-                    {titleText}
-                  </EscendiaText>
-                  <EscendiaText color={colors.escendia_light} fontSize={15}>
-                    {messageText}
-                  </EscendiaText>
-                </View>
-              </View>
-            </View>
-          );
-        }}
-      >
-        <EscendiaStacks />
-      </ToastProvider>
-    );
+    return <EscendiaStacks />;
   };
 
   return (
-    <PaperProvider theme={theme}>
-      <EscendiaPageWithToast />
-    </PaperProvider>
+    <ToastProvider
+      swipeEnabled={true}
+      icon={
+        <AntDesign
+          style={{ borderRadius: 9999 }}
+          name="info"
+          size={24}
+          color={colors.escendia_text_background}
+        />
+      }
+      successIcon={
+        <AntDesign
+          style={{ borderRadius: 9999 }}
+          name="check"
+          size={24}
+          color={colors.escendia_text_background}
+        />
+      }
+      dangerIcon={
+        <MaterialIcons
+          style={{ borderRadius: 9999 }}
+          name="dangerous"
+          size={24}
+          color="white"
+        />
+      }
+      warningIcon={
+        <MaterialIcons
+          style={{ borderRadius: 9999 }}
+          name="warning"
+          size={24}
+          color="white"
+        />
+      }
+      successColor={"green"}
+      dangerColor={"red"}
+      normalColor={"blue"}
+      warningColor={"yellow"}
+      renderToast={(toastOptions) => {
+        let icon = toastOptions.icon;
+        let colorType = toastOptions.normalColor;
+
+        let messageString = toastOptions.message.toString();
+        let messageStringLower = messageString.toLowerCase();
+
+        let message = t(messageString);
+        let hasTitle = message.indexOf("~") > 0;
+
+        if (messageStringLower.includes("success")) {
+          colorType = toastOptions.successColor;
+          icon = toastOptions.successIcon;
+        }
+
+        if (messageStringLower.includes("danger")) {
+          colorType = toastOptions.dangerColor;
+          icon = toastOptions.dangerIcon;
+        }
+
+        if (messageStringLower.includes("warning")) {
+          colorType = toastOptions.warningColor;
+          icon = toastOptions.warningIcon;
+        }
+
+        const titleText = hasTitle ? t(message.split("~")[0]) : "";
+        const messageText = hasTitle ? t(message.split("~")[1]) : t(message);
+
+        return (
+          <View
+            style={{
+              backgroundColor: colorType,
+              paddingLeft: 5,
+              margin: 10,
+              borderWidth: 1,
+              borderColor: "grey",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: colors.escendia_dark,
+                padding: 10,
+              }}
+            >
+              <View style={{ paddingRight: 10 }}>{icon}</View>
+              <View style={{ flexDirection: "column" }}>
+                <EscendiaText
+                  color={colors.escendia_light}
+                  fontWeight="bold"
+                  fontSize={20}
+                >
+                  {titleText}
+                </EscendiaText>
+                <EscendiaText color={colors.escendia_light} fontSize={15}>
+                  {messageText}
+                </EscendiaText>
+              </View>
+            </View>
+          </View>
+        );
+      }}
+    >
+      <PaperProvider theme={theme}>
+        <EscendiaPageWithToast />
+      </PaperProvider>
+    </ToastProvider>
   );
 }

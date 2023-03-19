@@ -70,7 +70,7 @@ export const HeaderLine = React.memo(
     const [key, setKey] = useState(uuidv4());
     const { navigate, openDrawer }: DrawerNavigationProp<StackParams> =
       useNavigation();
-    const user = useUserStore((state) => state.user);
+    const user = useUserStore((state) => state.fireBaseUser);
 
     return (
       <View

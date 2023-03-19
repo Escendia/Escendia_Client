@@ -1,3 +1,4 @@
+import { Attribute } from "./../../config/Attribute";
 import { FirebaseApp } from "firebase/app";
 import {
   getAnalytics,
@@ -9,20 +10,36 @@ import {
   Firestore,
   initializeFirestore,
 } from "firebase/firestore/lite";
-import { getAuth, Auth, User, initializeAuth, browserPopupRedirectResolver } from "firebase/auth";
+import {
+  getAuth,
+  Auth,
+  User,
+  initializeAuth,
+  browserPopupRedirectResolver,
+} from "firebase/auth";
 
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
-
+import { EscendiaUser } from "@config/EscendiaUser";
+import { ToastType } from "react-native-toast-notifications";
 
 interface UserState {
-  user: User | undefined;
-  setUser: (user: User) => void;
+  user: EscendiaUser | undefined;
+  setUser: (user: EscendiaUser) => void;
+  fireBaseUser: User | undefined;
+  setFireBaseUser: (user: User) => void;
 }
 
-
+interface AppState {
+  ready: boolean | undefined;
+  setReady: (ready: boolean) => void;
+}
+interface ToastState {
+  toast: ToastType | undefined;
+  setToast: (toast: ToastType) => void;
+}
 
 interface DBState {
   app: FirebaseApp;
@@ -30,6 +47,7 @@ interface DBState {
   db: Firestore;
   auth: Auth;
   setApp: (app: FirebaseApp) => void;
+  attribute: Array<Attribute>;
 }
 
 export const useUserStore = create<UserState>()(
@@ -41,11 +59,39 @@ export const useUserStore = create<UserState>()(
           user: user,
         }));
       },
+      fireBaseUser: undefined,
+      setFireBaseUser(fireBaseUser) {
+        set((state) => ({
+          fireBaseUser: fireBaseUser,
+        }));
+      },
     }),
     {
       name: "user_cookies",
     }
   )
+);
+
+/* export const useAppStore = create<AppState>()(
+  devtools((set) => ({
+    setReady(ready) {
+      set((state) => ({
+        ready: ready,
+      }));
+    },
+    ready: false,
+  }))
+); */
+
+export const useToastStore = create<ToastState>()(
+  devtools((set) => ({
+    setToast(toast) {
+      set((state) => ({
+        toast: toast,
+      }));
+    },
+    toast: undefined,
+  }))
 );
 
 export const useDBStore = create<DBState>()(
@@ -65,5 +111,6 @@ export const useDBStore = create<DBState>()(
         db: getFirestore(app),
       }));
     },
+    attribute: [],
   }))
 );
