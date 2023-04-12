@@ -1,22 +1,18 @@
 import EscendiaInput from "@components/default/EscendiaInput";
-import EscendiaModal from "@components/default/EscendiaModal";
-import EscendiaText from "@components/default/EscendiaText";
+import EscendiaTabView from "@components/default/EscendiaTabView";
+import { Attribute } from "@config/models/Attribute";
 import { Type } from "@config/types";
 import { uuidv4 } from "@firebase/util";
-import { colors } from "@services/styling/styles";
-import i18next, { t } from "i18next";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { View } from "react-native";
-import EscendiaDataModal from "../EscendiaDataModal";
-import { Tab, TabView } from "@rneui/themed";
-import EscendiaTabView from "@components/default/EscendiaTabView";
-import { getLocales, getCalendars } from "expo-localization";
-import { Attribute } from "@config/Attribute";
-import { useToast } from "react-native-toast-notifications";
 import { updateDatabaseValue } from "@services/functions";
 import { useUserStore } from "@services/store/store";
+import { colors } from "@services/styling/styles";
+import i18next, { t } from "i18next";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { View } from "react-native";
+import { useToast } from "react-native-toast-notifications";
+import EscendiaDataModal from "../EscendiaDataModal";
 
-interface EscendiaDataModalTypeProps {
+interface EscendiaDataModalAttributeProps {
   attribute?: Attribute;
   type?: Type;
   modalState: boolean;
@@ -24,14 +20,14 @@ interface EscendiaDataModalTypeProps {
   viewType: "view" | "edit" | undefined;
 }
 
-const EscendiaDataModalType = ({
+const EscendiaDataModalAttribute = ({
   attribute,
   type,
   modalState,
   viewType,
   setModalState,
   ...rest
-}: EscendiaDataModalTypeProps) => {
+}: EscendiaDataModalAttributeProps) => {
   const [key, setKey] = useState(uuidv4());
 
   const [attributeValue, setAttributeValue] = useState(new Attribute());
@@ -104,4 +100,4 @@ const EscendiaDataModalType = ({
   );
 };
 
-export default EscendiaDataModalType;
+export default EscendiaDataModalAttribute;

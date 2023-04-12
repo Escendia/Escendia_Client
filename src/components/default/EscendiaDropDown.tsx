@@ -13,9 +13,10 @@ interface EscendiaDropDownProps {
   style?: TextStyle;
   disabled?: boolean | undefined;
   editable?: boolean | undefined;
-  optionList?: [string];
+  optionList?: string[];
   iconColor?: string;
   onPress?: ((e: string) => void) | undefined;
+  type: "normal" | "edit" | undefined;
 }
 
 const EscendiaDropwDown = ({
@@ -26,6 +27,7 @@ const EscendiaDropwDown = ({
   iconColor,
   onPress,
   style,
+  type,
 }: EscendiaDropDownProps) => {
   const [pickerRef, setPickedRef] = useState(useRef());
 
@@ -94,7 +96,7 @@ const EscendiaDropwDown = ({
               value={undefined}
             />
           </Picker>
-          {editable ? (
+          {type === "edit" && editable ? (
             <EscendiaIcon
               key={"EscendiaDropwDown_Icon" + key}
               type={"MaterialCommunity"}

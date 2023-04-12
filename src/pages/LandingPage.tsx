@@ -16,7 +16,7 @@ import {
 
 import EscendiaCarousel from "@components/default/EscendiaCarousel";
 import EscendiaText from "@components/default/EscendiaText";
-import { EscendiaUser } from "@config/EscendiaUser";
+import { EscendiaUser } from "@config/models/EscendiaUser";
 import { Ionicons } from "@expo/vector-icons";
 import { useDBStore, useUserStore } from "@services/store/store";
 import { t } from "i18next";

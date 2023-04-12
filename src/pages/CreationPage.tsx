@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 
-import EscendiaDataModalType from "@components/datamodals/types/EscendiaDataModalType";
+import EscendiaDataModalAttribute from "@components/datamodals/types/EscendiaDataModalAttribute";
 import EscendiaCard from "@components/default/EscendiaCard";
 import EscendiaDefaultPage from "@components/main/EscendiaDefaultPage";
 import { uuidv4 } from "@firebase/util";
 import { t } from "i18next";
+import EscendiaText from "@components/default/EscendiaText";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import EscendiaIcon from "@components/default/EscendiaIcon";
+import EscendiaTable from "@components/table/EscendiaTable";
 
 /* 
       {index % 4 === 0 && index > 0 ? (
@@ -103,7 +107,7 @@ const EscendiaTypeCreation = () => {
 
   return (
     <View key={"CreationPage_Option_" + key}>
-      <EscendiaDataModalType
+      <EscendiaDataModalAttribute
         modalState={modalState}
         viewType={"edit"}
         setModalState={setModalState}
@@ -123,14 +127,22 @@ const EscendiaTypeCreation = () => {
 function CreationPage() {
   const [key, setKey] = useState(uuidv4());
 
-  useEffect(() => {}, []);
+  const [testData, setTestData] = useState([]);
+
+  useEffect(() => {
+    var testArray = [];
+    for (var i = 0; i <= 100000; i++) {
+      testArray.push({ col1: "COL1-" + i, col2: "COL2-" + i });
+    }
+    setTestData(testArray);
+  }, []);
 
   return (
     <EscendiaDefaultPage
       key={"CreationPage_" + key}
       title={t("Page_Creation_Title")}
     >
-      <View
+      {/*       <View
         key={"CreationPage_View_" + key}
         style={{
           display: "flex",
@@ -140,11 +152,54 @@ function CreationPage() {
         }}
       >
         <EscendiaTypeCreation />
-      </View>
+      </View> */}
+
+      <EscendiaTable
+        columns={[
+          {
+            Header: "Column 1",
+            accessor: "col1", // accessor is the "key" in the data
+          },
+
+          {
+            Header: "Column 2",
+            accessor: "col2",
+          },
+        ]}
+        data={testData}
+      />
     </EscendiaDefaultPage>
   );
 }
 
+/*       <EscendiaTable
+        columns={[
+          {
+            Header: "Column 1",
+            accessor: "col1", // accessor is the "key" in the data
+          },
+
+          {
+            Header: "Column 2",
+            accessor: "col2",
+          },
+        ]}
+        data={testData}
+      /> */
+/* 
+      <View
+        key={"CreationPage_View_" + key}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+        }}
+      >
+      
+        <EscendiaTypeCreation />
+      </View>
+*/
 export default CreationPage;
 
 /* 

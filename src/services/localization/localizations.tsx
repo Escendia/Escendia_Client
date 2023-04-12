@@ -104,6 +104,8 @@ const de = {
   Page_Creation_Title: "Erstellen",
   Page_Creation: "Anlegen",
 
+  Table_Pagination_Title: "Seite {{from}} von {{to}}",
+
   Sidebar_Landing: "Hauptseite",
   Sidebar_SignIn: "Anmelden",
   Sidebar_SignUp: "Registrieren",
@@ -140,6 +142,14 @@ const de = {
   Toast_Warning_SignIn_: "TBD",
 
   Toast_Success_Login: "Anmeldung~Du wurdest erfolgreich angemeldet!",
+
+  EscendiaTable_Placeholder_Search: "Suche...",
+  EscendiaTable_Filter_Header: "{{name}}",
+  EscendiaTable_Filter_Amount: "Anzahl Treffer: {{amount}}",
+  EscendiaTable_Filter_Placeholder: "Filter für {{name}}",
+  EscendiaTable_Filter_Title: "Tabellen-Filter",
+
+  EscendiaTable_Settings_Title: "Tabellen-Einstellung",
 
   Page_Landing_Feature_CommingSoon: "Kommt bald...",
 };

@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import axios from "axios";
 import { User } from "firebase/auth";
-import DataBaseObject from "@config/DataBaseObject";
-import { Attribute } from "@config/Attribute";
+import DataBaseObject from "@config/models/DataBaseObject";
+import { Attribute } from "@config/models/Attribute";
 import { ToastOptions } from "react-native-toast-notifications/lib/typescript/toast";
-import { EscendiaUser } from "@config/EscendiaUser";
+import { EscendiaUser } from "@config/models/EscendiaUser";
 
 /**
  * Method to calculate dynamic width or height - Recalculate by dynamisch change

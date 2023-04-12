@@ -1,4 +1,4 @@
-import { Attribute } from "./../../config/Attribute";
+import { Attribute } from "../../config/models/Attribute";
 import { FirebaseApp } from "firebase/app";
 import {
   getAnalytics,
@@ -22,7 +22,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
-import { EscendiaUser } from "@config/EscendiaUser";
+import { EscendiaUser } from "@config/models/EscendiaUser";
 import { ToastType } from "react-native-toast-notifications";
 
 interface UserState {

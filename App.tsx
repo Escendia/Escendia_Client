@@ -1,30 +1,20 @@
 import EscendiaText from "@components/default/EscendiaText";
 import EscendiaSidebar from "@components/sidebar/EscendiaSidebar";
 import useInterval from "@components/useInterval";
-import { EscendiaUser } from "@config/EscendiaUser";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
-  createNavigationContainerRef,
   NavigationContainer,
+  createNavigationContainerRef,
 } from "@react-navigation/native";
-import {
-  calculate,
-  getDatabaseValues,
-  updateDatabaseValue,
-} from "@services/functions";
-import {
-  useAppStore,
-  useDBStore,
-  useToastStore,
-  useUserStore,
-} from "@services/store/store";
+import { calculate } from "@services/functions";
+import { useDBStore, useUserStore } from "@services/store/store";
 import { colors } from "@services/styling/styles";
 import Constants from "expo-constants";
 import { useFonts } from "expo-font";
 import { initializeApp } from "firebase/app";
 import i18n, { t } from "i18next";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { initReactI18next } from "react-i18next";
 import { Dimensions, View } from "react-native";
 import "react-native-gesture-handler";
@@ -33,13 +23,15 @@ import {
   Provider as PaperProvider,
 } from "react-native-paper";
 import "react-native-reanimated";
-import { ToastProvider, useToast } from "react-native-toast-notifications";
+import { ToastProvider } from "react-native-toast-notifications";
 import CreationPage from "./src/pages/CreationPage";
 import LandingPage from "./src/pages/LandingPage";
 import ProfilePage from "./src/pages/ProfilePage";
 import SignInPage from "./src/pages/SignInPage";
 import SignUpPage from "./src/pages/SignUpPage";
 import TestPage from "./src/pages/TestPage";
+import SearchPage from "./src/pages/SearchPage";
+
 import { de, en } from "./src/services/localization/localizations";
 
 i18n.use(initReactI18next).init({
@@ -59,6 +51,7 @@ export type StackParams = {
   Test: undefined;
   Profile: undefined;
   Creation: undefined;
+  Search: undefined;
 };
 
 const Stack = createDrawerNavigator<StackParams>();
@@ -141,7 +134,7 @@ export default function App({ props }) {
       <NavigationContainer ref={globalNavigation}>
         {fontsLoaded && app !== undefined ? (
           <Stack.Navigator
-            initialRouteName="Landing"
+            initialRouteName="Search"
             screenOptions={{
               headerShown: false,
               drawerStyle: {
@@ -184,6 +177,11 @@ export default function App({ props }) {
               name="Creation"
               component={CreationPage}
               options={{ title: t("Page_CreationPage") }}
+            />
+            <Stack.Screen
+              name="Search"
+              component={SearchPage}
+              options={{ title: t("Page_SearchPage") }}
             />
           </Stack.Navigator>
         ) : null}
